@@ -2,13 +2,11 @@ package twogtwoj.whereishere.web;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import twogtwoj.whereishere.domain.Category;
 import twogtwoj.whereishere.domain.Company;
 import twogtwoj.whereishere.domain.Member;
-import twogtwoj.whereishere.repository.StarRepository;
 import twogtwoj.whereishere.service.CompanyService;
 import twogtwoj.whereishere.service.MemberService;
 
@@ -23,6 +21,10 @@ public class BasicController {
     private final MemberService memberService;
 
     private final CompanyService companyService;
+
+
+    @GetMapping("/home")
+    public String enterHome() {return "/home/home";}
 
     @PostConstruct
     public void initMemberAndCompany() {

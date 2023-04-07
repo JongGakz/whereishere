@@ -26,3 +26,5 @@ public class Comment { // 업체 한줄평
 
     private LocalDate commentWriteDate;
 }
+
+//가나다

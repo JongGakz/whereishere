@@ -7,6 +7,8 @@ import twogtwoj.whereishere.domain.Member;
 import twogtwoj.whereishere.repository.CompanyRepository;
 import twogtwoj.whereishere.repository.MemberRepository;
 
+import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -17,5 +19,9 @@ public class CompanyService {
 
     public Company save(Company company){
         return companyRepository.save(company);
+    }
+
+    public List<Company> findCompanies() {
+        return companyRepository.findAll();
     }
 }

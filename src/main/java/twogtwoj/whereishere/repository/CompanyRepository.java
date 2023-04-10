@@ -7,6 +7,7 @@ import twogtwoj.whereishere.domain.Company;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Transactional
@@ -18,5 +19,9 @@ public class CompanyRepository {
     public Company save(Company company) {
         em.persist(company);
         return company;
+    }
+
+    public List<Company> findAll() {
+        return em.createQuery("select c from Company c", Company.class).getResultList();
     }
 }

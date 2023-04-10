@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/loginStylesheet.css}"
+          href="../../static/css/loginStylesheet.css" rel="stylesheet">
+    <title>여긴 어디?</title>
+</head>
+<body>
+<div class="box_login">
+    <fieldset>
+        <legend id="box_logo">
+            <img src="css/logo.png">
+        </legend>
+        <legend>
+            <strong>LOGIN</strong>
+        </legend>
+
+        <!--    로그인 form-->
+        <div class="form">
+            <form action="" th:action method="post">
+                <input type="text" name="loginId" eautocomplete="off" title="아이디" placeholder="아이디">
+                <input type="password" name="loginPw" title="비밀번호" placeholder="비밀번호">
+                <button class="btn_common lrg blu"onclick="location.href='경로'" type="submit">로그인</button>
+            </form>
+        </div>
+        <div class="links">
+            <button class="btn_common lrg" onclick="location.href='/login/SignUp'" type="button">회원 가입</button>
+        </div>
+    </fieldset>
+</div>
+</body>
+</html>
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+img[src]{
+    width:10%;
+    height:30%;
+}
+
+.btn_common {
+    font-size: xx-large;
+    display: inline-block;
+    box-sizing: border-box;
+    text-align: center;
+    cursor: pointer;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(221, 221, 221);
+    border-image: initial;
+    background: #007bc3;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 250px;
+    height: 150px;
+    line-height: 77px;
+    color: #fff;
+    }
+
+.SignUp_member {
+    position: relative;
+    margin-top: 80px;
+    margin-bottom: 20px;
+    width: 450px;
+    box-sizing: border-box;
+    display: block;
+    margin-inline-start: 2px;
+    margin-inline-end: 2px;
+    left: 400px;
+    top: 90px;
+}
+
+.SignUp_company {
+    position: relative;
+    margin-top: 80px;
+    margin-bottom: 20px;
+    width: 450px;
+    box-sizing: border-box;
+    display: block;
+    margin-inline-start: 2px;
+    margin-inline-end: 2px;
+    left: 750px;
+    top: 90px;
+}

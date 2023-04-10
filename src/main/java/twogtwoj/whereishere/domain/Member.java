@@ -18,9 +18,12 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long memberId;
 
+
     private String memberLoginId;
 
+
     private String memberLoginPw;
+
 
     private String memberName;
 

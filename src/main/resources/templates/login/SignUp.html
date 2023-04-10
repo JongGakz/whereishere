@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link th:href="@{/css/loginSignUp.css}"
+          href="../../static/css/loginSignUp.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>회원 가입</title>
+</head>
+<body>
+ <div class="main">
+    <div class="box_logo">
+        <img src="../css/logo.png">
+    </div>
+
+    <div class="SignUp_member">
+         <button class="btn_common lrg member" onclick="location.href='/login/SignUpMember'" type="submit">개인</button>
+    </div>
+     <div class="SignUp_company">
+     <button class="btn_common lrg company" onclick="location.href='/login/SignUpCompany'" type="submit">기업</button>
+    </div>
+ </div>
+</body>
+</html>

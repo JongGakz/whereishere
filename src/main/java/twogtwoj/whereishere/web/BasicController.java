@@ -274,7 +274,5 @@ public class BasicController {
         companyService.save(new Company("debec","db4350",7561548952L,
                 "대구백화점 대백프라자점","이미지20.jpg","꿈과 미래가 있는 대구백화점. 고객과 기업가치의 극대화를 추구합니다.",Category.DEPARTMENT.getDescription()
                 ,"대구 중구 명덕로 333"));
-
-
     }
 }

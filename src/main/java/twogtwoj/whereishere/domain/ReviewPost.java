@@ -29,4 +29,6 @@ public class ReviewPost {
     private String reviewPostImg;
 
     private LocalDate reviewPostDate;
+
+
 }

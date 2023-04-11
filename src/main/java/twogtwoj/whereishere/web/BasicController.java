@@ -6,8 +6,10 @@ import org.springframework.web.bind.annotation.*;
 import twogtwoj.whereishere.domain.Category;
 import twogtwoj.whereishere.domain.Company;
 import twogtwoj.whereishere.domain.Member;
+import twogtwoj.whereishere.domain.ReviewPost;
 import twogtwoj.whereishere.service.CompanyService;
 import twogtwoj.whereishere.service.MemberService;
+import twogtwoj.whereishere.service.ReviewPostService;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;
@@ -20,6 +22,8 @@ public class BasicController {
     private final MemberService memberService;
 
     private final CompanyService companyService;
+
+    private final ReviewPostService reviewPostService;
 
 
     @PostConstruct
@@ -271,8 +275,10 @@ public class BasicController {
                     "BL짐","이미지19.jpg","가격은 저렴하지만 시설은 외국고급헬스장급 운동맛집",Category.HEALTH.getDescription()
                     ,"경북 포항시 남구 대이로 109 4층"));
 
-            companyService.save(new Company("debec","db4350",7561548952L,
+            Company company = companyService.save(new Company("debec","db4350",7561548952L,
                     "대구백화점 대백프라자점","이미지20.jpg","꿈과 미래가 있는 대구백화점. 고객과 기업가치의 극대화를 추구합니다.",Category.DEPARTMENT.getDescription()
                     ,"대구 중구 명덕로 333"));
+
+            reviewPostService.save(new ReviewPost(company,"너무 맛있어요","진짜 맛없어요","028090b3-01ac-4cc7-bb8e-30213a32030a.png","17740454-05f0-406b-9fae-a35cf6ef6bac.png",LocalDate.now()));
     }
 }

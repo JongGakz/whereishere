@@ -13,7 +13,6 @@ import twogtwoj.whereishere.service.CompanyService;
 import twogtwoj.whereishere.service.MemberService;
 
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Controller
@@ -31,7 +30,7 @@ public class MainController {
     @PostMapping("/home")
     public String searchPlace(@RequestParam String search, Model model) {
         System.out.println(search);
-        List<Company> companies = companyService.findCompanies();
+        List<Company> companies = companyService.findAll();
 
         List<Company> companyList = companies.stream().filter(n -> n.getCompanyIntroduction().contains(search)).collect(Collectors.toUnmodifiableList());
 

@@ -3,9 +3,7 @@ package twogtwoj.whereishere.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import twogtwoj.whereishere.domain.Company;
-import twogtwoj.whereishere.domain.Member;
 import twogtwoj.whereishere.repository.CompanyRepository;
-import twogtwoj.whereishere.repository.MemberRepository;
 
 import java.util.List;
 
@@ -21,7 +19,11 @@ public class CompanyService {
         return companyRepository.save(company);
     }
 
-    public List<Company> findCompanies() {
+    public List<Company> findAll() {
         return companyRepository.findAll();
+    }
+
+    public Company findCompanyByCompanyName(String companyName) {
+        return companyRepository.findCompanyByCompanyName(companyName);
     }
 }

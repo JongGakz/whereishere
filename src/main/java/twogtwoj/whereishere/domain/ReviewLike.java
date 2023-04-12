@@ -1,11 +1,15 @@
 package twogtwoj.whereishere.domain;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Data
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ReviewLike {
 
     @Id
@@ -20,5 +24,15 @@ public class ReviewLike {
     @JoinColumn(name ="MEMBER_ID")
     private Member member;
 
-    private int reviewLikePoint; // 개추
+
+    private int reviewLikePoint; // 좋아요 갯수
+
+    public static ReviewLike like(Member member, ReviewPost reviewPost) {
+        ReviewLike reviewLike = new ReviewLike();
+        reviewLike.setMember(member);
+        reviewLike.setReviewPost(reviewPost);
+
+        return reviewLike;
+    }
+
 }

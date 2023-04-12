@@ -32,7 +32,13 @@ public class ReviewPost {
 
     private String reviewPostImg2;
 
+    private String writer;//글 목록에 작성자 따로 필요
+
     private LocalDate reviewPostDate;
+
+    @ManyToOne
+    @JoinColumn(name = "LIKE")
+    private ReviewLike reviewLike;
 
     public ReviewPost(Company company, String reviewPostTitle, String reviewPostContent, String reviewPostImg1, String reviewPostImg2, LocalDate reviewPostDate) {
         this.company = company;
@@ -43,9 +49,8 @@ public class ReviewPost {
         this.reviewPostDate = reviewPostDate;
     }
 
- /*   @ManyToOne
-    @JoinColumn(name = "")
-    private ReviewLike reviewLike;
-*/
+
+
+    //private Integer viewCount;
 
 }

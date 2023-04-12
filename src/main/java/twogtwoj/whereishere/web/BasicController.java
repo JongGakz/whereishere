@@ -1,17 +1,21 @@
 package twogtwoj.whereishere.web;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import twogtwoj.whereishere.domain.Category;
 import twogtwoj.whereishere.domain.Company;
 import twogtwoj.whereishere.domain.Member;
 import twogtwoj.whereishere.domain.ReviewPost;
+import twogtwoj.whereishere.file.FileStore;
 import twogtwoj.whereishere.service.CompanyService;
 import twogtwoj.whereishere.service.MemberService;
 import twogtwoj.whereishere.service.ReviewPostService;
 
 import javax.annotation.PostConstruct;
+import java.net.MalformedURLException;
 import java.time.LocalDate;
 
 @Controller
@@ -25,11 +29,13 @@ public class BasicController {
 
     private final ReviewPostService reviewPostService;
 
-    @GetMapping("/home")
-    public String enterHome() {
-        return "/home/home";
+    private final FileStore fileStore;
+    // 게시글 보기에서 게시글에 저장된 이미지 가져오는 메서드
+    @ResponseBody
+    @GetMapping("/image/{filename}")
+    public Resource downloadImage(@PathVariable String filename) throws MalformedURLException {
+        return new UrlResource("file:" + fileStore.getFullPath(filename));
     }
-
     @PostConstruct
     public void initMemberAndCompany() {
         memberService.save(new Member("Jonggak","123123","임종각",LocalDate.of(1993,6,16)));

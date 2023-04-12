@@ -1,6 +1,4 @@
 package twogtwoj.whereishere.web;
-
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,23 +17,19 @@ import java.util.stream.Collectors;
 @RequestMapping
 @RequiredArgsConstructor
 public class MainController {
-
     private final MemberService memberService;
-
     private final CompanyService companyService;
-
     @GetMapping("/home")
     public String enterHome() {return "/home/home";}
-
     @PostMapping("/home")
     public String searchPlace(@RequestParam String search, Model model) {
         System.out.println(search);
+
         List<Company> companies = companyService.findAll();
 
         List<Company> companyList = companies.stream().filter(n -> n.getCompanyIntroduction().contains(search)).collect(Collectors.toUnmodifiableList());
 
         model.addAttribute("companyList",companyList);
-
         return "/home/home";
     }
 }

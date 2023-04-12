@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import twogtwoj.whereishere.domain.ReviewPost;
+import twogtwoj.whereishere.domain.*;
 import twogtwoj.whereishere.repository.ReviewPostRepository;
 import twogtwoj.whereishere.service.ReviewPostService;
 
@@ -16,7 +16,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import twogtwoj.whereishere.domain.Company;
 import twogtwoj.whereishere.domain.ReviewPost;
 import twogtwoj.whereishere.file.FileStore;
 import twogtwoj.whereishere.service.CompanyService;
@@ -62,7 +61,7 @@ public class ReviewPostController {
     }
 
 
-    // 리뷰 등록했을 때, ReviewPost에 객체로 저장하는 메서드
+    // 리뷰 등록했을 때, ReviewPost 에 객체로 저장하는 메서드
     @PostMapping("/reviews/post")
     public String saveReviewPost(@RequestParam String companyName, @RequestParam String reviewPostTitle,
                                  @RequestParam String reviewPostContent, @RequestParam MultipartFile reviewPostImg1,
@@ -81,18 +80,14 @@ public class ReviewPostController {
 
     // 리뷰 ID를 받아서 해당 게시글을 보여주는 메서드
     @GetMapping("/reviews/{reviewPostId}")
-    public String showReviewPost(@PathVariable Long reviewPostId ,Model model) {
+    public String showReviewPost(@PathVariable Long reviewPostId, Model model) {
         ReviewPost reviewPost = reviewPostService.findByReviewId(reviewPostId);
+       // ReviewLike reviewLike = reviewPostService.findByReviewId(reviewPostId).getReviewLike();
+
         model.addAttribute("reviewPost", reviewPost);
 
         return "/review/reviewPostView";
     }
 
 
-    // 게시글 보기에서 게시글에 저장된 이미지 가져오는 메서드
-    @ResponseBody
-    @GetMapping("/image/{filename}")
-    public Resource downloadImage(@PathVariable String filename) throws MalformedURLException {
-        return new UrlResource("file:" + fileStore.getFullPath(filename));
-    }
 }

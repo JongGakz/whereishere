@@ -1,12 +1,14 @@
 package twogtwoj.whereishere.domain;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Data
 @Entity
+@NoArgsConstructor
 public class ReviewPost {
 
     @Id
@@ -26,9 +28,24 @@ public class ReviewPost {
 
     private String reviewPostContent;
 
-    private String reviewPostImg;
+    private String reviewPostImg1;
+
+    private String reviewPostImg2;
 
     private LocalDate reviewPostDate;
 
+    public ReviewPost(Company company, String reviewPostTitle, String reviewPostContent, String reviewPostImg1, String reviewPostImg2, LocalDate reviewPostDate) {
+        this.company = company;
+        this.reviewPostTitle = reviewPostTitle;
+        this.reviewPostContent = reviewPostContent;
+        this.reviewPostImg1 = reviewPostImg1;
+        this.reviewPostImg2 = reviewPostImg2;
+        this.reviewPostDate = reviewPostDate;
+    }
+
+ /*   @ManyToOne
+    @JoinColumn(name = "")
+    private ReviewLike reviewLike;
+*/
 
 }

@@ -25,9 +25,9 @@ public class ReviewPostRepository {
         return reviewPost;
     }
 
-    public Optional<ReviewPost> findByReviewPostId(Long reviewPostId) {
+    public ReviewPost findByReviewPostId(Long reviewPostId) {
         ReviewPost reviewPost = em.find(ReviewPost.class, reviewPostId);
-        return Optional.ofNullable(reviewPost);
+        return reviewPost;
     }
 
     public ReviewPost findByReviewPostTitle(String reviewPostTitle) {
@@ -39,7 +39,7 @@ public class ReviewPostRepository {
     }
 
     public void update(Long reviewPostId, ReviewPost updateReviewPost) {
-        ReviewPost reviewPost = findByReviewPostId(reviewPostId).get();
+        ReviewPost reviewPost = findByReviewPostId(reviewPostId);
         reviewPost.setReviewPostTitle(updateReviewPost.getReviewPostTitle());
         reviewPost.setReviewPostContent(updateReviewPost.getReviewPostContent());
         reviewPost.setReviewPostImg1(updateReviewPost.getReviewPostImg1());
@@ -48,7 +48,7 @@ public class ReviewPostRepository {
     }
 
     public void delete(Long reviewPostId) {
-        em.remove(findByReviewPostId(reviewPostId).get());
+        em.remove(findByReviewPostId(reviewPostId));
     }
 }
 

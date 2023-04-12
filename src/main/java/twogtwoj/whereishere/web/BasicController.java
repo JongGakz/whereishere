@@ -2,13 +2,14 @@ package twogtwoj.whereishere.web;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import twogtwoj.whereishere.domain.Category;
 import twogtwoj.whereishere.domain.Company;
 import twogtwoj.whereishere.domain.Member;
+import twogtwoj.whereishere.domain.ReviewPost;
 import twogtwoj.whereishere.service.CompanyService;
 import twogtwoj.whereishere.service.MemberService;
+import twogtwoj.whereishere.service.ReviewPostService;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;
@@ -22,6 +23,7 @@ public class BasicController {
 
     private final CompanyService companyService;
 
+    private final ReviewPostService reviewPostService;
 
     @GetMapping("/home")
     public String enterHome() {
@@ -86,9 +88,9 @@ public class BasicController {
                 "한국시설안전연구원","한국.jpg","둘이먹다 하나죽어도 모르는 아메리카노 카페",Category.CAFFE.getDescription()
         ,"울산광역시 동구 전하로 64"));
 
-        companyService.save(new Company("starbucks","starbucks112",1838100871L,
-                "별다방","이미지3.jpg","스타벅스를 혐오하는 자만 먹을 수 있는 김치찌개 까페",Category.CAFFE.getDescription()
-        ,"전라남도 무안군 해저면 만송로 480"));
+            companyService.save(new Company("starbucks","starbucks112",6627019215L,
+                    "별다방","이미지3.jpg","스타벅스를 혐오하는 자만 먹을 수 있는 김치찌개 까페",Category.CAFFE.getDescription()
+            ,"전라남도 무안군 해제면 만송로 480"));
 
         companyService.save(new Company("JeJu","202012",1838100871L,
                 "제주공항","이미지4.jpg","백화점이지만 파는건 많지 않아요 하지만 푸드코드 김치찌개가 맛있어요",Category.DEPARTMENT.getDescription()
@@ -137,45 +139,70 @@ public class BasicController {
                 "내 가족에게 대접하듯 정성들여 준비하겠습니다.",Category.RESTAURANT.getDescription()
                 ,"강원 강릉시 난설헌로 73"));
 
-        companyService.save(new Company("sungmo","eyes1359",1593574589L,
-                "울산성모안과의원","이미지11.jpg","라식, 노안 백내장하면 울산성모안과병원.",Category.HOSPITAL.getDescription()
-                ,"울산 남구 삼산로 201 성모빌딩 2층"));
+            companyService.save(new Company("hyundae","061235",1123212624L,
+                    "현대백화점","이미지5.jpg","지상 최대 크기 백화점",Category.DEPARTMENT.getDescription()
+                    ,"서울 구로구 디지털로34길 43"));
 
-        companyService.save(new Company("choryang","milmyeon53",2013654756L,
-                "해운대초량밀면","이미지12.jpg","해운대 밀면 맛집입니다. 만두도 맛있어요",Category.RESTAURANT.getDescription()
-                ,"부산 해운대구 구남로 20 1층"));
+            companyService.save(new Company("donsam","4662",1423523121L,
+                    "돈삼이네","이미지6.jpg","서울 최대 맛집 고기팝니다",Category.RESTAURANT.getDescription()
+                    ,"서울 구로구 디지털로32나길 51"));
 
-        companyService.save(new Company("assemble","coffe4783",4358792113L,
-                "어셈블커피로스터즈","이미지13.jpg","분위기 좋은 로스팅전문 루프탑 카페",Category.CAFFE.getDescription()
-                ,"경남 밀양시 삼랑진읍 삼랑진로 32"));
+            companyService.save(new Company("venti","95972",6514258852L,
+                    "더 벤티","이미지7.jpg","독보적 사이즈의 커피 팝니다",Category.CAFFE.getDescription()
+                    ,"구로구 구로동 1124-42"));
 
-        companyService.save(new Company("muscle","like357",9875613345L,
-                "머슬팩토리 율하점","이미지14.jpg","김해 최대규모 실평수 360평. 24시 연중무휴 헬스장. PT 전문 트레이너 10명 근무",Category.HEALTH.getDescription()
-                ,"경남 김해시 율하3로 38 경보오션빌딩 3층"));
+            companyService.save(new Company("appzla","33122a",759846591L,
+                    "애플스토어","이미지8.jpg","애플 기기 50% 세일",Category.DEPARTMENT.getDescription()
+                    ,"서울 구로구 디지털로32길 43"));
 
-        companyService.save(new Company("dcube","dc15647",3546987123L,
-                "디큐브 거제백화점","이미지15.jpg","고객의 행복과 감동을 최우선으로 하는 실내쇼핑센터 디큐브 거제백화점입니다.",Category.DEPARTMENT.getDescription()
-                ,"경남 거제시 장평로 12"));
+            companyService.save(new Company("todayzokbal","2818b",238478291L,
+                    "오늘의 족발","이미지9.jpg","회식자리로 베스트 족발 팝니다",Category.RESTAURANT.getDescription()
+                    ,"서울 구로구 디지털로 306"));
 
-        companyService.save(new Company("cinema45","yjoo10246",1657895213L,
-                "롯데시네마 영주","이미지16.jpg","롯데시네마 영주점은 고객에게 행복한 기억을 선사합니다.",Category.THEATER.getDescription()
-                ,"경북 영주시 구성로 417"));
+            companyService.save(new Company("healthcare","3919c",664887237L,
+                    "헬스케어","이미지10.jpg","헬스기기들 다 최신 꺼에용",Category.HEALTH.getDescription()
+                    ,"서울 구로구 디지털로 288 대륭포스트타워 1차"));
 
-        companyService.save(new Company("jjimdark","ssg5478",8951234567L,
-                "안동신세계찜닭","이미지17.jpg","안동찜닭거리의 최고의 맛집. 양도 맛도 최고",Category.RESTAURANT.getDescription()
-                ,"경북 안동시 번영길 10"));
+            companyService.save(new Company("sungmo","eyes1359",1593574589L,
+                    "울산성모안과의원","이미지11.jpg","라식, 노안 백내장하면 울산성모안과병원.",Category.HOSPITAL.getDescription()
+                    ,"울산 남구 삼산로 201 성모빌딩 2층"));
 
-        companyService.save(new Company("aden","desertgood",1468795126L,
-                "아덴","이미지18.jpg","경주보문단지의 뷰 & 베이커리 & 커피 맛집. 데이트 코스로 제격인 대형 한옥 카페",Category.CAFFE.getDescription()
-                ,"경북 경주시 보문로 424-34 "));
+            companyService.save(new Company("choryang","milmyeon53",2013654756L,
+                    "해운대초량밀면","이미지12.jpg","해운대 밀면 맛집입니다. 만두도 맛있어요",Category.RESTAURANT.getDescription()
+                    ,"부산 해운대구 구남로 20 1층"));
 
-        companyService.save(new Company("health26","gym5863",6123495491L,
-                "BL짐","이미지19.jpg","가격은 저렴하지만 시설은 외국고급헬스장급 운동맛집",Category.HEALTH.getDescription()
-                ,"경북 포항시 남구 대이로 109 4층"));
+            companyService.save(new Company("assemble","coffe4783",4358792113L,
+                    "어셈블커피로스터즈","이미지13.jpg","분위기 좋은 로스팅전문 루프탑 카페",Category.CAFFE.getDescription()
+                    ,"경남 밀양시 삼랑진읍 삼랑진로 32"));
 
-        companyService.save(new Company("debec","db4350",7561548952L,
-                "대구백화점 대백프라자점","이미지20.jpg","꿈과 미래가 있는 대구백화점. 고객과 기업가치의 극대화를 추구합니다.",Category.DEPARTMENT.getDescription()
-                ,"대구 중구 명덕로 333"));
+            companyService.save(new Company("muscle","like357",9875613345L,
+                    "머슬팩토리 율하점","이미지14.jpg","김해 최대규모 실평수 360평. 24시 연중무휴 헬스장. PT 전문 트레이너 10명 근무",Category.HEALTH.getDescription()
+                    ,"경남 김해시 율하3로 38 경보오션빌딩 3층"));
 
+            companyService.save(new Company("dcube","dc15647",3546987123L,
+                    "디큐브 거제백화점","이미지15.jpg","고객의 행복과 감동을 최우선으로 하는 실내쇼핑센터 디큐브 거제백화점입니다.",Category.DEPARTMENT.getDescription()
+                    ,"경남 거제시 장평로 12"));
+
+            companyService.save(new Company("cinema45","yjoo10246",1657895213L,
+                    "롯데시네마 영주","이미지16.jpg","롯데시네마 영주점은 고객에게 행복한 기억을 선사합니다.",Category.THEATER.getDescription()
+                    ,"경북 영주시 구성로 417"));
+
+            companyService.save(new Company("jjimdark","ssg5478",8951234567L,
+                    "안동신세계찜닭","이미지17.jpg","안동찜닭거리의 최고의 맛집. 양도 맛도 최고",Category.RESTAURANT.getDescription()
+                    ,"경북 안동시 번영길 10"));
+
+            companyService.save(new Company("aden","desertgood",1468795126L,
+                    "아덴","이미지18.jpg","경주보문단지의 뷰 & 베이커리 & 커피 맛집. 데이트 코스로 제격인 대형 한옥 카페",Category.CAFFE.getDescription()
+                    ,"경북 경주시 보문로 424-34 "));
+
+            companyService.save(new Company("health26","gym5863",6123495491L,
+                    "BL짐","이미지19.jpg","가격은 저렴하지만 시설은 외국고급헬스장급 운동맛집",Category.HEALTH.getDescription()
+                    ,"경북 포항시 남구 대이로 109 4층"));
+
+            Company company = companyService.save(new Company("debec","db4350",7561548952L,
+                    "대구백화점 대백프라자점","이미지20.jpg","꿈과 미래가 있는 대구백화점. 고객과 기업가치의 극대화를 추구합니다.",Category.DEPARTMENT.getDescription()
+                    ,"대구 중구 명덕로 333"));
+
+            reviewPostService.save(new ReviewPost(company,"너무 맛있어요","진짜 맛없어요","028090b3-01ac-4cc7-bb8e-30213a32030a.png","17740454-05f0-406b-9fae-a35cf6ef6bac.png",LocalDate.now()));
     }
 }

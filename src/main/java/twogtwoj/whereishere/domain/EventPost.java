@@ -25,4 +25,5 @@ public class EventPost { // 이벤트 게시판
     private String eventPostImg;
 
     private LocalDate eventPostWriteDate;
+
 }

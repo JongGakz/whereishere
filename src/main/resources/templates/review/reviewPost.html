@@ -5,6 +5,22 @@
     <title>후기 게시판 - 게시글 작성</title>
 </head>
 <body>
-
+<form th:action method="post" enctype="multipart/form-data">
+    <ul>
+        <li>업체명 <input type="text" name="companyName" th:id="companyName"></li>
+        <li>리뷰 제목<input type="text" name="reviewPostTitle"></li>
+        <li>리뷰 내용 <input type="text" name="reviewPostContent"></li>
+        <li>이미지 1<input type="file" name="reviewPostImg1"></li>
+        <li>이미지 2<input type="file" name="reviewPostImg2"></li>
+    </ul>
+    <input type="submit" id="submit">
+</form>
 </body>
+
+<script th:inline="javascript">
+
+    let companyList = [[${companyList}]];
+
+
+</script>
 </html>

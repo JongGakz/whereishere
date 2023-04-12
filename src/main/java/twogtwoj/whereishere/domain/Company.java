@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
+import java.util.Map;
 
 @Data
 @Entity
@@ -16,6 +17,7 @@ public class Company {
     private Long companyId;
 
 //    @Range(min = 5, max = 15)
+   // @Column(unique = true) // 중복 불가
     private String companyLoginId;
 
 //    @Range(min = 8, max = 20)

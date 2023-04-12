@@ -24,7 +24,7 @@ public class ReviewPostService {
         return reviewPostRepository.save(reviewPost);
     }
 
-    public Optional<ReviewPost> findByReviewId(Long reviewPostId) {
+    public ReviewPost findByReviewId(Long reviewPostId) {
         return reviewPostRepository.findByReviewPostId(reviewPostId);
     }
 

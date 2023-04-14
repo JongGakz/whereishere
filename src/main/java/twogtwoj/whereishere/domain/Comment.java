@@ -1,12 +1,15 @@
 package twogtwoj.whereishere.domain;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
+@NoArgsConstructor
 public class Comment { // 업체 한줄평
 
     @Id
@@ -24,5 +27,12 @@ public class Comment { // 업체 한줄평
 
     private String commentContent;
 
-    private LocalDate commentWriteDate;
+    private LocalDateTime commentWriteDate;
+
+    public Comment(Member member, Company company, String commentContent, LocalDateTime commentWriteDate) {
+        this.member = member;
+        this.company = company;
+        this.commentContent = commentContent;
+        this.commentWriteDate = commentWriteDate;
+    }
 }

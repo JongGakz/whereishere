@@ -26,4 +26,8 @@ public class CompanyService {
     public Company findCompanyByCompanyName(String companyName) {
         return companyRepository.findCompanyByCompanyName(companyName);
     }
+
+    public Company findCompanyByCompanyId(Long companyId) {
+        return companyRepository.findCompanyByCompanyId(companyId);
+    }
 }

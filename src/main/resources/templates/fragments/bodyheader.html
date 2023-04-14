@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<header th:fragment="bodyheader" class="header">
+    <a href="/home"><img src="/image/LOGO.png" class="logo"></a>
+
+    <div class="logininfo">
+        <label for="loginbutton"><h3>누구누구님 반갑습니다</h3></label>
+        <button class="button" id="loginbutton">로그아웃</button>
+    </div>
+
+    <div class="topmenu">
+
+        <a href="/eventpost" class="topmenusource">메인 메뉴</a>
+        <span>|</span>
+        <a href="/eventpost" class="topmenusource">리뷰 게시판</a>
+        <span>|</span>
+        <a href="/eventpost" class="topmenusource">이벤트 게시판</a>
+    </div>
+</header>

@@ -1,0 +1,46 @@
+.container {  display: grid;
+    grid-template-columns: 15% 30% 40% 15%;
+    grid-template-rows: 15px 10% 3% 35% 15% 15% 1fr 1fr;
+    grid-auto-columns: 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+    ". . . ."
+    ". companyname companyname ."
+    ". . . ."
+    ". image companyinfo ."
+    ". . companyinfo ."
+    ". gocompanyreview gocompanyeventpost ."
+    ". companycomment companycomment ."
+    ". companycommentlist companycommentlist .";
+}
+
+.companyname { grid-area: companyname; }
+
+.image { grid-area: image; }
+
+.companyinfo {  display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.3fr 0.4fr 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+    "companyadress"
+    "companystars"
+    "companyintroduction";
+    grid-area: companyinfo;
+}
+
+.companyadress { grid-area: companyadress; }
+
+.companystars { grid-area: companystars; }
+
+.companyintroduction { grid-area: companyintroduction; }
+
+.gocompanyreview { grid-area: gocompanyreview; }
+
+.gocompanyeventpost { grid-area: gocompanyeventpost; }
+
+.companycomment { grid-area: companycomment; }
+
+.companycommentlist { grid-area: companycommentlist; }

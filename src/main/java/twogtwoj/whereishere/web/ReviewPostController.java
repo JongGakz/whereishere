@@ -64,14 +64,15 @@ public class ReviewPostController {
         String reviewPostImg2Name = UUID.randomUUID() + ".png";
         reviewPostImg1.transferTo(new File(fileStore.getFullPath(reviewPostImg1Name)));
         reviewPostImg2.transferTo(new File(fileStore.getFullPath(reviewPostImg2Name)));
-        reviewPostService.save(new ReviewPost(findCompany, reviewPostTitle, reviewPostContent,reviewPostImg1Name ,reviewPostImg2Name , LocalDate.now()));
+        reviewPostService.save(new ReviewPost(findCompany, reviewPostTitle,reviewPostContent, reviewPostImg1Name ,
+                reviewPostImg2Name , LocalDate.now()));
 
         return "/review/reviews";
     }
 
 
     // 리뷰 ID를 받아서 해당 게시글을 보여주는 메서드
-    @GetMapping("/reviews/{reviewPostId}")
+    @PostMapping("/reviews/{reviewPostId}")
     public String showReviewPost(@PathVariable Long reviewPostId ,Model model) {
         ReviewPost reviewPost = reviewPostService.findByReviewId(reviewPostId);
         model.addAttribute("reviewPost", reviewPost);
@@ -80,10 +81,4 @@ public class ReviewPostController {
     }
 
 
-    // 게시글 보기에서 게시글에 저장된 이미지 가져오는 메서드
-    @ResponseBody
-    @GetMapping("/image/{filename}")
-    public Resource downloadImage(@PathVariable String filename) throws MalformedURLException {
-        return new UrlResource("file:" + fileStore.getFullPath(filename));
-    }
 }

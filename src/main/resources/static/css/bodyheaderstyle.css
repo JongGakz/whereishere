@@ -1,0 +1,62 @@
+body {
+    margin:0;
+    font-family: 'Nanum Gothic Coding', monospace;
+    font-weight:bold;
+    font-size: 22px;
+}
+
+.header {
+    height:40px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: rgb(76,188,127);
+    border-bottom-style: solid;
+    border-bottom-color: rgb(255, 255, 255);
+}
+
+.topmenu {
+    margin-right:20px;
+    width:550px;
+    display:flex;
+    justify-content: space-between;
+}
+
+.logininfo {
+    margin-left:15%;
+    display:inline-flex;
+    width:60%;
+    justify-content: center;
+    align-items: center;
+}
+
+.button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    height:30px;
+    font-family: 'Gamja Flower', cursive;
+    border: none;
+    border-radius: 4px;
+    font-weight:bold;
+    font-size: 17px;
+}
+
+.topmenusource {
+    font-size:20px;
+    text-decoration-line: none;
+    color:white;
+}
+.topmenusource:hover {
+    color:red;
+}
+
+.logo{
+    margin-top:6px;
+    margin-left:30px;
+    width: 150px; 
+    height: fit-content;
+}

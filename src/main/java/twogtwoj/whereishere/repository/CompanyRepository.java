@@ -29,4 +29,7 @@ public class CompanyRepository {
     public Company findCompanyByCompanyName(String companyName) {
         return (Company)(findAll().stream().filter(n -> n.getCompanyName().equals(companyName)).toArray()[0]);
     }
+    public Company findCompanyByCompanyId(Long companyId) {
+        return em.find(Company.class,companyId);
+    }
 }

@@ -1,19 +1,31 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8"/>
-    <title>여긴 어때</title>
-</head>
-<body>
-<img src="/image/LOGO.png" style="width: 150px; height: fit-content;">
-    <form action method="post">
-        <label for="search">검색 : </label>
-        <input type="text" name="search" id="search" placeholder="찾고자 하는 매장을 검색하세요" style="width:30%">
-        <button type="submit" class="btn btn-primary" style="padding: 5px; border-style: dashed">검색!</button>
-    </form>
-    <br>
-<div id="map" style="width:500px;height:400px;"></div>
+<head th:replace="fragments/header :: header"/>
 
+
+<body>
+
+<div th:replace="fragments/bodyheader :: bodyheader"/>
+
+
+<div class="mainpage">
+    <form action method="post" class="searchform">
+        <label for="search">검색 : </label>
+        <input type="text" name="search" id="search" class="searchinput" placeholder="찾고자 하는 매장을 검색하세요">
+        <button type="submit" class="button">검색!</button>
+    </form>
+
+    <div id="map" class="map"></div>
+    <div>
+        <h1 th:if="${companyList.size() !=0}" th:text="${companyList.size()}"
+            style="color:red; display:inline-block"></h1>
+        <h1 th:if="${companyList.size() !=0}" style="display:inline-block">&nbsp;건 검색되었습니다.</h1>
+    </div>
+
+</div>
+
+
+</body>
 
 <script type="text/javascript"
         src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2c6b0a66decef0d8afcc9821dd4f4446&libraries=services">
@@ -23,7 +35,7 @@
 <script th:inline="javascript">
 
     // 타임리프로 companyList 받아오기
-        let companyList = [[${companyList}]];
+    let companyList = [[${companyList}]];
 
     // test
     let main = document.querySelector("body");
@@ -33,57 +45,91 @@
     // HTML5의 geolocation 으로 사용할 수 있는지 확인합니다
     // GeoLocation 을 이용해서 접속 위치를 얻어옵니다
 
-        navigator.geolocation.getCurrentPosition(function (position) {
-            let lat = position.coords.latitude;     // 위도
-            let lon = position.coords.longitude;    // 경도
-            let point = [];
-            point[0] = lat;
-            point[1] = lon;
+    navigator.geolocation.getCurrentPosition(function (position) {
+        let lat = position.coords.latitude;     // 위도
+        let lon = position.coords.longitude;    // 경도
+        let point = [];
+        point[0] = lat;
+        point[1] = lon;
 
 
-            var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-                mapOption = {
-                    center: new kakao.maps.LatLng(lat, lon), // 지도의 중심좌표
-                    level: 20 // 지도의 확대 레벨
-                };
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+            mapOption = {
+                center: new kakao.maps.LatLng(lat, lon), // 지도의 중심좌표
+                level: 3 // 지도의 확대 레벨
+            };
 
-            // 지도를 생성합니다
-            let map = new kakao.maps.Map(mapContainer, mapOption);
+        // 지도를 생성합니다
+        let map = new kakao.maps.Map(mapContainer, mapOption);
 
-            // 주소-좌표 변환 객체를 생성합니다
-            var geocoder = new kakao.maps.services.Geocoder();
-
-            for (let i = 0; i < companyList.length; i++) {
+        bounds = new kakao.maps.LatLngBounds();
 
 
-                // 주소로 좌표를 검색합니다
-                geocoder.addressSearch(companyList[i].companyAddress, function (result, status) {
+        // 주소-좌표 변환 객체를 생성합니다
+        var geocoder = new kakao.maps.services.Geocoder();
 
-                    // 정상적으로 검색이 완료됐으면
-                    if (status === kakao.maps.services.Status.OK) {
+        for (let i = 0; i < companyList.length; i++) {
 
-                        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 
-                        // 결과값으로 받은 위치를 마커로 표시합니다
-                        var marker = new kakao.maps.Marker({
-                            map: map,
-                            position: coords
-                        });
+            // 주소로 좌표를 검색합니다
+            geocoder.addressSearch(companyList[i].companyAddress, function (result, status) {
 
-                        // 인포윈도우로 장소에 대한 설명을 표시합니다
-                        var infowindow = new kakao.maps.InfoWindow({
-                            content: `<div style="width:150px;text-align:center;padding:6px 0;">${companyList[i].companyName}</div>`
-                        });
+                // 정상적으로 검색이 완료됐으면
+                if (status === kakao.maps.services.Status.OK) {
+
+                    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+                    // 좌표를 bounds에 저장 (맵의 범위 재설정)
+                    bounds.extend(coords);
+
+                    // 결과값으로 받은 위치를 마커로 표시합니다
+                    var marker = new kakao.maps.Marker({
+                        map: map,
+                        position: coords
+                    });
+
+
+                    // 인포윈도우로 장소에 대한 설명을 표시합니다
+                    var infowindow = new kakao.maps.InfoWindow({
+                        content:
+                        // 클릭시 나오는 말풍선
+                            `
+                                <div class="infocontainer">
+                                    <img class="image" src="/image/${companyList[i].companyImg}"/>
+
+                                    <div class="info1">업체명 </div>
+                                    <div class="companyname">${companyList[i].companyName}</div>
+                                    <div class="info2">업체소개 </div>
+                                    <div class="companyintroduction"> ${companyList[i].companyIntroduction}</div>
+                                    <a href="/home/${companyList[i].companyId}" class="companyherf" >링크 바로가기 ▶</a>
+                                </div>
+                                `
+                    });
+
+
+                    // 마커 마우스 오버 시, 매장 정보 노출해 주는 기능
+                    kakao.maps.event.addListener(marker, 'click', function () {
+                        // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
                         infowindow.open(map, marker);
+                    });
 
-                        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-                        map.setCenter(new kakao.maps.LatLng(lat, lon));
-                    }
-                });
-            }
+                    // // 마커에 마우스아웃 이벤트를 등록합니다
+                    // kakao.maps.event.addListener(marker, 'mouseout', function() {
+                    //     // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
+                    //     infowindow.close();
+                    // });
+                    //
+                    // // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다 (현재 사용안함)
+                    // // map.setCenter(new kakao.maps.LatLng(lat, lon));
 
-        });
+
+                    // 검색 된 결과의 마커를 전부 표시해줄 수 있게 지도의 범위 및 위치 조절
+                    map.setBounds(bounds);
+                }
+            });
+        }
+
+    });
 
 </script>
-</body>
 </html>

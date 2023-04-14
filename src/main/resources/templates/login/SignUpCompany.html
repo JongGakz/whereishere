@@ -8,58 +8,56 @@
 </head>
 <body>
 <div class="main">
-    <div class="box_logo">
-        <img src="../css/logo.png">
-    </div>
-
-    <form>
-        <div class="row mb-3">
-            <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
-            <div class="col-sm-10">
-                <input type="email" class="form-control" id="inputEmail3">
-            </div>
+        <div class="box_logo">
+            <img src="../image/LOGO.png">
         </div>
-        <div class="row mb-3">
-            <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
-            <div class="col-sm-10">
-                <input type="password" class="form-control" id="inputPassword3">
+        <form role="form" th:action method="post" enctype="multipart/form-data">
+            <div class="inputCompanyLoginId">
+                <label for="companyLoginId" class="form-label">아이디</label>
+                <input type="text" class="form-control" id="companyLoginId" name="companyLoginId" placeholder="아이디를 입력하세요">
             </div>
-        </div>
-        <fieldset class="row mb-3">
-            <legend class="col-form-label col-sm-2 pt-0">Radios</legend>
-            <div class="col-sm-10">
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
-                    <label class="form-check-label" for="gridRadios1">
-                        First radio
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
-                    <label class="form-check-label" for="gridRadios2">
-                        Second radio
-                    </label>
-                </div>
-                <div class="form-check disabled">
-                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="option3" disabled>
-                    <label class="form-check-label" for="gridRadios3">
-                        Third disabled radio
-                    </label>
-                </div>
+            <div class="inputCompanyLoginPw">
+                <label for="companyLoginPw" class="form-label">비밀번호</label>
+                <input type="password" class="form-control" id="companyLoginPw" name="companyLoginPw"  placeholder="비밀번호를 입력하세요">
             </div>
-        </fieldset>
-        <div class="row mb-3">
-            <div class="col-sm-10 offset-sm-2">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="gridCheck1">
-                    <label class="form-check-label" for="gridCheck1">
-                        Example checkbox
-                    </label>
-                </div>
+            <div class="inputCompanyBusinessId">
+                <label for="companyBusinessId" class="form-label">사업자번호</label>
+                <input type="text" class="form-control" pattern="\d*" maxlength="10" id="companyBusinessId" name="companyBusinessId" placeholder="예시)1234567890">
             </div>
-        </div>
-        <button type="submit" class="btn btn-primary">Sign in</button>
-    </form>
+            <div class="inputCompanyName">
+                <label for="companyName" class="form-label">업체명</label>
+                <input type="text" class="form-control" id="companyName" name="companyName" placeholder="업체명을 입력하세요">
+            </div>
+<!--            <div class="inputCompanyCategory">-->
+<!--                <label for="companyCategory" class="form-label">업종</label>-->
+<!--                <input type="text" class="form-control" id="companyCategory" name="companyCategory" placeholder="업종을 선택하세요">-->
+<!--            </div>-->
+            <label for="companyCategory">업종</label>
+                <select name="companyCategory" id="companyCategory">
+                    <option value="헬스장">헬스장</option>
+                    <option value="음식점">음식점</option>
+                    <option value="병원">병원</option>
+                    <option value="영화관">영화관</option>
+                    <option value="백화점">백화점</option>
+                    <option value="카페">카페</option>
+            </select>
+            <div class="inputCompanyAddress">
+                <label for="companyAddress" class="form-label">주소</label>
+                <input type="text" class="form-control" id="companyAddress" name="companyAddress" placeholder="주소를 입력하세요">
+            </div>
+            <div class="companyImg">
+                <label for="companyImg" class="form-label">대표 이미지(1장)</label>
+                <input type="file" id="companyImg" name="companyImg">
+            </div>
+            <div class="inputCompanyIntroduction">
+                <label for="companyIntroduction" class="form-label">소개말</label>
+                <input type="text" class="form-control" id="companyIntroduction" name="companyIntroduction" placeholder="소개말을 입력하세요">
+            </div>
+            <div class="col-12">
+                <button class="signUpBtn" type="submit">회원 가입</button>
+            </div>
+        </form>
+        <button class="btn_common lrg" onclick="location.href='/'" type="button">취소</button>
 </div>
 </body>
 </html>

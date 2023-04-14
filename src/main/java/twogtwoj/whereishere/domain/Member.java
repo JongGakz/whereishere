@@ -1,29 +1,26 @@
 package twogtwoj.whereishere.domain;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.Range;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Data
 @Entity
+@NoArgsConstructor
 public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long memberId;
 
-
+    //@Column(unique = true) // 중복 불가
     private String memberLoginId;
 
-
     private String memberLoginPw;
-
 
     private String memberName;
 
@@ -36,5 +33,5 @@ public class Member {
         this.memberName = memberName;
         this.memberBirthday = memberBirthday;
     }
-    public Member(){}
+
 }

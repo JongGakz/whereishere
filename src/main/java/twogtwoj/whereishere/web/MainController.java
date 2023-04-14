@@ -3,6 +3,7 @@ package twogtwoj.whereishere.web;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +13,7 @@ import twogtwoj.whereishere.service.CompanyService;
 import twogtwoj.whereishere.service.MemberService;
 
 import java.util.List;
-import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping
@@ -27,11 +28,13 @@ public class MainController {
     public String enterHome() {return "/home/home";}
 
     @PostMapping("/home")
-    public String searchPlace(@RequestParam String search) {
+    public String searchPlace(@RequestParam String search, Model model) {
         System.out.println(search);
-        List<Company> companies = companyService.findCompanies();
+        List<Company> companies = companyService.findAll();
 
-        System.out.println(companies.stream().filter(n -> n.getCompanyIntroduction().contains(search)).count());
+        List<Company> companyList = companies.stream().filter(n -> n.getCompanyIntroduction().contains(search)).collect(Collectors.toUnmodifiableList());
+
+        model.addAttribute("companyList",companyList);
 
         return "/home/home";
     }

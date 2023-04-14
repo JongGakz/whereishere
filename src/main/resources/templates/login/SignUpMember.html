@@ -9,52 +9,31 @@
 <body>
 <div class="main">
     <div class="box_logo">
-        <img src="../css/logo.png">
+        <img src="../image/LOGO.png">
     </div>
-    <form class="row g-3">
-        <div class="col-md-6">
-            <label for="inputEmail4" class="form-label">Email</label>
-            <input type="email" class="form-control" id="inputEmail4">
+    <form role="form" th:action method="post">
+        <div class="inputMemberLoginId">
+            <label for="memberLoginId" class="form-label">아이디</label>
+            <input type="text" class="form-control" id="memberLoginId" name="memberLoginId" placeholder="아이디를 입력하세요">
         </div>
-        <div class="col-md-6">
-            <label for="inputPassword4" class="form-label">Password</label>
-            <input type="password" class="form-control" id="inputPassword4">
+        <div class="inputMemberLoginPw">
+            <label for="memberLoginPw" class="form-label">비밀번호</label>
+            <input type="password" class="form-control" id="memberLoginPw" name="memberLoginPw"  placeholder="비밀번호를 입력하세요">
         </div>
-        <div class="col-12">
-            <label for="inputAddress" class="form-label">Address</label>
-            <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+        <div class="inputMemberPw">
+            <label for="memberName" class="form-label">이름</label>
+            <input type="text" class="form-control" id="memberName" name="memberName" placeholder="이름을 입력하세요">
         </div>
-        <div class="col-12">
-            <label for="inputAddress2" class="form-label">Address 2</label>
-            <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-        </div>
-        <div class="col-md-6">
-            <label for="inputCity" class="form-label">City</label>
-            <input type="text" class="form-control" id="inputCity">
-        </div>
-        <div class="col-md-4">
-            <label for="inputState" class="form-label">State</label>
-            <select id="inputState" class="form-select">
-                <option selected>Choose...</option>
-                <option>...</option>
-            </select>
-        </div>
-        <div class="col-md-2">
-            <label for="inputZip" class="form-label">Zip</label>
-            <input type="text" class="form-control" id="inputZip">
+        <div class="inputMemberPw">
+            <label for="memberBirthday" class="form-label">생년월일</label>
+            <input type="text" class="form-control" pattern="\d*" maxlength="8" id="memberBirthday"  name="memberBirthday" placeholder="예시)19900101">
         </div>
         <div class="col-12">
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="gridCheck">
-                <label class="form-check-label" for="gridCheck">
-                    Check me out
-                </label>
-            </div>
-        </div>
-        <div class="col-12">
-            <button type="submit" class="btn btn-primary">Sign in</button>
+            <button class="signUpBtn" type="submit">회원 가입</button>
         </div>
     </form>
+    <button class="btn_common lrg" onclick="location.href='/'" type="button">취소</button>
+</div>
 </div>
 </body>
 </html>

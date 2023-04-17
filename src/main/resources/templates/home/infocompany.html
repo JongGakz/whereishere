@@ -4,66 +4,83 @@
 <body>
 <div th:replace="fragments/bodyheader :: bodyheader"/>
 
-<!--여기 수정해야함 -->
+
 <div class="container">
     <div class="companyname">
-        <span>업체명 :</span>
-        <span th:text="${company.companyName}"></span><br/>
+        <span th:text="${company.companyName}"></span>
     </div>
     <div class="image">
         <img th:src="|/image/${company.companyImg}|" width="100%" height="100%"/>
     </div>
     <div class="companyinfo">
         <div class="companyadress">
-            <h1>업체 주소 :</h1>
-            <span th:text="${company.companyAddress}"></span><br/>
+            <span class="list">업체 주소 </span>
+            <br><br>
+            <span th:text="${company.companyAddress}"></span>
         </div>
         <div class="companystars">
-            <h1>업체 별점 :</h1>
-            <span th:text="${starsPoint}"></span><br/>
-
-            <h1>별점 매기기 :</h1>
+            <span class="list">업체 별점 </span>
+            <br><br>
+            <span th:text="${starsPoint}"></span>
+            <div class="star-ratings">
+                <div
+                        class="star-ratings-fill space-x-2 text-lg"
+                        style="{ width: 50%; }"
+                >
+                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                </div>
+                <div class="star-ratings-base space-x-2 text-lg">
+                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                </div>
+            </div>
+            <br>
+            <br>
+            <span class="list">별점 매기기 </span>
+            <br><br>
             <form th:action="|/home/${companyId}/star|" method="post">
                 <input type="number" name="starPoint" max="5" min="1" step="1" placeholder="별점">
                 <span>/ 5 </span>
-                <input type="submit" value="점수 등록">
+                <input type="submit" class="button" value="점수 등록">
             </form>
         </div>
-        <div class="companyintroduction">
-            <h1>업체 소개 :</h1>
-            <span th:text="${company.companyIntroduction}"></span><br/>
+    </div>
+    <div class="companyintroduction">
+        <span class="list">업체 소개 </span><br><br>
+        <div class="companyintroductiontext">
+        <span th:text="${company.companyIntroduction}"></span>
         </div>
     </div>
     <div class="gocompanyreview">
-        <a herf="/hone">업체 리뷰 보러가기</a>
+        <button class="button"  th:onclick="|location.href='@{/home}'|">업체 리뷰 보러가기</button>
     </div>
     <div class="gocompanyeventpost">
-        <a herf="/hone">업체 이벤트 보러가기</a>
+        <button class="button"  th:onclick="|location.href='@{/home}'|">업체 이벤트 보러가기</button>
     </div>
-
     <div class="companycomment">
         <form th:action="|/home/${companyId}/comment|" method="post">
-            <input type="text" name="commentContent" id="commentContent" placeholder="한줄 평을 남겨주세요!" style="width:500px; height:100px;">
-            <input type="submit" value="등록">
+            <input type="text" name="commentContent" id="commentContent" placeholder="한줄 평을 남겨주세요!" style="width:90%; height:60px">
+            <input type="submit" class="button" value="등록">
         </form>
     </div>
-    <div class="companycommentlist">
 
-        <h2>업체 한줄평</h2>
+    <div class="companycommentlist">
+        <span class="list">업체 한줄평</span>
+        <br>
+        <br>
         <ul>
-            <li>번호</li>
-            <li>작성자</li>
-            <li>작성 내용</li>
-            <li>날짜 </li>
+            <li class="companycommentnum">번호</li>
+            <li class="companycommentwriter">작성자</li>
+            <li class="companycommentcontent">작성 내용</li>
+            <li class="companycommenttime">작성 시간</li>
         </ul>
-        <ui th:if="${commentList.size() != 0}" th:each="comment,commentStat : ${commentList}">
-            <br>
-            <li th:text="${commentStat.count}">순번</li>
-            <li th:text="${comment.getMember().getMemberName()}">작성자</li>
-            <li th:text="${comment.getCommentContent()}">작성 내용</li>
-            <li th:text="${comment.getCommentWriteDate().getYear()} +  '년 '  + ${comment.getCommentWriteDate().getMonthValue()} +  '월 '
+        <br>
+        <ul th:if="${commentList.size() != 0}" th:each="comment,commentStat : ${commentList}">
+            <li class="companycommentnum" th:text="${commentStat.count}">순번</li>
+            <li class="companycommentwriter" th:text="${comment.getMember().getMemberName()}">작성자</li>
+            <li class="companycommentcontent" th:text="${comment.getCommentContent()}">작성 내용</li>
+            <li class="companycommenttime" th:text="${comment.getCommentWriteDate().getYear()} +  '년 '  + ${comment.getCommentWriteDate().getMonthValue()} +  '월 '
     + ${comment.getCommentWriteDate().getDayOfMonth()} +  '일 '  + ${comment.getCommentWriteDate().getHour()} +  '시 '  + ${comment.getCommentWriteDate().getMinute()} +  '분'" >날짜</li>
-        </ui>
+        </ul>
     </div>
 </div>
 </body>

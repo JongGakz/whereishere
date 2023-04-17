@@ -30,11 +30,11 @@
     align-self: center;
     grid-area: info1;
     font-size: 10px;
-    color: darkkhaki;
+    color: blue;
 
 }
 
-.companyname {
+.mapcompanyname {
     grid-area: companyname;
     font-size: 12px;
 
@@ -48,13 +48,13 @@
 
 }
 
-.companyintroduction {
+.mapcompanyintroduction {
     grid-area: companyintroduction;
     font-size: 11px;
 
 }
 
-.companyherf {
+.mapcompanyherf {
     justify-self: right;
     padding-top: 3px;
     grid-area: companyherf;
@@ -66,7 +66,7 @@
     color: red;
 }
 
-.image {
+.mapimage {
     grid-area: image;
     margin-left: 5px;
     margin-top: 9px;

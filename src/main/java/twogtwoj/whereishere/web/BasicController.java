@@ -210,7 +210,7 @@ public class BasicController {
         companyService.save(new Company("koreanfood12", "ko19209", 1920994838L,
                 "강릉한정식 하서주미역", "이미지39.png", "기쁜날, 좋은날 함께하고 싶은 사람과 먹기 좋은 음식.\n" +
                 "내 가족에게 대접하듯 정성들여 준비하겠습니다.", Category.RESTAURANT.getDescription()
-                , "강원 강릉시 난설헌로 73"));
+                , "강원 강릉시 난설헌로 7333333333333333333333333333333333333333333333333333333333333333"));
 
         reviewPostService.save(new ReviewPost(company, "너무 맛있어요", "진짜 맛없어요", "028090b3-01ac-4cc7-bb8e-30213a32030a.png", "17740454-05f0-406b-9fae-a35cf6ef6bac.png", LocalDate.now()));
 

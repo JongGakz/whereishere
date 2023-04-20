@@ -18,19 +18,16 @@
 
         <!--    로그인 form-->
         <div class="form">
-            <form action th:action method="post" th:object="${LoginForm}">
-
-                <label for="loginCategory">로그인(개인/기업) 선택</label>
-                <select name="loginCategory" id="loginCategory">
-                    <option value="Member">개인</option>
-                    <option value="Company">기업</option>
-                </select>
-
-                <input type="text" name="loginId" eautocomplete="off" th:field="*{loginId}" title="아이디" placeholder="아이디">
-
-                <input type="password" name="loginPw" title="비밀번호"th:field="*{loginPw}" placeholder="비밀번호">
-
-                <button class="btn_common lrg blu" type="submit">로그인</button>
+            <form action="" th:action method="post">
+                <input type="text" name="loginId" title="아이디" placeholder="아이디">
+                <input type="password" name="loginPw" title="비밀번호" placeholder="비밀번호">
+                <div>
+                    <label for="memberToggle">개인</label>
+                    <input type="radio" id="memberToggle" name="userType" value="member" checked>
+                    <label for="companyToggle">기업</label>
+                    <input type="radio" id="companyToggle" name="userType" value="company">
+                </div>
+                <button class="btn_common lrg blu"onclick="location.href='경로'" type="submit">로그인</button>
             </form>
         </div>
         <div class="links">

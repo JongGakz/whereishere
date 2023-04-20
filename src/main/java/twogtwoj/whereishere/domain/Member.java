@@ -2,8 +2,8 @@ package twogtwoj.whereishere.domain;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.hibernate.validator.constraints.Range;
+import twogtwoj.whereishere.web.Login.Role;
+
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -26,12 +26,17 @@ public class Member {
 
     private LocalDate memberBirthday;
 
+    @Enumerated(EnumType.STRING)
+    private Role memberRole;
 
-    public Member(String memberLoginId, String memberLoginPw, String memberName, LocalDate memberBirthday) {
+
+    public Member(String memberLoginId, String memberLoginPw, String memberName, LocalDate memberBirthday, Role memberRole) {
         this.memberLoginId = memberLoginId;
         this.memberLoginPw = memberLoginPw;
         this.memberName = memberName;
         this.memberBirthday = memberBirthday;
+        this.memberRole = memberRole;
     }
+
 
 }

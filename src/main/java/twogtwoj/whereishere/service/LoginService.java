@@ -21,7 +21,7 @@ public class LoginService {
 
     // 멤버 로그인 PW 찾기
     public Member loginMember(String loginId, String loginPw) {
-        return memberRepository.findByLonginId(loginId)
+        return memberRepository.findByLoginId(loginId)
                 .filter(m -> {
                     //m.getMemberLoginPw().equals(loginPw)
                     if ( new BCryptPasswordEncoder().matches(loginPw, m.getMemberLoginPw()) ) {

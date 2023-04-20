@@ -2,6 +2,7 @@ package twogtwoj.whereishere.domain;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import twogtwoj.whereishere.web.Login.Role;
 
 import javax.persistence.*;
 
@@ -35,8 +36,12 @@ public class Company {
 
     private String companyAddress;
 
+    @Enumerated(EnumType.STRING)
+    private Role companyRole;
 
-    public Company(String companyLoginId, String companyLoginPw, Long companyBusinessId, String companyName, String companyImg, String companyIntroduction, String companyCategory, String companyAddress) {
+
+
+    public Company(String companyLoginId, String companyLoginPw, Long companyBusinessId, String companyName, String companyImg, String companyIntroduction, String companyCategory, String companyAddress, Role companyRole) {
         this.companyLoginId = companyLoginId;
         this.companyLoginPw = companyLoginPw;
         this.companyBusinessId = companyBusinessId;
@@ -45,6 +50,7 @@ public class Company {
         this.companyIntroduction = companyIntroduction;
         this.companyCategory = companyCategory;
         this.companyAddress = companyAddress;
+        this.companyRole = companyRole;
     }
 
 }

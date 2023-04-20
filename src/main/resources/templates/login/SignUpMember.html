@@ -11,22 +11,22 @@
     <div class="box_logo">
         <img src="../image/LOGO.png">
     </div>
-    <form role="form" th:action method="post">
+    <form role="form" th:action th:object="${member}" method="post">
         <div class="inputMemberLoginId">
             <label for="memberLoginId" class="form-label">아이디</label>
-            <input type="text" class="form-control" id="memberLoginId" name="memberLoginId" placeholder="아이디를 입력하세요">
+            <input type="text" class="form-control"  th:field="*{memberLoginId}" id="memberLoginId" name="memberLoginId" placeholder="아이디를 입력하세요">
         </div>
         <div class="inputMemberLoginPw">
             <label for="memberLoginPw" class="form-label">비밀번호</label>
-            <input type="password" class="form-control" id="memberLoginPw" name="memberLoginPw"  placeholder="비밀번호를 입력하세요">
+            <input type="password" class="form-control" th:field="*{memberLoginPw}" id="memberLoginPw" name="memberLoginPw"  placeholder="비밀번호를 입력하세요">
         </div>
         <div class="inputMemberPw">
             <label for="memberName" class="form-label">이름</label>
-            <input type="text" class="form-control" id="memberName" name="memberName" placeholder="이름을 입력하세요">
+            <input type="text" class="form-control" th:field="*{memberName}" id="memberName" name="memberName" placeholder="이름을 입력하세요">
         </div>
         <div class="inputMemberPw">
             <label for="memberBirthday" class="form-label">생년월일</label>
-            <input type="text" class="form-control" pattern="\d*" maxlength="8" id="memberBirthday"  name="memberBirthday" placeholder="예시)19900101">
+            <input type="text" class="form-control" th:field="*{memberBirthday}" pattern="\d*" maxlength="8" id="memberBirthday"  name="memberBirthday" placeholder="예시)19900101">
         </div>
         <div class="col-12">
             <button class="signUpBtn" type="submit">회원 가입</button>

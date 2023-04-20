@@ -43,7 +43,7 @@ public class MemberRepository {
 
     // Optional : jpa null 인셉션 막기용
     // 멤버 테이블에 있는 로그인id 찾기 // 값이 있을 경우에만 true
-    public Optional<Member> findByLonginId(String loginId){ // 클라에게 받은 로그인 id(html에서 전달 받은)
+    public Optional<Member> findByLoginId(String loginId){ // 클라에게 받은 로그인 id(html에서 전달 받은)
         return findAll().stream()
                 .filter(member -> member.getMemberLoginId()
                         .equals(loginId)).findFirst();

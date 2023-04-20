@@ -21,15 +21,15 @@ body {
 
 .topmenu {
     margin-right:20px;
-    width:550px;
+    width:100%;
     display:flex;
     justify-content: space-between;
 }
 
 .logininfo {
-    margin-left:15%;
+    margin-left:22%;
     display:inline-flex;
-    width:60%;
+    width:100%;
     justify-content: center;
     align-items: center;
 }

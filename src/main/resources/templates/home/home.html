@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragments/header :: header"/>
 
 
@@ -9,7 +10,7 @@
 
 
 <div class="mainpage">
-    <form action method="post" class="searchform">
+    <form th:action method="post" class="searchform">
         <label for="search">검색 : </label>
         <input type="text" name="search" id="search" class="searchinput" placeholder="찾고자 하는 매장을 검색하세요">
         <button type="submit" class="button">검색!</button>
@@ -21,12 +22,13 @@
             style="color:red; display:inline-block"></h1>
         <h1 th:if="${companyList.size() !=0}" style="display:inline-block">&nbsp;건 검색되었습니다.</h1>
     </div>
-
+    <div>
+        <h1 th:if="${companyList.size() == 0}" style="display:inline-block">검색된 결과가 없습니다.</h1>
+    </div>
 </div>
 
 
 </body>
-
 <script type="text/javascript"
         src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2c6b0a66decef0d8afcc9821dd4f4446&libraries=services">
     // 카카오 api 키
@@ -37,13 +39,11 @@
     // 타임리프로 companyList 받아오기
     let companyList = [[${companyList}]];
 
-    // test
-    let main = document.querySelector("body");
-
-
     // 카카오 네비 api
     // HTML5의 geolocation 으로 사용할 수 있는지 확인합니다
     // GeoLocation 을 이용해서 접속 위치를 얻어옵니다
+
+
 
     navigator.geolocation.getCurrentPosition(function (position) {
         let lat = position.coords.latitude;     // 위도
@@ -68,6 +68,8 @@
         // 주소-좌표 변환 객체를 생성합니다
         var geocoder = new kakao.maps.services.Geocoder();
 
+
+
         for (let i = 0; i < companyList.length; i++) {
 
 
@@ -90,21 +92,21 @@
 
 
                     // 인포윈도우로 장소에 대한 설명을 표시합니다
-                    var infowindow = new kakao.maps.InfoWindow({
+                    let infowindow = new kakao.maps.InfoWindow({
                         content:
-                        // 클릭시 나오는 말풍선
+                        // 클릭시 나오는 말풍선 - 창을 클릭하면 사라질 수 있게 infowindow.close() 추가
                             `
                                 <div class="infocontainer">
-                                    <img class="mapimage" src="/image/${companyList[i].companyImg}"/>
-
+                                    <img class="mapimage"  src="/image/${companyList[i].companyImg}"/>
                                     <div class="info1">업체명 </div>
-                                    <div class="mapcompanyname">${companyList[i].companyName}</div>
+                                    <div class="mapcompanyname">${companyList[i].name}</div>
                                     <div class="info2">업체소개 </div>
                                     <div class="mapcompanyintroduction"> ${companyList[i].companyIntroduction}</div>
-                                    <a href="/home/${companyList[i].companyId}" class="mapcompanyherf" >링크 바로가기 ▶</a>
+                                    <a href="/companies/${companyList[i].id}" class="mapcompanyherf" >링크 바로가기 ▶</a>
                                 </div>
                                 `
                     });
+
 
 
                     // 마커 마우스 오버 시, 매장 정보 노출해 주는 기능
@@ -112,11 +114,16 @@
                         // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
                         infowindow.open(map, marker);
                     });
-
-                    // // 마커에 마우스아웃 이벤트를 등록합니다
+                    kakao.maps.event.addListener(map,'click',function() {
+                        infowindow.close();
+                    });
+                    kakao.maps.event.addListener(map, 'dragend', function() {
+                        infowindow.close();
+                    });
+                        // // 마커에 마우스아웃 이벤트를 등록합니다
                     // kakao.maps.event.addListener(marker, 'mouseout', function() {
                     //     // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
-                    //     infowindow.close();
+                    // infowindow.close();
                     // });
                     //
                     // // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다 (현재 사용안함)

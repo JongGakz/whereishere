@@ -1,0 +1,184 @@
+
+.box_login {
+    padding: 47px 0 67px;
+    border: 1px solid #ffffff;
+    background: #fff;
+    border-top-width: 130px;
+}
+
+
+.box_login fieldset .form {
+    position: relative;
+    margin-top: 40px;
+    padding-right: 200px;
+    margin-bottom: 20px;
+}
+
+
+div {
+    line-height: 1em;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    top: 50%;
+    left: 45%;
+    display: block;
+}
+
+
+.box_login fieldset {
+    width: 450px;
+    margin: 0 auto;
+    border: 0;
+    vertical-align: middle;
+    box-sizing: border-box;
+    display: block;
+    margin-inline-start: 2px;
+    margin-inline-end: 2px;
+    padding-block-start: 0.35em;
+    padding-inline-start: 0.75em;
+    padding-inline-end: 0.75em;
+    padding-block-end: 0.625em;
+    min-inline-size: min-content;
+}
+
+
+legend{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    display: block;
+    padding-inline-start: 2px;
+    padding-inline-end: 2px;
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-image: initial;
+}
+
+.box_login fieldset legend {
+    position: static;
+    width: 100%;
+    height: auto;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+    visibility: visible;
+    line-height: normal;
+    text-align: center;
+}
+
+.box_login fieldset {
+    width: 450px;
+    margin: 0 auto;
+}
+
+fieldset {
+    border: 0;
+    vertical-align: middle;
+    box-sizing: border-box;
+}
+
+
+.box_login fieldset .form input[type="text"], .box_login fieldset .form input[type="password"] {
+    display: block;
+    width: 100%;
+}
+
+input[type="text"], input[type="password"] {
+    display: inline-block;
+    height: 34px;
+    line-height: 31px;
+    padding: 0 9px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+}
+
+input{
+    font-size: 14px;
+    color: #555;
+    font-weight: 300;
+    letter-spacing: -0.05em;
+    vertical-align: middle;
+    box-sizing: border-box;
+}
+
+.box_login fieldset .form .btn_common {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 180px;
+    height: 80px;
+    line-height: 77px;
+}
+
+.btn_common.blu {
+    background: #007bc3;
+    border-color: #007bc3;
+    color: #fff;
+}
+
+.btn_common.lrg {
+    height: 50px;
+    line-height: 46px;
+    padding: 0 59px;
+    font-size: 18px;
+}
+
+.btn_common {
+    display: inline-block;
+    font-weight: 500;
+    text-align: center;
+    border: 1px solid #ddd;
+    background: #f5f5f5;
+    cursor: pointer;
+}
+
+label {
+    cursor: default;
+}
+
+.box_login fieldset .links {
+    margin-top: 40px;
+}
+
+.box_login fieldset .links:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.box_login fieldset .links .btn_common {
+    float: left;
+    width: 50%;
+    padding: 0 0 0 0;
+    font-size: 14px;
+    color: #555;
+    height: 50px;
+    line-height: 46px;
+}
+
+.links{
+    width:200%;
+}
+
+body {
+    font-size: 14px;
+    color: #333;
+    letter-spacing: -0.05em;
+    -webkit-text-size-adjust: none;
+    margin: 0;
+    padding: 0;
+}
+
+strong{
+    font-size: 30px;
+}
+
+.form{
+    left: 0px;
+}
+
+img[src]{
+    width:30%;
+    height:30%;
+}

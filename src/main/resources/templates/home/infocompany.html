@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragments/header :: header"/>
 <body>
 <div th:replace="fragments/bodyheader :: bodyheader"/>
@@ -7,7 +8,7 @@
 
 <div class="container">
     <div class="companyname">
-        <span th:text="${company.companyName}"></span>
+        <span th:text="${company.getName()}"></span>
     </div>
     <div class="image">
         <img th:src="|/image/${company.companyImg}|" width="100%" height="100%"/>
@@ -21,11 +22,11 @@
         <div class="companystars">
             <span class="list">업체 별점 </span>
             <br><br>
-            <span th:text="${starsPoint}"></span>
+            <span th:text="${starsPoint}+'점'"></span><br><br>
             <div class="star-ratings">
                 <div
                         class="star-ratings-fill space-x-2 text-lg"
-                        style="{ width: 50%; }"
+                        th:style="'width:' + ${starsPoint} * 20 + '%'"
                 >
                     <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
                 </div>
@@ -35,10 +36,10 @@
             </div>
             <br>
             <br>
-            <span class="list">별점 매기기 </span>
+            <span sec:authorize="hasRole('MEMBER')" class="list">별점 매기기 (개인회원) </span>
             <br><br>
-            <form th:action="|/home/${companyId}/star|" method="post">
-                <input type="number" name="starPoint" max="5" min="1" step="1" placeholder="별점">
+            <form sec:authorize="hasRole('MEMBER')" th:action="|/companies/${companyId}/star|" method="post">
+                <input type="number" name="starPoint" max="5" min="1" step="1" value="3" placeholder="별점">
                 <span>/ 5 </span>
                 <input type="submit" class="button" value="점수 등록">
             </form>
@@ -57,7 +58,7 @@
         <button class="button"  th:onclick="|location.href='@{/home}'|">업체 이벤트 보러가기</button>
     </div>
     <div class="companycomment">
-        <form th:action="|/home/${companyId}/comment|" method="post">
+        <form sec:authorize="hasRole('MEMBER')" th:action="|/companies/${companyId}/comment|" method="post">
             <input type="text" name="commentContent" id="commentContent" placeholder="한줄 평을 남겨주세요!" style="width:90%; height:60px">
             <input type="submit" class="button" value="등록">
         </form>
@@ -76,7 +77,7 @@
         <br>
         <ul th:if="${commentList.size() != 0}" th:each="comment,commentStat : ${commentList}">
             <li class="companycommentnum" th:text="${commentStat.count}">순번</li>
-            <li class="companycommentwriter" th:text="${comment.getMember().getMemberName()}">작성자</li>
+            <li class="companycommentwriter" th:text="${comment.getMember().getName()}">작성자</li>
             <li class="companycommentcontent" th:text="${comment.getCommentContent()}">작성 내용</li>
             <li class="companycommenttime" th:text="${comment.getCommentWriteDate().getYear()} +  '년 '  + ${comment.getCommentWriteDate().getMonthValue()} +  '월 '
     + ${comment.getCommentWriteDate().getDayOfMonth()} +  '일 '  + ${comment.getCommentWriteDate().getHour()} +  '시 '  + ${comment.getCommentWriteDate().getMinute()} +  '분'" >날짜</li>
@@ -84,4 +85,15 @@
     </div>
 </div>
 </body>
+<script th:inline="javascript">
+
+    let paramStatus = [[${param.status}]];
+
+    if(paramStatus[0] === 'true'){
+        alert("저장을 성공했습니다.");
+    } else if(paramStatus[0] === 'false') {
+        alert("저장에 실패했습니다.");
+    }
+
+</script>
 </html>

@@ -14,19 +14,19 @@ public class Company {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long companyId;
+    private Long Id;
 
 //    @Range(min = 5, max = 15)
-   // @Column(unique = true) // 중복 불가
-    private String companyLoginId;
+    @Column(unique = true) // 중복 불가
+    private String LoginId;
 
 //    @Range(min = 8, max = 20)
-    private String companyLoginPw;
+    private String LoginPw;
 
     private Long companyBusinessId; // 사업자 번호
 
 //    @Range(min = 2, max = 100)
-    private String companyName;
+    private String name;
 
     private String companyImg;
 
@@ -39,10 +39,10 @@ public class Company {
 
 
     public Company(String companyLoginId, String companyLoginPw, Long companyBusinessId, String companyName, String companyImg, String companyIntroduction, String companyCategory, String companyAddress) {
-        this.companyLoginId = companyLoginId;
-        this.companyLoginPw = companyLoginPw;
+        this.LoginId = companyLoginId;
+        this.LoginPw = companyLoginPw;
         this.companyBusinessId = companyBusinessId;
-        this.companyName = companyName;
+        this.name = companyName;
         this.companyImg = companyImg;
         this.companyIntroduction = companyIntroduction;
         this.companyCategory = companyCategory;

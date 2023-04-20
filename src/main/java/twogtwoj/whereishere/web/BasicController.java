@@ -3,6 +3,7 @@ package twogtwoj.whereishere.web;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import twogtwoj.whereishere.domain.*;
@@ -32,6 +33,7 @@ public class BasicController {
     private final FileStore fileStore;
 
 
+
     // 게시글 보기에서 게시글에 저장된 이미지 가져오는 메서드
     @ResponseBody
     @GetMapping("/image/{filename}")
@@ -47,14 +49,14 @@ public class BasicController {
 
         Member member = memberService.save(new Member("Jonggak", "123123", "임종각", LocalDate.of(1993, 6, 16)));
 
-        Member member2 = memberService.save(new Member("afternoon", "321321", "최정오", LocalDate.of(1997, 4, 15)));
+        Member member2 = memberService.save(new Member("afternoon", "123123", "최정오", LocalDate.of(1997, 4, 15)));
 
         Member member3 = memberService.save(new Member("Gagyeong", "154689", "박가경", LocalDate.of(1988, 12, 7)));
 
         Member member4 = memberService.save(new Member("Gzero", "181818", "김지영", LocalDate.of(1996, 7, 6)));
 
 
-        companyService.save(new Company("kitri", "3213212", 1838100871L,
+        companyService.save(new Company("kitri", "123123", 1838100871L,
                 "키트리주식회사", "이미지1.png", "세상에서 제일 맛있는 김치찌개병원", Category.HOSPITAL.getDescription()
                 , "경기도 부천시 소삼로 47"));
 
@@ -129,11 +131,11 @@ public class BasicController {
                 "BL짐", "이미지19.png", "가격은 저렴하지만 시설은 외국고급헬스장급 운동맛집", Category.HEALTH.getDescription()
                 , "경북 포항시 남구 대이로 109 4층"));
 
-        companyService.save(new Company("debec", "db4350", 7561548952L,
+        companyService.save(new Company("Gzero", "db4350", 7561548952L,
                 "대구백화점 대백프라자점", "이미지20.png", "꿈과 미래가 있는 대구백화점. 고객과 기업가치의 극대화를 추구합니다.", Category.DEPARTMENT.getDescription()
                 , "대구 중구 명덕로 333"));
 
-        companyService.save(new Company("siott", "0507", 8457692143L,
+        companyService.save(new Company("gggzaqs", "0507", 8457692143L,
                 "시옷 남원도통점", "이미지21.png", "안녕하세요 남원 도통점시옷입니다. 야끼니꾸 전문점 이자카야입니다.", Category.RESTAURANT.getDescription()
                 , "전북 남원시 큰들길 36 1층"));
 

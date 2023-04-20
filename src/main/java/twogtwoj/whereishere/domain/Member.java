@@ -4,10 +4,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.Range;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Data
@@ -16,21 +13,22 @@ public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long memberId;
+    private Long Id;
 
-    private String memberLoginId;
+    @Column(unique = true) // 중복 불가
+    private String LoginId;
 
-    private String memberLoginPw;
+    private String LoginPw;
 
-    private String memberName;
+    private String name;
 
     private LocalDate memberBirthday;
 
 
     public Member(String memberLoginId, String memberLoginPw, String memberName, LocalDate memberBirthday) {
-        this.memberLoginId = memberLoginId;
-        this.memberLoginPw = memberLoginPw;
-        this.memberName = memberName;
+        this.LoginId = memberLoginId;
+        this.LoginPw = memberLoginPw;
+        this.name = memberName;
         this.memberBirthday = memberBirthday;
     }
     public Member(){}

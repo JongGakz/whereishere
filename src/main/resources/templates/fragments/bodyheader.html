@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <header th:fragment="bodyheader" class="header">
     <a href="/home"><img src="/image/LOGO.png" class="logo"></a>
 
     <div class="logininfo">
-        <h3>누구누구 님</h3>
-        <button class="button" id="loginbutton">로그아웃</button>
+
+<!--        로그인한 객체의 정보 어떻게 가져오지 -->
+        <h2 sec:authorize="isAuthenticated()" th:text="${#authentication.principal.username}"></h2>
+        <button class="button"  th:onclick="|location.href='@{/logout}'|">로그아웃</button>
     </div>
 
     <div class="topmenu">

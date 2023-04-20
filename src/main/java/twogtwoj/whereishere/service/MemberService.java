@@ -21,4 +21,8 @@ public class MemberService {
     public Member findMemberByMemberId(Long memberId) {
         return memberRepository.findMemberByMemberId(memberId);
     }
+
+    public Member findMemberByLoginId(String loginId) {
+        return memberRepository.findMemberByLoginId(loginId);
+    }
 }

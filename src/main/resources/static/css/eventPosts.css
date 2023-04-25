@@ -1,0 +1,118 @@
+.container {
+    display: grid;
+    grid-template-columns: 1fr 800px 1fr;
+    grid-template-rows: 50px 100px 100px 400px 30px;
+    grid-auto-columns: 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+    ". . ."
+    ". eventPost ."
+    ". eventPostCategory ."
+    ". eventPostList .";
+    ". page ."
+    justify-items: stretch;
+    align-items: stretch;
+}
+
+.eventPost {
+    grid-area: eventPost;
+    font-size: 50px;
+    justify-self: center;
+}
+
+.eventPostCategory {
+    grid-area: eventPostCategory;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    justify-self: center;
+    align-self: center;
+}
+
+.eventPostCategory button,
+.eventPostCategory form {
+    height: 38px;
+    display: inline-block;
+    margin: 0;
+}
+
+.eventPostList {
+    grid-template-columns: 100%;
+    grid-template-rows: 130px 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    margin-bottom: 0;
+    grid-area: eventPostList;
+    row-gap: 10px;
+    word-wrap: break-word;
+    justify-self: center;
+}
+
+
+.page {
+    grid-area: page;
+    word-wrap: break-word;
+    justify-self: center;
+    align-self: center;
+}
+
+.eventPostContent {
+    cursor: pointer;
+}
+
+.eventPostContent:hover {
+    background-color: green;
+    color: white;
+}
+
+.table{
+    margin-bottom: 0;
+}
+
+.list{
+    color:blue;
+    font-size:15px;
+}
+
+li {
+    word-wrap: break-word;
+    display: block;
+    padding: 10px;
+    margin-bottom: 5px;
+    border: 3px solid #efefef;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.star-ratings {
+    color: #aaa9a9;
+    position: relative;
+    unicode-bidi: bidi-override;
+    width: max-content;
+    -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
+    -webkit-text-stroke-width: 1.3px;
+    -webkit-text-stroke-color: #2b2a29;
+}
+
+.star-ratings-fill {
+    color: #fff58c;
+    padding: 0;
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    -webkit-text-fill-color: gold;
+}
+
+.star-ratings-base {
+    z-index: 0;
+    padding: 0;
+}
+.button{
+    display: inline-block;
+}

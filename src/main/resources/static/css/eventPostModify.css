@@ -1,0 +1,93 @@
+.grid-form {
+    display: grid;
+    grid-template-columns: 1fr 400px 400px 1fr;
+    grid-template-rows: 50px 50px 50px 400px 50px;
+    grid-auto-columns: 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+    ". . . ."
+    ". modify modify ."
+    ". eventTitle eventTitle ."
+    ". eventPostContent eventPostContent  ."
+    ". eventPostImg1 eventPostImg2 .";
+    justify-items: stretch;
+    align-items: stretch;
+}
+
+.modify {
+    grid-area: modify;
+    align-self: center;
+    margin-left: 30px;
+    justify-self: flex-start;
+}
+
+.eventTitle {
+    grid-area: eventTitle;
+    align-self: center;
+    justify-self: normal;
+}
+
+label.title {
+    width: 5%;
+    margin-bottom: 0;
+}
+
+input#eventPostTitle {
+    width: 700px;
+    border: none;
+    border-bottom: 1px solid black;
+    padding: 0;
+    outline: none;
+}
+
+input#eventPostTitle:focus,
+input#eventPostTitle:hover {
+    border-bottom: 2px solid black;
+}
+
+.eventPostContent {
+    grid-area: eventPostContent;
+    justify-self: center;
+}
+
+.eventPostImg1 {
+    grid-area: eventPostImg1;
+    align-self: center;
+    justify-self: center;
+}
+
+.eventPostImg2 {
+    grid-area: eventPostImg2;
+    align-self: center;
+    justify-self: center;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+textarea.eventPostContent {
+    width: 800px;
+    height: 400px;
+    resize: none;
+    overflow: scroll;
+}
+
+label, input {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+li {
+    word-wrap: break-word;
+    display: block;
+    padding: 10px;
+    margin-bottom: 5px;
+    border: 3px solid #efefef;
+    font-size: 14px;
+    cursor: pointer;
+    justify-self: center;
+}

@@ -32,6 +32,8 @@ public class BasicController {
 
     private final FileStore fileStore;
 
+    private final EventPostService eventPostService;
+
 
 
     // 게시글 보기에서 게시글에 저장된 이미지 가져오는 메서드
@@ -231,5 +233,17 @@ public class BasicController {
         commentService.save(new Comment(member2, company, "그려 니 맘대로하렴", LocalDateTime.now()));
         commentService.save(new Comment(member3, company, "엥 여기 근데 음식집아아닌걸", LocalDateTime.now()));
         commentService.save(new Comment(member4, company, "허허벌판", LocalDateTime.now()));
+
+
+        eventPostService.save(new EventPost(companyService.findCompanyByCompanyName("하얀나라피부과의원"), "할인중", "할인중입니다.", null, null, LocalDate.of(2022,02, 13)));
+        eventPostService.save(new EventPost(companyService.findCompanyByCompanyName("핏앤피트니스"), "새해 이벤트", "1월 중에 등록하신분들은 회원권 40%할인 해드립니다.", "fitness1", "fitness2", LocalDate.of(2022,01, 10)));
+        eventPostService.save(new EventPost(companyService.findCompanyByCompanyName("강냉이소쿠리"), "아메리카노 반값 이벤트", "한달 동안 아메리카노에 한해서 반값 이벤트 합니다.", "gang1.png", "gang2.png", LocalDate.of(2022,02, 13)));
+        eventPostService.save(new EventPost(companyService.findCompanyByCompanyName("만동제과"), "빵 6개 이벤트", "빵 6개를 한번에 사시면 서비스로 2개를 드려요", "bread1", "bread2", LocalDate.of(2021,05, 13)));
+        eventPostService.save(new EventPost(companyService.findCompanyByCompanyName("테라로사 커피공장 강릉본점"), "아침이벤트", "아침에는 아메리카노가 이천원 입니다.", "coffee1", "coffee2", LocalDate.of(2021,12, 27)));
+        eventPostService.save(new EventPost(companyService.findCompanyByCompanyName("강릉자동차극장"), "팝콘 세트 이벤트", "팝콘 세트 20%할인합니다.", "movie1.png", "movie2.png", LocalDate.of(2020,07, 24)));
+        eventPostService.save(new EventPost(companyService.findCompanyByCompanyName("롯데시네마 동해"), "조조영화 특별 할인", "조조영화는 10%할인 합니다.", "cinema1.png", "cinema2.png", LocalDate.of(2022,01, 05)));
+        eventPostService.save(new EventPost(companyService.findCompanyByCompanyName("그린횟집"), "제철생선 주문시 추가이벤트", "제철생선을 시킬시 광어와 우럭회를 추가로 드려요", "green1.png", "green2.png", LocalDate.of(2022,04, 15)));
+        eventPostService.save(new EventPost(companyService.findCompanyByCompanyName("강릉한정식 하서주미역"), "10인이상 단체손님은 음료수 무료", "10인 이상 단체손님 방문시 음료수를 무료로 제공해 드립니다.", "han1.png", "han2.png", LocalDate.of(2019,11, 11)));
+
     }
 }

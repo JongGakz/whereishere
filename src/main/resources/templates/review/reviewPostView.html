@@ -6,7 +6,7 @@
 
 </head>
 <body>
-업체명 : <span th:text="${reviewPost.getCompany().getCompanyName()}">상품명</span><br/>
+업체명 : <span th:text="${reviewPost.getCompany().getName()}">상품명</span><br/>
 제목 : <span th:text="${reviewPost.getReviewPostTitle()}">상품명</span><br/>
 내용 : <span th:text="${reviewPost.getReviewPostContent()}">상품명</span><br/>
 사진1 : <img th:src="|/image/${reviewPost.getReviewPostImg1()}|" width="300" height="300"/>

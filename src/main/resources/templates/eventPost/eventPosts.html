@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/header :: header"/>
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"
+          th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css}"
+          rel="stylesheet">
+    <link href="/css/eventPosts.css" rel="stylesheet">
+
+</head>
+
+<body>
+<div th:replace="fragments/bodyheader :: bodyheader"/>
+<div class="container" style="max-width: 800px">
+    <div class="eventPost">
+        <h1>이벤트포스트 게시판</h1>
+    </div>
+    <div class="eventPostCategory">
+        <button class="btn btn-outline-success"
+                onclick="location.href='createEventPost.html'"
+                th:onclick="|location.href='@{/events/eventPost/new}'|"
+                type="button" sec:authorize="hasRole('COMPANY')" >글쓰기</button>
+        <button class="btn btn-outline-success"
+                onclick="location.href='eventPostMyList.html'"
+                th:onclick="|location.href='@{/events/eventPost/myList}'|"
+                type="button" sec:authorize="hasRole('COMPANY')" >내가 쓴 글 보기</button>
+        <form th:action="@{/events/eventPost/search}" method="get" style="width: 245px">
+            <div class="input-group mb-3">
+                <input type="text"  name="searchKeyword" class="form-control" placeholder="companyname">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-success" type="submit" id="button-addon2">Button</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <hr class="my-4">
+    <div class="eventPostList">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>작성자</th>
+                <th>제목</th>
+                <th>이벤트 내용</th>
+                <th>등록날짜</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="eventPostContent" th:each="eventPost : ${events}" th:onclick="|location.href='@{|/events/eventPost/${eventPost.eventPostId}|}'|">
+                <td th:text="${eventPost.company.getName()}">작성자</td>
+                <td th:text="${eventPost.eventPostTitle}">제목</td>
+                <td th:text="${eventPost.eventPostContent}">이벤트 내용</td>
+                <td style="width: 124px;" th:text="${eventPost.eventPostWriteDate}">등록날짜</td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="page">
+        <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
+            <a th:if="${page != nowPage}" th:href="@{/events/eventPost(page = ${page - 1})}" th:text="${page}"></a>
+            <strong th:if="${page == nowPage}" th:text="${page}" style="color: black"></strong>
+        </th:block>
+        </div>
+    </div>
+</div> <!-- /container -->
+</body>
+</html>

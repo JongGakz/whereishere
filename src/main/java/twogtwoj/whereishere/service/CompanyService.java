@@ -30,4 +30,8 @@ public class CompanyService {
     public Company findCompanyByCompanyId(Long companyId) {
         return companyRepository.findCompanyByCompanyId(companyId);
     }
+
+    public Company findCompanyByLoginId(String userId) {
+        return companyRepository.findCompanyByLoginId(userId);
+    }
 }

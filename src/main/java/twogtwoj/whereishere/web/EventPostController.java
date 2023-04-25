@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -142,11 +143,14 @@ public class EventPostController {
     //제목을 누르면 상세 페이지로 넘어가는 매소드
     @GetMapping("/eventPost/{eventPostId}")
     public String showEventPost(@PathVariable Long eventPostId, Model model,@AuthenticationPrincipal User user) {
-        Company findCompany = companyService.findCompanyByLoginId(user.getUsername());
         EventPost eventPosts = eventPostService.eventPostView(eventPostId);
-
         model.addAttribute("eventPost", eventPosts);
-        model.addAttribute("myCompany", findCompany.getName());
+        if(user.getAuthorities().stream().filter(n -> n.getAuthority().equals("ROLE_COMPANY")).toArray().length == 1){
+            Company findCompany = companyService.findCompanyByLoginId(user.getUsername());
+            model.addAttribute("myCompany", findCompany.getName());
+        } else {
+            model.addAttribute("myCompany","");
+        }
         return "eventPost/eventPostView";
     }
 

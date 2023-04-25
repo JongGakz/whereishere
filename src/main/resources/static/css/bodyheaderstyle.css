@@ -6,6 +6,10 @@ body {
     font-size: 22px;
 }
 
+.contour {
+    font-size:22px;
+    line-height: 22px;
+}
 .bodyheader {
     height:40px;
     display: flex;
@@ -17,6 +21,12 @@ body {
     background-color: rgb(76,188,127);
     border-bottom-style: solid;
     border-bottom-color: rgb(255, 255, 255);
+    margin:0;
+    margin-bottom:50px;
+    font-family: 'Nanum Gothic Coding', monospace;
+    font-weight:bold;
+    font-size: 16px;
+    box-sizing: content-box;
 }
 
 .topmenu {
@@ -27,6 +37,7 @@ body {
 }
 
 .logininfo {
+    flex-grow: 0;
     margin-left:22%;
     display:inline-flex;
     width:100%;
@@ -55,13 +66,28 @@ body {
     font-size:20px;
     text-decoration-line: none;
     color:white;
+    line-height: 22px;
+    padding:0px;
+    margin:0px;
 }
 .topmenusource:hover {
+    text-decoration-line: none;
     color:red;
 }
 
+@media only screen and (max-width: 1176px) {
+    .topmenu {
+        display: none;
+    }
+    .logininfo {
+        margin-left:-120px;
+    }
+
+}
+
 .logo{
-    margin-top:6px;
+    vertical-align: middle;
+    border-style: none;
     margin-left:30px;
     width: 150px; 
     height: fit-content;

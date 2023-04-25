@@ -1,16 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="fragments/header :: header"/>
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"
           th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css}"
           rel="stylesheet">
-
-
     <title>후기 게시판 - 후기 작성하기</title>
-</head>
-
 <style>
     .container {
     width : 50%;
@@ -49,20 +45,22 @@
         width: 300px;
         height: 300px;
     }
-    
+
 
 </style>
 
 <body>
+<div th:replace="fragments/bodyheader :: bodyheader"/>
+
 <div class="container" style="max-width: 600px">
     <div class="py-5 text-center">
         <h2>후기 작성 페이지</h2>
     </div>
-        <form action="/review/postPro" method="post" enctype="multipart/form-data">
+        <form th:action="|/review/postPro|" method="post" enctype="multipart/form-data">
             업체명 :
-                <input name="companyName" id= "autocompleteCompany" type="text" placeholder="업체명을 입력해주세요" aria-label="Search" list="companyName" />
+                <input name="name" id= "autocompleteCompany" type="text" placeholder="업체명을 입력해주세요" aria-label="Search"/>
                 <div>
-                    <select id="companyName" name="companyName">
+                    <select id="companyName">
 <!--                        <option th:value="${review.companyName}"></option>-->
                     </select>
                 </div>
@@ -110,16 +108,16 @@
         response = await fetch(url);
         data = await response.json();
         matchCompanyList.innerHTML="";
-        for(let i = 0; i < data.companyList.length; i++) {
-            console.log(data.companyList[i].companyName);
-            matchCompanyList.innerHTML +=`<option> ${data.companyList[i].companyName} [${data.companyList[i].companyAddress}]</option>`
-        }
-
         let selectCompany = document.querySelector("select");
 
-        selectCompany.addEventListener("change",function() {
+        selectCompany.addEventListener("click",function() {
             document.querySelector("#autocompleteCompany").value = selectCompany.value;
-        })
+        });
+
+        for(let i = 0; i < data.companyList.length; i++) {
+            console.log(data.companyList[i].name);
+            matchCompanyList.innerHTML +=`<option> ${data.companyList[i].name} [${data.companyList[i].companyAddress}]</option>`;
+        }
     }
 
     function readURL1(input) {

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href="/css/loginStylesheet.css" rel="stylesheet">
+
+    <title>여긴 어디?</title>
+</head>
+<body>
+<div class="box_login">
+    <fieldset>
+        <legend id="box_logo">
+            <img src="/image/LOGO.png">
+        </legend>
+        <legend>
+            <strong>LOGIN</strong>
+        </legend>
+
+        <!--    로그인 form-->
+        <div class="form">
+            <form th:action method="post">
+                <input type="text" name="loginId" title="아이디" placeholder="아이디">
+                <input type="password" name="loginPw" title="비밀번호" placeholder="비밀번호">
+                <div>
+                    <label for="memberToggle">개인</label>
+                    <input type="radio" id="memberToggle" name="userType" value="member" checked>
+                    <label for="companyToggle">기업</label>
+                    <input type="radio" id="companyToggle" name="userType" value="company">
+                </div>
+                <button class="btn_common lrg blu" type="submit">로그인</button>
+            </form>
+        </div>
+        <div class="links">
+            <button class="btn_common lrg" onclick="location.href='/login/signup'" type="button">회원 가입</button>
+        </div>
+    </fieldset>
+</div>
+</body>
+
+<script th:inline="javascript">
+    let url = new URL(window.location.href);
+    let param = url.searchParams.get("error");
+
+    if (param === 'false') {
+        alert("로그인에 실패하셨습니다.");
+    }
+
+    let paramStatus = [[${param.status}]];
+    if(paramStatus[0] === 'true') {
+        alert("회원가입에 성공하셨습니다!");
+    }
+
+
+
+</script>
+</html>

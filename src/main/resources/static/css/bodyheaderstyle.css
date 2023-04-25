@@ -1,0 +1,94 @@
+body {
+    margin:0;
+    margin-bottom:100px;
+    font-family: 'Nanum Gothic Coding', monospace;
+    font-weight:bold;
+    font-size: 22px;
+}
+
+.contour {
+    font-size:22px;
+    line-height: 22px;
+}
+.body_header {
+    height:40px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: rgb(76,188,127);
+    border-bottom-style: solid;
+    border-bottom-color: rgb(255, 255, 255);
+    margin:0;
+    margin-bottom:50px;
+    font-family: 'Nanum Gothic Coding', monospace;
+    font-weight:bold;
+    font-size: 16px;
+    box-sizing: content-box;
+}
+
+.topmenu {
+    margin-right:20px;
+    width:100%;
+    display:flex;
+    justify-content: space-between;
+}
+
+.login_info {
+    flex-grow: 0;
+    margin-left:22%;
+    display:inline-flex;
+    width:100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    height:30px;
+    font-family: 'Nanum Gothic Coding', monospace;
+    border: none;
+    border-radius: 4px;
+    font-weight:bold;
+    font-size: 17px;
+}
+
+.button:hover {
+    background-color: rgb(200,200,200);
+    color:white;
+}
+
+.topmenusource {
+    font-size:20px;
+    text-decoration-line: none;
+    color:white;
+    line-height: 22px;
+    padding:0px;
+    margin:0px;
+}
+.topmenusource:hover {
+    text-decoration-line: none;
+    color:red;
+}
+
+@media only screen and (max-width: 1176px) {
+    .topmenu {
+        display: none;
+    }
+    .login_info {
+        margin-left:-120px;
+    }
+
+}
+
+.body_logo{
+    vertical-align: middle;
+    border-style: none;
+    margin-left:30px;
+    width: 150px; 
+    height: fit-content;
+}

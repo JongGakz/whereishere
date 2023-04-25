@@ -2,6 +2,7 @@ package twogtwoj.whereishere.domain;
 
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -25,13 +26,13 @@ public class ReviewPost {//후기 게시판
     @JoinColumn(name = "COMPANY_ID")
     private Company company;
 
-    private String companyName;
+    private String name;
 
     private String writer;
 
     private String reviewPostTitle;
 
-     private String reviewPostContent;
+    private String reviewPostContent;
 
     private String reviewPostImg1;
 

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"/>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"
+          th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css}"
+          rel="stylesheet">
+    <title>후기 게시판 - 게시글 작성</title>
+
+<body>
+<div th:replace="fragments/bodyheader :: bodyheader"/>
+
+<form th:action method="post" enctype="multipart/form-data" class="col">
+    <ul>
+        <li>리뷰 제목<input type="text" name="eventPostTitle"></li>
+        <li>리뷰 내용 <input type="text" name="eventPostContent"></li>
+        <li>이미지 1<input type="file" name="eventPostImg1"></li>
+        <li>이미지 2<input type="file" name="eventPostImg2"></li>
+    </ul>
+    <input type="submit" id="submit">
+</form>
+</body>
+</html>

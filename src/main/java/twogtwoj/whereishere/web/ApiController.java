@@ -19,7 +19,7 @@ public class ApiController {
     @GetMapping("/api/search/companies")
     public String searchCompanies(@RequestParam String query) {
 
-        List<Company> list =  companyService.companyList(query);
+        List<Company> list =  companyService.findByNameContaining(query);
 
         System.out.println(list);
         JSONObject json = new JSONObject();
@@ -32,7 +32,7 @@ public class ApiController {
 
     @PostMapping("/api/search/companies")
     public String companies(@RequestParam String query) {
-        List<Company> list = companyService.companyList(query);
+        List<Company> list = companyService.findByNameContaining(query);
 
         return String.valueOf(list);
     }

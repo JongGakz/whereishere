@@ -8,10 +8,10 @@ import twogtwoj.whereishere.domain.Company;
 @Setter
 public class CompanyDto {
     private Long companyId;
-    private String companyName;
+    private String name;
 
     public CompanyDto(Company data) {
-        this.companyId = data.getCompanyId();
-        this.companyName = data.getCompanyName();
+        this.companyId = data.getId();
+        this.name = data.getName();
     }
 }

@@ -26,7 +26,7 @@ public class FileStore {
         return request.getMultiFileMap().size() > MAX_UPLOAD_FILE_COUNT;
     }
 
-        public List<UploadFile> storeFiles(List<MultipartFile> multipartFiles) throws IOException {// 다중 파일
+    public List<UploadFile> storeFiles(List<MultipartFile> multipartFiles) throws IOException {// 다중 파일
         List<UploadFile> storeFileResult = new ArrayList<>();
         for (MultipartFile multipartFile : multipartFiles) {
             if (!multipartFile.isEmpty()) {

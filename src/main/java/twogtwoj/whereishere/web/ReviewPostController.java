@@ -31,7 +31,7 @@ public class ReviewPostController {
 
     private final ReviewPostService reviewPostService;
 
-    private  final ReviewPostRepository reviewPostRepository;
+    private final ReviewPostRepository reviewPostRepository;
 
     private final FileStore fileStore;
 
@@ -69,20 +69,20 @@ public class ReviewPostController {
     @SneakyThrows
     @GetMapping("/list")
     public String reviewList(@PageableDefault(size = 10, sort = "reviewPostId", direction = Sort.Direction.DESC) Pageable pageable,
-                                 @RequestParam(name = "searchKeyword", required = false) String searchKeyword,
-                                 @RequestParam(name = "companyName", required = false) String companyName,
-                                 Model model) {
+                             @RequestParam(name = "searchKeyword", required = false) String searchKeyword,
+                             @RequestParam(name = "name", required = false) String name,
+                             Model model) {
 
         Page<ReviewPost> list = null;
 
-        if (searchKeyword == null && companyName == null) {
+        if (searchKeyword == null && name == null) {
             list = reviewPostService.reviewPostList(pageable);
-        } else if (searchKeyword != null && companyName != null) {
-            list = reviewPostService.reviewPostSearchList(searchKeyword, companyName, pageable);
+        } else if (searchKeyword != null && name != null) {
+            list = reviewPostService.reviewPostSearchList(searchKeyword, name, pageable);
         } else if (searchKeyword != null) {
             list = reviewPostService.reviewPostSearchList(searchKeyword, null, pageable);
-        } else if (companyName != null) {
-            list = reviewPostService.reviewPostSearchList(null, companyName, pageable);
+        } else if (name != null) {
+            list = reviewPostService.reviewPostSearchList(null, name, pageable);
         } else {
             list = reviewPostService.reviewPostList(pageable);
         }
@@ -99,7 +99,7 @@ public class ReviewPostController {
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
         model.addAttribute("searchKeyword", searchKeyword);
-        model.addAttribute("companyName", companyName);
+        model.addAttribute("name", name);
 
         System.out.println(list);
 

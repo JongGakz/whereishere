@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 @AllArgsConstructor
 public class ReviewPostDto {
 
-    private String companyName;
+    private String name;
     private String reviewPostTitle;
     private String reviewPostContent;
     private MultipartFile file1;

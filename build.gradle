@@ -21,6 +21,12 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
 	implementation 'com.google.code.gson:gson:2.9.0'
+	implementation 'org.json:json:20220924'
+	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+
+
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
@@ -39,6 +45,7 @@ dependencies {
 	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 
 
+	developmentOnly("org.springframework.boot:spring-boot-devtools")
 }
 
 tasks.named('test') {

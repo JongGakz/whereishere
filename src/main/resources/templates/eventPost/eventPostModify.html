@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"/>
+<meta charset="UTF-8">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"
+      th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css}"
+      rel="stylesheet">
+<link href="/css/eventPostModify.css" rel="stylesheet">
+    <title>Title</title>
+
+<body>
+<div th:replace="fragments/bodyheader :: bodyheader"/>
+<form th:action="@{/events/eventPost/update/{eventPostId}(eventPostId = ${eventPost.eventPostId})}" method="post" enctype="multipart/form-data" class="grid-form">
+    <div class="modify">
+    <button class="btn btn-outline-success" type="submit">수정</button>
+    </div>
+    <div class="eventTitle">
+        <label for="eventPostTitle" class="title">제목</label>
+        <input name="eventPostTitle" type="text" id="eventPostTitle" th:value="${eventPost.eventPostTitle}">
+    </div>
+    <div class="eventPostContent">
+        <textarea name="eventPostContent" id="eventPostContent" class="eventPostContent" th:text="${eventPost.eventPostContent}"></textarea>
+    </div>
+    <div class="eventPostImg1">
+        <label for="eventPostImg1">이미지 1</label>
+        <input type="file" name="eventPostImg1" id="eventPostImg1" multiple>
+    </div>
+    <div class="eventPostImg2">
+        <label for="eventPostImg2">이미지 2</label>
+        <input type="file" name="eventPostImg2" id="eventPostImg2">
+    </div>
+</form>
+</body>
+</html>

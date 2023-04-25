@@ -1,44 +1,35 @@
 package twogtwoj.whereishere.domain;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.RequiredArgsConstructor;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @Entity
-@Getter
-@Setter
 public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long memberId;
+    private Long Id;
 
+    @Column(unique = true) // 중복 불가
+    private String LoginId;
 
-    //@Range(min = 5, max = 15)
-    private String memberLoginId;
+    private String LoginPw;
 
-    //@Range(min = 8, max = 20)
-    private String memberLoginPw;
-
-    //@Range(min = 2, max = 100)
-    private String memberName;
+    private String name;
 
     private LocalDate memberBirthday;
-    @OneToMany(mappedBy = "member")
-    private List<ReviewPost> reviewPostList = new ArrayList<>();
+
 
     public Member(String memberLoginId, String memberLoginPw, String memberName, LocalDate memberBirthday) {
-        this.memberLoginId = memberLoginId;
-        this.memberLoginPw = memberLoginPw;
-        this.memberName = memberName;
+        this.LoginId = memberLoginId;
+        this.LoginPw = memberLoginPw;
+        this.name = memberName;
         this.memberBirthday = memberBirthday;
     }
     public Member(){}
-
 }

@@ -10,13 +10,11 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class CompanyService {
+
     private final CompanyRepository companyRepository;
-    public Company save(Company company) {
-        return companyRepository.save(company);
-    }
 
-    public List<Company> companyList (String name) {
-        return companyRepository.findByCompanyNameContaining(name);
-    }
 
+    public List<Company> findByNameContaining(String name) {
+        return companyRepository.findByNameContaining(name);
+    }
 }

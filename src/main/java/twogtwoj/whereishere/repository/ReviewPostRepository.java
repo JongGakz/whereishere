@@ -10,12 +10,10 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import twogtwoj.whereishere.domain.ReviewPost;
 
-import java.util.List;
-
 @Repository
 public interface ReviewPostRepository extends JpaRepository<ReviewPost, Long>, JpaSpecificationExecutor<ReviewPost> {
 
-    Page<ReviewPost> findByReviewPostTitleContainingAndCompanyNameContaining(String reviewPostTitle, String companyName, Pageable pageable);
+    Page<ReviewPost> findByReviewPostTitleContainingAndNameContaining(String reviewPostTitle, String name, Pageable pageable);
 
     @Modifying
     @Query(value = "update ReviewPost r set r.liked = r.liked+1 where r.reviewPostId = :reviewPostId")

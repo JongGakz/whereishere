@@ -6,7 +6,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import twogtwoj.whereishere.domain.Company;
 import twogtwoj.whereishere.domain.Member;
 import twogtwoj.whereishere.domain.ReviewLike;
 import twogtwoj.whereishere.domain.ReviewPost;
@@ -19,6 +18,7 @@ import twogtwoj.whereishere.repository.ReviewPostRepository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -39,7 +39,7 @@ public class ReviewPostService {
         ReviewPost reviewPost = new ReviewPost();
 
         reviewPost.setReviewPostDate(LocalDate.now());
-        reviewPost.setCompanyName(reviewPostDto.getCompanyName());
+        reviewPost.setName(reviewPostDto.getName());
         reviewPost.setReviewPostContent(reviewPostDto.getReviewPostContent());
         reviewPost.setReviewPostTitle(reviewPostDto.getReviewPostTitle());
 
@@ -60,7 +60,7 @@ public class ReviewPostService {
 
         reviewPost.setReviewPostTitle(reviewPostDto.getReviewPostTitle());
         reviewPost.setReviewPostContent(reviewPostDto.getReviewPostContent());//덮어씌우기
-        reviewPost.setCompanyName(reviewPostDto.getCompanyName());
+        reviewPost.setName(reviewPostDto.getName());
         reviewPost.setReviewPostDate(LocalDate.now());
 
         // 이미지 파일이 null이 아니라면 수정
@@ -84,14 +84,14 @@ public class ReviewPostService {
     }
 
     //검색 리스트
-    public Page<ReviewPost> reviewPostSearchList(String searchKeyword, String companyName, Pageable pageable) {
+    public Page<ReviewPost> reviewPostSearchList(String searchKeyword, String name, Pageable pageable) {
         if (searchKeyword == null) {
             searchKeyword = "";
         }
-        if (companyName == null) {
-            companyName = "";
+        if (name == null) {
+            name = "";
         }
-        return reviewPostRepository.findByReviewPostTitleContainingAndCompanyNameContaining(searchKeyword, companyName, pageable);
+        return reviewPostRepository.findByReviewPostTitleContainingAndNameContaining(searchKeyword, name, pageable);
     }
 
 
@@ -110,7 +110,7 @@ public class ReviewPostService {
         ReviewLike findReviewLike = reviewLikeRepository.findByReviewPostAndMember(reviewPostId, memberId);
 
         if (findReviewLike == null) {
-            Member member = memberRepository.findByMemberId(memberId.getMemberId()).get();
+            Member member = memberRepository.findMemberByMemberId(memberId.getId()).get();
             ReviewPost reviewPost = reviewPostRepository.findById(reviewPostId.getReviewPostId()).get();
 
             ReviewLike reviewLike = ReviewLike.toReviewLike(member, reviewPost);

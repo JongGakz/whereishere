@@ -1,0 +1,43 @@
+.mainpage {
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+    background-color:white;
+}
+
+
+/* 검색 줄  */
+
+.searchform {
+    display:flex;
+    padding-top:20px;
+    justify-content: center;
+    width:100%;
+    padding-bottom:20px;
+}
+
+.searchinput {
+    margin-left:10px;
+    width:20%;
+    background-color:  whitesmoke;
+    outline: none;
+}
+
+
+.searchinput::placeholder {
+    font-family: 'Gamja Flower', cursive;
+    font-weight:bold;
+    font-size: 17px;
+    color:gray;
+    padding-left:10px;
+}
+
+
+.button {
+    margin-left : 10px;
+    
+}
+
+
+
+

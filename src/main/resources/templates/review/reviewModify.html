@@ -49,10 +49,10 @@
         </div>
         <div>
             <label for="companyName">업체명</label>
-            <input type="text" id="autocompleteCompany" name="companyName" class="form-control"
-                   th:value="${review.companyName}" value="삼성성모안과">
+            <input type="text" id="autocompleteCompany" name="name" class="form-control"
+                   th:value="${review.name}" value="삼성성모안과">
             <div>
-                <select id="companyName" name="companyName">
+                <select id="companyName">
                     <!--                        <option th:value="${review.companyName}"></option>-->
                 </select>
             </div>
@@ -117,57 +117,39 @@
         response = await fetch(url);
         data = await response.json();
         matchCompanyList.innerHTML="";
-        for(let i = 0; i < data.companyList.length; i++) {
-            console.log(data.companyList[i].companyName);
-            matchCompanyList.innerHTML +=`<option> ${data.companyList[i].companyName} [${data.companyList[i].companyAddress}]</option>`
-        }
-
         let selectCompany = document.querySelector("select");
 
-        selectCompany.addEventListener("change",function() {
+        selectCompany.addEventListener("click",function() {
             document.querySelector("#autocompleteCompany").value = selectCompany.value;
-        })
-
-        selectCompany.addEventListener("keypress",function() {
-            document.querySelector("#autocompleteCompany").value = selectCompany.value;
-        })
-    }
-
-    $(function () {
-        $("#file1").change(function () {
-            readURL1(this);
         });
-    });
+
+        for(let i = 0; i < data.companyList.length; i++) {
+            console.log(data.companyList[i].name);
+            matchCompanyList.innerHTML +=`<option> ${data.companyList[i].name} [${data.companyList[i].companyAddress}]</option>`;
+        }
+    }
 
     function readURL1(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
-
-            reader.onload = function (e) {
-                //alert(e.target.result);
-                $('#img1').attr('src', e.target.result);
-            }
-
+            reader.onload = function(e) {
+                document.getElementById('img1').src = e.target.result;
+            };
             reader.readAsDataURL(input.files[0]);
+        } else {
+            document.getElementById('img1').src = "";
         }
     }
-
-    $(function () {
-        $("#file2").change(function () {
-            readURL2(this);
-        });
-    });
 
     function readURL2(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
-
-            reader.onload = function (e) {
-                //alert(e.target.result);
-                $('#img2').attr('src', e.target.result);
-            }
-
+            reader.onload = function(e) {
+                document.getElementById('img2').src = e.target.result;
+            };
             reader.readAsDataURL(input.files[0]);
+        } else {
+            document.getElementById('img2').src = "";
         }
     }
 

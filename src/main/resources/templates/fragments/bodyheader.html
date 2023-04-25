@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<header th:fragment="bodyheader" class="bodyheader">
-    <a href="/home"><img src="/image/LOGO.png" class="logo"></a>
+<header th:fragment="bodyheader" class="body_header">
+    <a href="/home"><img src="/image/LOGO.png" class="body_logo"></a>
 
-    <div class="logininfo">
+    <div class="login_info">
 
 <!--        로그인한 객체의 정보 어떻게 가져오지 -->
         <div sec:authorize="isAuthenticated()" th:text="${#authentication.principal.username}" style="font-size:35px;"></div>

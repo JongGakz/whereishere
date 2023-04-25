@@ -76,5 +76,4 @@ public class LogInController {
         redirectAttributes.addAttribute("status",true);
         return "redirect:/login";
     }
-
 }

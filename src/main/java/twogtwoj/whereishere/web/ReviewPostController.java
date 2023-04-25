@@ -1,84 +1,141 @@
 package twogtwoj.whereishere.web;
 
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import twogtwoj.whereishere.domain.Company;
 import twogtwoj.whereishere.domain.ReviewPost;
+import twogtwoj.whereishere.dto.ReviewPostDto;
 import twogtwoj.whereishere.file.FileStore;
-import twogtwoj.whereishere.service.CompanyService;
+import twogtwoj.whereishere.repository.ReviewPostRepository;
 import twogtwoj.whereishere.service.ReviewPostService;
 
-import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
+@Slf4j
 @Controller
 @RequestMapping("/review")
 @RequiredArgsConstructor
 public class ReviewPostController {
-    /*
-    1. 후기 게시판 메인
-    2. 내가 쓴 글 보기
-    3. 글쓰기
-    4. 게시물 상세보기
-     */
+
     private final ReviewPostService reviewPostService;
 
-    private final CompanyService companyService;
+    private final ReviewPostRepository reviewPostRepository;
 
     private final FileStore fileStore;
-    @GetMapping
-    public String reviews(Model model) {
-        List<ReviewPost> reviews = reviewPostService.findAllReviewPost();
-        model.addAttribute("reviews", reviews);
-        return "/review/reviews";
-    }
 
-    // 리뷰포스트 게시글 작성 클릭시 게시글 작성 페이지로 이동
-    // ** html 에서 스크립트로 자동완성 기능 구현 필요
-    @GetMapping("/reviews/post")
+    @GetMapping("/post")
     public String reviewPostForm(Model model) {
-        List<Company> companyList = companyService.findAll();
-        model.addAttribute("companyList",companyList);
+
+        model.addAttribute("review", new ReviewPostDto());
         return "/review/reviewPost";
     }
 
+    @GetMapping("/view/{reviewPostId}")
+    public String image(@PathVariable Long reviewPostId, Model model) {
+        ReviewPost reviewPost = reviewPostService.reviewPostView(reviewPostId);
+        model.addAttribute("image", reviewPost);
+        return "review/view";
+    }
 
-    // 리뷰 등록했을 때, ReviewPost에 객체로 저장하는 메서드
-    @PostMapping("/reviews/post")
-    public String saveReviewPost(@RequestParam String companyName, @RequestParam String reviewPostTitle,
-                                 @RequestParam String reviewPostContent, @RequestParam MultipartFile reviewPostImg1,
-                                 @RequestParam MultipartFile reviewPostImg2) throws IOException {
+    @ResponseBody
+    @GetMapping("/images/{filename}")
+    public Resource downloadImage(@PathVariable String filename) throws MalformedURLException {
+        return new UrlResource("file:" + fileStore.getFullPath(filename));
+    }
+    //@PostMapping("/postPro")//안쓰는 경우가 많지만 개발에서 필요한 경우도 있음 알아두는 것이 좋음
 
-        Company findCompany = companyService.findCompanyByCompanyName(companyName);
-        String reviewPostImg1Name = UUID.randomUUID() + ".png";
-        String reviewPostImg2Name = UUID.randomUUID() + ".png";
-        reviewPostImg1.transferTo(new File(fileStore.getFullPath(reviewPostImg1Name)));
-        reviewPostImg2.transferTo(new File(fileStore.getFullPath(reviewPostImg2Name)));
-        reviewPostService.save(new ReviewPost(findCompany, reviewPostTitle,reviewPostContent, reviewPostImg1Name ,
-                reviewPostImg2Name , LocalDate.now()));
+    @RequestMapping(path = "/postPro", method = POST, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    public String reviewPostPro(@ModelAttribute ReviewPostDto reviewPostDto, Model model) throws Exception{
+        reviewPostService.post(reviewPostDto);
 
-        return "/review/reviews";
+        model.addAttribute("message", "작성이 완료되었습니다.");
+        model.addAttribute("searchUrl", "/review/list");
+
+        return "/review/message";
+    }
+
+    @SneakyThrows
+    @GetMapping("/list")
+    public String reviewList(@PageableDefault(size = 10, sort = "reviewPostId", direction = Sort.Direction.DESC) Pageable pageable,
+                             @RequestParam(name = "searchKeyword", required = false) String searchKeyword,
+                             @RequestParam(name = "name", required = false) String name,
+                             Model model) {
+
+        Page<ReviewPost> list = null;
+
+        if (searchKeyword == null && name == null) {
+            list = reviewPostService.reviewPostList(pageable);
+        } else if (searchKeyword != null && name != null) {
+            list = reviewPostService.reviewPostSearchList(searchKeyword, name, pageable);
+        } else if (searchKeyword != null) {
+            list = reviewPostService.reviewPostSearchList(searchKeyword, null, pageable);
+        } else if (name != null) {
+            list = reviewPostService.reviewPostSearchList(null, name, pageable);
+        } else {
+            list = reviewPostService.reviewPostList(pageable);
+        }
+
+        //현재 페이지
+        int nowPage = list.getPageable().getPageNumber() + 1; //list 변수 없이 사용해도 가능하지만 통일성을 위해서 사용한 것. 시작이 0이기에 +1 해줌
+        //시작 페이지
+        int startPage = Math.max(nowPage - 4, 1); // nowPage - 4 의 값이 1보다 작을 경우 1이 출력. 즉 두가지 중에 작은 값으로 출력하게 됨
+        //마지막 페이지
+        int endPage = Math.min(nowPage + 5, list.getTotalPages()); //nowPage + 5 이 값이 총 페이지 수 보다 클 경우 총 페이지 수가 출력됨
+
+        model.addAttribute("list", list);
+        model.addAttribute("nowPage", nowPage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("searchKeyword", searchKeyword);
+        model.addAttribute("name", name);
+
+        System.out.println(list);
+
+        return "/review/reviewList";
     }
 
 
-    // 리뷰 ID를 받아서 해당 게시글을 보여주는 메서드
-    @PostMapping("/reviews/{reviewPostId}")
-    public String showReviewPost(@PathVariable Long reviewPostId ,Model model) {
-        ReviewPost reviewPost = reviewPostService.findByReviewId(reviewPostId);
-        model.addAttribute("reviewPost", reviewPost);
+    @GetMapping("/view")//localhost:8080/review/view?id=1
+    public String review(@RequestParam Long reviewPostId, Model model) throws Exception{
 
-        return "/review/reviewPostView";
+        ReviewPost reviewPost = reviewPostService.reviewPostView(reviewPostId);
+
+        model.addAttribute("review", reviewPost);
+
+        return "/review/view";
     }
 
+    @GetMapping("/modify/{reviewPostId}")
+    public String modify(@PathVariable Long reviewPostId, Model model) {
+        model.addAttribute("review",reviewPostService.reviewPostView(reviewPostId));
+        return "/review/reviewModify";
+    }
 
+    @RequestMapping(path = "/update/{reviewPostId}", method = POST, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    public String update(@PathVariable("reviewPostId") Long reviewPostId,
+                         @ModelAttribute ReviewPostDto reviewPostDto,
+                         Model model) throws Exception {
+
+        reviewPostService.update(reviewPostId, reviewPostDto);
+
+        return "redirect:/review/list";
+    }
+
+    @GetMapping("/delete/{reviewPostId}")
+    public String delete(@PathVariable Long reviewPostId) {
+        reviewPostService.delete(reviewPostId);
+        return "redirect:/review/list";
+    }
 }

@@ -10,6 +10,7 @@ import twogtwoj.whereishere.domain.Member;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Transactional
@@ -25,8 +26,9 @@ public class MemberRepository {
         return member;
     }
 
-    public Member findMemberByMemberId(Long memberId) {
-        return em.find(Member.class,memberId);
+    public Optional<Member> findMemberByMemberId(Long memberId) {
+        Member member = em.find(Member.class, memberId);
+        return Optional.ofNullable(member);
     }
     public List<Member> findAll() {
         return em.createQuery("select m from Member m", Member.class).getResultList();

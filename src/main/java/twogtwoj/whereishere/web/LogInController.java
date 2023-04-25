@@ -6,14 +6,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import twogtwoj.whereishere.domain.Category;
 import twogtwoj.whereishere.domain.Company;
 import twogtwoj.whereishere.domain.Member;
 import twogtwoj.whereishere.file.FileStore;
-import twogtwoj.whereishere.service.CompanyService;
+import twogtwoj.whereishere.service.CompanyServiceImpl;
 import twogtwoj.whereishere.service.MemberService;
 
 import java.io.File;
@@ -29,7 +27,7 @@ public class LogInController {
     private final MemberService memberService;
     private final FileStore fileStore;
 
-    private final CompanyService companyService;
+    private final CompanyServiceImpl companyServiceImpl;
 
     @GetMapping("/login")
     public String viewLoginPage() {
@@ -71,7 +69,7 @@ public class LogInController {
 
         String companyImgName = UUID.randomUUID() + ".png";
         companyImg.transferTo(new File(fileStore.getFullPath(companyImgName)));
-        companyService.save(new Company(companyLoginId,companyLoginPw,companyBusinessId,companyName,companyImgName,companyIntroduction,companyCategory,companyAddress));
+        companyServiceImpl.save(new Company(companyLoginId,companyLoginPw,companyBusinessId,companyName,companyImgName,companyIntroduction,companyCategory,companyAddress));
 
         redirectAttributes.addAttribute("status",true);
         return "redirect:/login";

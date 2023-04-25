@@ -1,10 +1,6 @@
 package twogtwoj.whereishere.security;
 
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.hibernate.usertype.UserType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,17 +8,14 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import twogtwoj.whereishere.domain.Company;
 import twogtwoj.whereishere.domain.Member;
-import twogtwoj.whereishere.repository.CompanyRepository;
+import twogtwoj.whereishere.repository.CompanyRepositoryImpl;
 import twogtwoj.whereishere.repository.MemberRepository;
 
-import javax.management.MXBean;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,14 +24,14 @@ import java.util.List;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final MemberRepository memberRepository;
-    private final CompanyRepository companyRepository;
+    private final CompanyRepositoryImpl companyRepositoryImpl;
 
 
 
     @Autowired @Lazy
-    public UserDetailsServiceImpl(MemberRepository memberRepository, CompanyRepository companyRepository) {
+    public UserDetailsServiceImpl(MemberRepository memberRepository, CompanyRepositoryImpl companyRepositoryImpl) {
         this.memberRepository = memberRepository;
-        this.companyRepository = companyRepository;
+        this.companyRepositoryImpl = companyRepositoryImpl;
 
     }
 
@@ -51,7 +44,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (userType.equals("member")) {
             user = memberRepository.findMemberByLoginId(loginId);
         } else if (userType.equals("company")) {
-            user = companyRepository.findCompanyByLoginId(loginId);
+            user = companyRepositoryImpl.findCompanyByLoginId(loginId);
         }
 
         // 조회된 도메인이 없을 경우 예외를 발생시킵니다.

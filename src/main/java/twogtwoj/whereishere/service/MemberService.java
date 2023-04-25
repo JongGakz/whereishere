@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import twogtwoj.whereishere.domain.Member;
 import twogtwoj.whereishere.repository.MemberRepository;
 
+import java.util.Optional;
 
 
 @Service
@@ -18,7 +19,7 @@ public class MemberService {
         return memberRepository.save(member);
     }
 
-    public Member findMemberByMemberId(Long memberId) {
+    public Optional<Member> findMemberByMemberId(Long memberId) {
         return memberRepository.findMemberByMemberId(memberId);
     }
 

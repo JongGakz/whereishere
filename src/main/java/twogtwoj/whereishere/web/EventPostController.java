@@ -8,7 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -19,7 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import twogtwoj.whereishere.domain.Company;
 import twogtwoj.whereishere.domain.EventPost;
 import twogtwoj.whereishere.file.FileStore;
-import twogtwoj.whereishere.service.CompanyService;
+import twogtwoj.whereishere.service.CompanyServiceImpl;
 import twogtwoj.whereishere.service.EventPostService;
 
 import java.io.File;
@@ -41,7 +40,7 @@ public class EventPostController {
     4. 게시물 상세보기
      */
     private final EventPostService eventPostService;
-    private final CompanyService companyService;
+    private final CompanyServiceImpl companyServiceImpl;
     private final FileStore fileStore;
 
     // 이벤트포스트 리스트화 하여 보여주는 메소드
@@ -80,7 +79,7 @@ public class EventPostController {
     // 내가 쓴글 보기
     @GetMapping("/eventPost/myList")
     public String eventPostsList(Model model, Pageable pageable, @AuthenticationPrincipal User user) {
-        Company company = companyService.findCompanyByLoginId(user.getUsername());
+        Company company = companyServiceImpl.findCompanyByLoginId(user.getUsername());
         Page<EventPost> events = eventPostService.eventPostList(pageable);
 
         Page<EventPost> resultPage = PageableExecutionUtils.getPage(
@@ -101,7 +100,7 @@ public class EventPostController {
     //이벤트 포스트 생성 메소드
     @GetMapping("/eventPost/new")
     public String showEventPostForm(RedirectAttributes redirectAttributes, @AuthenticationPrincipal User user) {
-        Company findCompany = companyService.findCompanyByLoginId(user.getUsername());
+        Company findCompany = companyServiceImpl.findCompanyByLoginId(user.getUsername());
         List<EventPost> all = eventPostService.findAll();
         List<EventPost> collect = all.stream().filter(n -> n.getCompany().equals(findCompany)).collect(Collectors.toUnmodifiableList()); //필터 equals를 사용하면 그 것만 보여준다 collect는 다시 리스트화 시켜준다.
         if(collect.isEmpty()) {
@@ -118,7 +117,7 @@ public class EventPostController {
     public String saveEventPost(@RequestParam String eventPostTitle,
                                 @RequestParam String eventPostContent, @RequestParam(name = "eventPostImg1", required = false) MultipartFile eventPostImg1,
                                 @RequestParam(name = "eventPostImg2", required = false) MultipartFile eventPostImg2, @AuthenticationPrincipal User user) throws IOException {
-        Company findCompany = companyService.findCompanyByLoginId(user.getUsername());
+        Company findCompany = companyServiceImpl.findCompanyByLoginId(user.getUsername());
 
         if(eventPostImg1 == null && eventPostImg2 == null) {
             eventPostService.save(new EventPost(findCompany, eventPostTitle, eventPostContent, null, null, LocalDate.now()));
@@ -146,7 +145,7 @@ public class EventPostController {
         EventPost eventPosts = eventPostService.eventPostView(eventPostId);
         model.addAttribute("eventPost", eventPosts);
         if(user.getAuthorities().stream().filter(n -> n.getAuthority().equals("ROLE_COMPANY")).toArray().length == 1){
-            Company findCompany = companyService.findCompanyByLoginId(user.getUsername());
+            Company findCompany = companyServiceImpl.findCompanyByLoginId(user.getUsername());
             model.addAttribute("myCompany", findCompany.getName());
         } else {
             model.addAttribute("myCompany","");

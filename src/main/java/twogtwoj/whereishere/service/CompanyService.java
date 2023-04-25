@@ -7,7 +7,6 @@ import twogtwoj.whereishere.repository.CompanyRepository;
 
 import java.util.List;
 
-
 @Service
 @RequiredArgsConstructor
 public class CompanyService {
@@ -15,23 +14,7 @@ public class CompanyService {
     private final CompanyRepository companyRepository;
 
 
-    public Company save(Company company){
-        return companyRepository.save(company);
-    }
-
-    public List<Company> findAll() {
-        return companyRepository.findAll();
-    }
-
-    public Company findCompanyByCompanyName(String companyName) {
-        return companyRepository.findCompanyByCompanyName(companyName);
-    }
-
-    public Company findCompanyByCompanyId(Long companyId) {
-        return companyRepository.findCompanyByCompanyId(companyId);
-    }
-
-    public Company findCompanyByLoginId(String userId) {
-        return companyRepository.findCompanyByLoginId(userId);
+    public List<Company> findByNameContaining(String name) {
+        return companyRepository.findByNameContaining(name);
     }
 }

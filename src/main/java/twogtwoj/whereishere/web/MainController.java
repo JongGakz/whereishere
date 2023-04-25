@@ -2,11 +2,8 @@ package twogtwoj.whereishere.web;
 
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,12 +13,10 @@ import twogtwoj.whereishere.domain.Company;
 import twogtwoj.whereishere.domain.Member;
 import twogtwoj.whereishere.domain.Star;
 import twogtwoj.whereishere.service.CommentService;
-import twogtwoj.whereishere.service.CompanyService;
+import twogtwoj.whereishere.service.CompanyServiceImpl;
 import twogtwoj.whereishere.service.MemberService;
 import twogtwoj.whereishere.service.StarService;
 
-import java.security.Principal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +29,7 @@ public class MainController {
 
     private final MemberService memberService;
 
-    private final CompanyService companyService;
+    private final CompanyServiceImpl companyServiceImpl;
 
     private final StarService starService;
 
@@ -56,7 +51,7 @@ public class MainController {
             return "/home/home";
         } else {
 
-            List<Company> companies = companyService.findAll();
+            List<Company> companies = companyServiceImpl.findAll();
 
             List<Company> companyList = companies.stream().filter(n -> n.getCompanyIntroduction().contains(search)).collect(Collectors.toUnmodifiableList());
 
@@ -70,7 +65,7 @@ public class MainController {
     @GetMapping("/companies/{companyId}")
     public String informationCompany(@PathVariable Long companyId, Model model) {
 
-        Company company = companyService.findCompanyByCompanyId(companyId);
+        Company company = companyServiceImpl.findCompanyByCompanyId(companyId);
 
         // 업체에 등록된 별점객체들 찾기 (별점이 등록된 것이 없으면 0 반환)
         Double starsPoint = starService.findStarsPointByCompany(company);
@@ -97,7 +92,7 @@ public class MainController {
     public String saveStarPoint(@PathVariable Long companyId, @RequestParam Long starPoint, RedirectAttributes redirectAttributes, @AuthenticationPrincipal User user) {
         Member member = memberService.findMemberByLoginId(user.getUsername());
         // 해당 컴퍼니
-        Company company = companyService.findCompanyByCompanyId(companyId);
+        Company company = companyServiceImpl.findCompanyByCompanyId(companyId);
 
         // 현재, 이맴버가 이 컴페니에 별점을 남겼더라면, 적용이 되지않고 리턴할 수 있게 만들기
         List<Star> allStars = starService.findAll();
@@ -130,7 +125,7 @@ public class MainController {
             Member member = memberService.findMemberByLoginId(user.getUsername());
 
             // 회사 객체를 찾아, commentContent 와 함께, 새로운 코멘트객체 저장
-            Company company = companyService.findCompanyByCompanyId(companyId);
+            Company company = companyServiceImpl.findCompanyByCompanyId(companyId);
             commentService.save(new Comment(member, company, commentContent, LocalDateTime.now()));
 
             // 되돌아가기

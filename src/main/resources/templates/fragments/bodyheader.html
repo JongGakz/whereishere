@@ -8,7 +8,7 @@
 
 <!--        로그인한 객체의 정보 어떻게 가져오지 -->
         <div sec:authorize="isAuthenticated()" th:text="${#authentication.principal.username}" style="font-size:35px;"></div>
-        <button class="button"  th:onclick="|location.href='@{/logout}'|">로그아웃</button>
+        <button class="button"  th:onclick="|location.href='@{/logout}'|" style="margin-left:10px;">로그아웃</button>
     </div>
 
     <div class="topmenu">

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"
+          th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css}"
+          rel="stylesheet">
+    <title>후기 게시판 - 메인 페이지</title>
+</head>
+
+<style>
+    .container {
+        margin : 0 auto;
+        margin-top : 40px;
+    }
+
+    .container input {
+        width: 280px;
+        height: 38px;
+    }
+
+    th {
+        text-align: center;
+    }
+
+    td{
+        text-align: center;
+    }
+
+    .page {
+        text-align: center;
+    }
+
+</style>
+
+<body>
+        <div class="container" style="max-width: 700px">
+        <div class="py-5 text-center">
+            <h2>후기 게시판</h2>
+        </div>
+            <div class="row">
+                <div class="col-auto">
+                    <form th:action="@{/review/list}" method="get">
+                        <button class="btn btn-warning float-end"
+                                onclick="location.href='reviewPost.html'"
+                                th:onclick="|location.href='@{/review/post}'|"
+                                type="button">글쓰기</button>
+                        <button class="btn btn-warning float-end"
+                                onclick="location.href='reviewMyList.html'"
+                                th:onclick="|location.href='@{/review/myList}'|"
+                                type="button">내가 쓴 글 보기</button>
+
+
+                        <div class="input-group input-group-dynamic mb-4">
+
+                            <input class="form-control" name="searchKeyword" th:value="${searchKeyword}" placeholder="검색어를 입력해주세요" type="text">
+                            <input class="form-control" name="companyName" th:value="${companyName}" placeholder="회사명 또는 지역을 입력해주세요" type="text">
+
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-warning" type="submit">검색</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        <hr class="my-4">
+        <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>글번호</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>등록날짜</th>
+                    <th>좋아요수</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="reviewPost : ${list}">
+                    <td th:text="${reviewPost.reviewPostId}">1</td>
+                    <td>
+                        <a th:href="@{/review/view(reviewPostId=${reviewPost.reviewPostId})}">
+                            <span th:text="|[${reviewPost.companyName}]|"></span>
+                            </br>
+                            <span th:text="${reviewPost.reviewPostTitle}"></span>
+                        </a>
+                    </td>
+                    <td th:text="${reviewPost.writer}">작성자</td>
+                    <td th:text="${reviewPost.reviewPostDate}">등록날짜</td>
+                    <td th:text="${reviewPost.liked}">좋아요</td>
+                </tr>
+            </tbody>
+        </table>
+            <hr class="my-4">
+
+            <div class="page">
+                <!--th:block -> 굳이 태그로 감쌀 필요가 없는 부분을 감싸는 타임리프 문법-->
+                <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
+                    <a th:if="${page != nowPage}" th:href="@{/review/list(page = ${page - 1}, searchKeyword = ${param.searchKeyword})}" th:text="${page}"></a>
+                    <!--parameter 안에 있는 searchKeyword 를 가져와서 다음 페이지도 검색어에 맞는 페이지가 나오게 구현 됨-->
+                    <strong th:if="${page == nowPage}" th:text="${page}" style="color : red"></strong>
+                </th:block>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

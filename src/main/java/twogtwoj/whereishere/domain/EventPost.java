@@ -13,9 +13,8 @@ public class EventPost { // 이벤트 게시판
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long eventPostId;
 
-
     @ManyToOne
-    @JoinColumn(name ="COMPANY_ID")
+    @JoinColumn(name = "COMPANY_ID")
     private Company company;
 
     private String eventPostTitle;
@@ -25,5 +24,4 @@ public class EventPost { // 이벤트 게시판
     private String eventPostImg;
 
     private LocalDate eventPostWriteDate;
-
 }

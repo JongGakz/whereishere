@@ -1,7 +1,6 @@
 package twogtwoj.whereishere.domain;
 
 public enum Category {
-
     HEALTH("헬스장"),
     RESTAURANT("음식점"),
     HOSPITAL("병원"),

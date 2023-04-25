@@ -12,13 +12,12 @@ public class Star {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long starId;
 
-
     @ManyToOne
-    @JoinColumn(name ="COMPANY_ID")
+    @JoinColumn(name = "COMPANY_ID")
     private Company company;
 
     @ManyToOne
-    @JoinColumn(name ="MEMBER_ID")
+    @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
     private int starPoint;

@@ -1,6 +1,8 @@
 package twogtwoj.whereishere.domain;
 
-import lombok.*;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -8,8 +10,6 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ReviewLike {
 
     @Id
@@ -17,17 +17,16 @@ public class ReviewLike {
     private Long reviewLikeId;
 
     @ManyToOne
-    @JoinColumn(name ="REVIEW_POST_ID")
+    @JoinColumn(name = "REVIEW_POST_ID")
     private ReviewPost reviewPost;
 
     @ManyToOne
-    @JoinColumn(name ="MEMBER_ID")
+    @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
+    private boolean status;
 
-    private int reviewLikePoint; // 좋아요 갯수
-
-    public static ReviewLike like(Member member, ReviewPost reviewPost) {
+    public static ReviewLike toReviewLike(Member member, ReviewPost reviewPost){
         ReviewLike reviewLike = new ReviewLike();
         reviewLike.setMember(member);
         reviewLike.setReviewPost(reviewPost);

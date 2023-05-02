@@ -3,11 +3,8 @@ package twogtwoj.whereishere.web;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.core.io.*;
+import org.springframework.data.domain.*;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
@@ -16,11 +13,9 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import twogtwoj.whereishere.domain.Member;
-import twogtwoj.whereishere.domain.ReviewPost;
-import twogtwoj.whereishere.dto.ReviewPostDto;
+import twogtwoj.whereishere.domain.*;
+import twogtwoj.whereishere.dto.*;
 import twogtwoj.whereishere.file.FileStore;
-import twogtwoj.whereishere.repository.ReviewPostRepository;
 import twogtwoj.whereishere.service.MemberService;
 import twogtwoj.whereishere.service.ReviewPostService;
 
@@ -49,6 +44,17 @@ public class ReviewPostController {
         return "/review/reviewPost";
     }
 
+    @RequestMapping(path = "/postPro", method = POST, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    public String reviewPostPro(@ModelAttribute ReviewPostDto reviewPostDto, Model model, @AuthenticationPrincipal User user) throws Exception{
+        Member member = memberService.findMemberByLoginId(user.getUsername());
+        reviewPostService.post(reviewPostDto,member);
+
+        model.addAttribute("message", "작성이 완료되었습니다.");
+        model.addAttribute("searchUrl", "/review/list");
+
+        return "/review/message";
+    }
+
     @GetMapping("/view/{reviewPostId}")
     public String image(@PathVariable Long reviewPostId, Model model) {
         ReviewPost reviewPost = reviewPostService.reviewPostView(reviewPostId);
@@ -60,16 +66,6 @@ public class ReviewPostController {
     @GetMapping("/images/{filename}")
     public Resource downloadImage(@PathVariable String filename) throws MalformedURLException {
         return new UrlResource("file:" + fileStore.getFullPath(filename));
-    }
-    @RequestMapping(path = "/postPro", method = POST, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-    public String reviewPostPro(@ModelAttribute ReviewPostDto reviewPostDto, Model model, @AuthenticationPrincipal User user) throws Exception{
-        Member member = memberService.findMemberByLoginId(user.getUsername());
-        reviewPostService.post(reviewPostDto,member);
-
-        model.addAttribute("message", "작성이 완료되었습니다.");
-        model.addAttribute("searchUrl", "/review/list");
-
-        return "/review/message";
     }
 
     @SneakyThrows
@@ -112,27 +108,11 @@ public class ReviewPostController {
         return "/review/reviewList";
     }
 
-
-    @GetMapping("/view")//localhost:8080/review/view?id=1
-    public String review(@RequestParam Long reviewPostId, Model model, Principal principal) throws Exception{
-
-        ReviewPost reviewPost = reviewPostService.reviewPostView(reviewPostId);
-
-        model.addAttribute("review", reviewPost);
-        // 글쓴이 아이디
-        model.addAttribute("memberId", reviewPost.getMember().getId());
-
-        Member member = memberService.findMemberByLoginId(principal.getName());
-        int like = reviewPostService.findLike(reviewPostId, member.getId());
-
-        model.addAttribute("like", like);
-        model.addAttribute("memberId", member.getId());
-
-        return "/review/view";
-    }
-
     @GetMapping("/myList")
-    public String reviewMyList(Model model, Pageable pageable, @AuthenticationPrincipal User user) {
+    public String reviewMyList(@PageableDefault(size = 5, sort = "reviewPostDate", direction = Sort.Direction.DESC) Pageable pageable,
+                               @RequestParam(name = "searchKeyword", required = false) String searchKeyword,
+                               @RequestParam(name = "name", required = false) String name,
+                               Model model, @AuthenticationPrincipal User user) {
         Member member = memberService.findMemberByLoginId(user.getUsername());
         Page<ReviewPost> reviewPost = reviewPostService.reviewPostList(pageable);
 
@@ -144,6 +124,8 @@ public class ReviewPostController {
         int nowPage = resultPage.getPageable().getPageNumber() + 1;
         int startPage = Math.max(nowPage - 4, 1);
         int endPage = Math.min(nowPage + 5, resultPage.getTotalPages());
+
+        model.addAttribute("list", reviewList(pageable, searchKeyword, name, model));
         model.addAttribute("reviewPost", resultPage);
         model.addAttribute("nowPage", nowPage);
         model.addAttribute("startPage", startPage);
@@ -151,10 +133,45 @@ public class ReviewPostController {
         return "review/reviewMyList";
     }
 
+    @GetMapping("/view")//localhost:8080/review/view?id=1
+    public String review(@RequestParam Long reviewPostId, Model model, Principal principal) throws Exception {
+
+        ReviewPost reviewPost = reviewPostService.reviewPostView(reviewPostId);
+        model.addAttribute("review", reviewPost);
+
+        try {
+            Member member = memberService.findMemberByLoginId(principal.getName());
+            int like = reviewPostService.findLike(reviewPostId, member.getId());
+//
+            // 로그인한 회원이 해당 후기 게시글에 좋아요를 누른 기록
+            model.addAttribute("like", like);
+            model.addAttribute("memberId", member.getId());
+        } catch (ArrayIndexOutOfBoundsException e) {
+            model.addAttribute("like", 0);
+            model.addAttribute("memberId", 0);
+
+        } finally {
+            model.addAttribute("reviewPostId", reviewPost.getReviewPostId());
+        }
+
+        return "/review/view";
+    }
+
     @ResponseBody
-    @PostMapping("like")
-    public int like(Long reviewPostId, Long memberId) {
-        return reviewPostService.saveLike(reviewPostId, memberId);
+    @PostMapping("/like")
+    public ReviewLikeResponseDto like(@RequestBody ReviewLikeDto reviewLikeDto) {
+
+        Long memberId = reviewLikeDto.getMemberId();
+        Long reviewPostId = reviewLikeDto.getReviewPostId();
+
+        //저장 1, 삭제 0
+
+        // 1. 자바스크립트 통해서 post 요청 보내기
+        // 2. 컨트롤러에서 수신
+        // 3. reviewPostService 내에서 "좋아요 증가" 로직 수행
+        // 4. 증가하면 1, 감소하면 0
+
+        return new ReviewLikeResponseDto(reviewPostService.saveLike(reviewPostId, memberId));
     }
 
     @GetMapping("/modify/{reviewPostId}")

@@ -60,29 +60,29 @@
     <div class="py-5 text-center">
         <h2>후기 작성 페이지</h2>
     </div>
-        <form th:action="|/review/postPro|" method="post" enctype="multipart/form-data">
-            업체명 :
-                <input name="name" id= "autocompleteCompany" type="text" placeholder="업체명을 입력해주세요" aria-label="Search"/>
-                <div>
-                    <select id="companyName"></select>
-                </div>
-
-            제목 : <input name="reviewPostTitle" type="text" placeholder="제목을 입력해주세요.">
-            내용 : <input id="reviewPostContent" name="reviewPostContent" placeholder="내용을 입력해주세요" >
-            첨부파일:
+    <form th:action="@{/review/postPro}" method="post" enctype="multipart/form-data">
+        업체명 :
+            <input name="name" id= "autocompleteCompany" type="text" placeholder="업체명을 입력해주세요" aria-label="Search"/>
             <div>
-                </br>
-                <input type="file" name="file1" id="file1" onchange="readURL1(this)"><img id="img1">
-                </br>
-                <input type="file" name="file2" id="file2" onchange="readURL2(this)"><img id="img2" >
+                <select id="companyName"></select>
             </div>
 
-            <hr class="my-4">
+        제목 : <input name="reviewPostTitle" type="text" placeholder="제목을 입력해주세요.">
+        내용 : <input id="reviewPostContent" name="reviewPostContent" placeholder="내용을 입력해주세요" >
+        첨부파일:
+        <div>
+            </br>
+            <input type="file" name="file1" id="file1" onchange="readURL1(this)"><img id="img1">
+            </br>
+            <input type="file" name="file2" id="file2" onchange="readURL2(this)"><img id="img2" >
+        </div>
+
+        <hr class="my-4">
                 <!--컨트롤러의 매개변수의 값과 name 의 값이 같아야함-->
-            <button class="btn btn-outline-success" type="submit">작성</button>
-        </form>
-        </br>
-        <button class="btn btn-outline-danger" th:onclick="|location.href='@{/review/list}'|">취소</button>
+        <button class="btn btn-outline-success" type="submit">작성</button>
+    </form>
+    </br>
+    <button class="btn btn-outline-danger" th:onclick="|location.href='@{/review/list}'|">취소</button>
     </div>
 </body>
 

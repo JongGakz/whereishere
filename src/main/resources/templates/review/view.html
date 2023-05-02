@@ -82,12 +82,13 @@
             </div>
         </div>
 
-
-
     </div>
 </body>
 
 <script>
+    let memberId = document.querySelector("#memberId").value;
+    let reviewPostId = document.querySelector("#reviewPostId").value;
+
     let likeBtn = document.createElement('img');
     likeBtn.classList.add("heart");
     likeBtn.src = "/image/like_empty.png";
@@ -96,7 +97,7 @@
     let likedBtn = document.createElement('img');
     likedBtn.classList.add("heart-liked");
     likedBtn.src = "image/like_click.png";
-    likedBtn.alt = "좋아요된하트";
+    likedBtn.alt = "좋아요된 하트";
 
     let like = document.createElement('div');
     like.classList.add("like");
@@ -112,18 +113,45 @@
 
     like = document.querySelectorAll('.like');
     like.forEach(function(event) {
-        event.addEventListener('click', function() {
-            let likeBtn = this.querySelector('.heart');
-            let likedBtn = this.querySelector('.heart-liked');
+        event.addEventListener('click',
+            function () {
+                if (memberId != 0) {
+                    processLike();
+                }
+            })
 
-            if (likeBtn.style.display === 'none') {
-                likeBtn.style.display = 'inline-block';
-                likedBtn.style.display = 'none';
-            } else {
+        async function processLike() {
+
+            let likeBtn = document.querySelector('.heart');
+            let likedBtn = document.querySelector('.heart-liked');
+            let likeCount = document.querySelector("#like-count");
+
+            let response = await fetch("http://localhost:8080/review/like", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    memberId: memberId,
+                    reviewPostId: reviewPostId,
+                })
+            });
+
+            let data = await response.json();
+            console.log(data)
+
+            console.log(data.like)
+            if (data.like === 1) {
+                likeCount.textContent = Number(likeCount.textContent) + 1;
                 likeBtn.style.display = 'none';
                 likedBtn.style.display = 'inline-block';
+
+            } else {
+                likeCount.textContent = Number(likeCount.textContent) - 1;
+                likeBtn.style.display = 'inline-block';
+                likedBtn.style.display = 'none';
             }
-        })
-    })
+        }
+    });
 </script>
 </html>

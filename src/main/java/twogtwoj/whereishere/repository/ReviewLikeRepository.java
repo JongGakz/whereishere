@@ -2,10 +2,7 @@ package twogtwoj.whereishere.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import twogtwoj.whereishere.domain.Member;
-import twogtwoj.whereishere.domain.ReviewLike;
-import twogtwoj.whereishere.domain.ReviewPost;
-
+import twogtwoj.whereishere.domain.*;
 import java.util.Optional;
 
 @Repository

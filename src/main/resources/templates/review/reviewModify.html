@@ -23,6 +23,7 @@
     }
 
     #reviewPostContent {
+
         width : 100%;
         margin-top : 10px;
         min-height : 300px;
@@ -32,7 +33,7 @@
     input[type=file]::file-selector-button {
         width: auto;
         height: 38px;
-        background: #FFC107;
+        background: #28a745;
     }
     .container button {
         width : 100%
@@ -49,18 +50,20 @@
             <h2>후기 수정 게시판</h2>
         </div>
         <div>
-            <label>업체명</label>
+            <label for="name">업체명</label>
             <input type="text" id="autocompleteCompany" name="name" class="form-control"
                    th:value="${review.name}" value="삼성성모안과">
             <div>
-                <select id="companyName"></select>
+                <select id="name">
+                    <!--                        <option th:value="${review.name}"></option>-->
+                </select>
             </div>
         </div>
 
         <div>
             <label for="memberName">작성자</label>
             <input type="text" id="memberName" name="memberName" class="form-control"
-                   th:value="${review.member}" value="박가경" readonly>
+                   th:value="${review.member.getMemberName()}" value="박가경" readonly>
         </div>
         <div>
             <label for="reviewPostTitle">제목</label>
@@ -71,9 +74,10 @@
         <div>
             <label for="reviewPostContent">내용</label>
             <input type="text" id="reviewPostContent" name="reviewPostContent" class="form-control"
-                      th:value="${review.reviewPostContent}" value="내용">
+                   th:value="${review.reviewPostContent}" value="내용">
+
         </div>
-           </br>
+        </br>
         <div>
             <label>첨부파일</label>
             <input type="file" name="file1" id="file1"> <img id="img1" th:src="|/review/images/${review.reviewPostImg1}|" value="사진1" width="300" height="300"/>
@@ -179,6 +183,6 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
-</script>
 
+</script>
 </html>

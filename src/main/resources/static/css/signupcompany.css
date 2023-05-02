@@ -1,0 +1,91 @@
+img[src]{
+    margin:30px;
+    width:200px;
+    height:fit-content;
+}
+
+
+.signup_company_menu {
+    margin-left:30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    padding-right: 40px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    max-width: 500px;
+    min-width: 500px;
+}
+
+.signup_company_menu form {
+    width: 100%;
+    height: 100%;
+}
+
+.signup_company_menu label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+.signup_company_list {
+    margin-top:20px;
+}
+
+.signup_company_menu input {
+    display: inline-block;
+    width: 62%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+#loginIdCheckComment, #loginPwCheckComment, #loginPwCheckComment2 {
+    font-size:15px;
+    color:red;
+}
+
+#companyIntroduction {
+    width:100%;
+    height:50px;
+}
+
+button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 0 5px;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    cursor: pointer;
+}
+
+.signup_company_create {
+    background-color: #007bff;
+}
+
+.signup_company_button button:hover {
+    background-color: #0069d9;
+}
+
+.signup_company_list select {
+    width:100px;
+    height:50px;
+    margin-bottom: 20px;
+}
+.signup_company_address > .signup_company_address_button:hover {
+    background-color:rgb(229,229,229);
+}
+button:hover {
+    background-color: #0069d9;
+}
+
+@media screen and (max-width: 480px) {
+    .signup_company_menu {
+        max-width: 100%;
+    }
+}

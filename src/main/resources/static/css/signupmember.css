@@ -1,0 +1,92 @@
+img[src]{
+    margin:30px;
+    width:200px;
+    height:fit-content;
+}
+
+.signup_member_menu {
+    margin-left:30%;
+    margin-top:70px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    padding-right: 40px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    max-width: 500px;
+    min-width: 500px;
+}
+
+.signup_member_list {
+    margin-top:20px;
+}
+
+.signup_member_menu form {
+    width: 100%;
+    height: 100%;
+}
+
+.signup_member_menu label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+.signup_member_birthday label {
+    display:inline-block;
+}
+
+.signup_member_menu input {
+    display: inline-block;
+    width: 62%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.signup_member_birthday input {
+    display:inline-block;
+    width:20%;
+}
+
+button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 0 5px;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0069d9;
+}
+.signup_member_create {
+    background-color: #007bff;
+}
+
+.signup_member_button button:hover {
+    background-color: #0069d9;
+}
+
+.signup_member_cancel:hover {
+    background-color: #c82333;
+}
+#loginIdCheckComment, #loginPwCheckComment, #loginPwCheckComment2 {
+    font-size:15px;
+    color:red;
+}
+
+
+
+
+@media screen and (max-width: 480px) {
+    .signup_member_menu {
+        max-width: 100%;
+    }
+}

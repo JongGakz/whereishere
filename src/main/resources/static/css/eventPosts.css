@@ -1,16 +1,15 @@
 .container {
     display: grid;
     grid-template-columns: 1fr 800px 1fr;
-    grid-template-rows: 50px 100px 100px 400px 30px;
-    grid-auto-columns: 1fr;
+    grid-template-rows: 50px 50px 100px 400px 30px;
     gap: 0px 0px;
     grid-auto-flow: row;
     grid-template-areas:
     ". . ."
     ". eventPost ."
     ". eventPostCategory ."
-    ". eventPostList .";
-    ". page ."
+    ". eventPostList ."
+    ". page .";
     justify-items: stretch;
     align-items: stretch;
 }
@@ -50,7 +49,9 @@
     word-wrap: break-word;
     justify-self: center;
 }
-
+.eventPostList tr:last-child td {
+    border-bottom: 1px solid #dee2e6;
+}
 
 .page {
     grid-area: page;
@@ -70,21 +71,7 @@
 
 .table{
     margin-bottom: 0;
-}
-
-.list{
-    color:blue;
-    font-size:15px;
-}
-
-li {
-    word-wrap: break-word;
-    display: block;
-    padding: 10px;
-    margin-bottom: 5px;
-    border: 3px solid #efefef;
-    font-size: 14px;
-    cursor: pointer;
+    table-layout: fixed;
 }
 
 .star-ratings {
@@ -97,22 +84,43 @@ li {
     -webkit-text-stroke-color: #2b2a29;
 }
 
-.star-ratings-fill {
-    color: #fff58c;
-    padding: 0;
-    position: absolute;
-    z-index: 1;
-    display: flex;
-    top: 0;
-    left: 0;
-    overflow: hidden;
-    -webkit-text-fill-color: gold;
-}
-
-.star-ratings-base {
-    z-index: 0;
-    padding: 0;
-}
 .button{
     display: inline-block;
+}
+
+th {
+    text-align: center;
+}
+
+td {
+    text-align: center;
+}
+
+.active {
+    display: inline-block;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #ccc;
+    color: white;
+}
+
+strong {
+    display: inline-block;
+    width: 2rem; /* 너비와 높이를 같게 설정 */
+    height: 2rem;
+    padding: 0.5rem;
+    border: 2px solid green;
+    border-radius: 5px;
+    text-align: center;
+    height: 30px;
+    line-height: 10px;
+}
+
+a {
+    color: black;
+}
+
+strong, a {
+    margin-right: 10px;
 }

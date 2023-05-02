@@ -1,8 +1,6 @@
 package twogtwoj.whereishere.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @Data
@@ -10,7 +8,8 @@ import org.springframework.web.multipart.MultipartFile;
 @AllArgsConstructor
 public class ReviewPostDto {
 
-    private String name;
+    private Long reviewPostId;
+    private String name;//기업명
     private String reviewPostTitle;
     private String reviewPostContent;
     private MultipartFile file1;

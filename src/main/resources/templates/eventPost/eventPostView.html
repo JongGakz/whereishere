@@ -5,19 +5,40 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"
         th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css}" rel="stylesheet">
+<link href="/css/eventPostView.css" rel="stylesheet">
     <title>후기 게시판 - 게시글 보기</title>
 
 </head>
 <body>
 <div th:replace="fragments/bodyheader :: bodyheader"/>
-    업체명 : <span th:text="${eventPost.company.getName()}">업체명</span><br/>
-    제목 : <span th:text="${eventPost.eventPostTitle}">이벤트 제목</span><br/>
-    내용 : <span th:text="${eventPost.eventPostContent}">이벤트 내용</span><br/>
-    <img th:src="|/events/image/${eventPost.getEventPostImg1()}|" width="300" height="300"/>
-    <img th:src="|/events/image/${eventPost.getEventPostImg2()}|" width="300" height="300"/>
-
-    <a th:if="${eventPost.company.getName()}==${myCompany}" th:href="@{/events/eventPost/delete/(eventPostId = ${eventPost.eventPostId})}">글삭제</a>
-    <a th:if="${eventPost.company.getName()}==${myCompany}" th:href="@{/events/eventPost/modify/{eventPostId}(eventPostId = ${eventPost.eventPostId})}">글수정</a>
+<div class="container">
+    <div class="Button">
+        <button class="btn btn-outline-success"
+                th:if="${eventPost.company.getName()}==${myCompany}"
+                th:onclick="|location.href='@{/events/eventPost/delete(eventPostId=${eventPost.eventPostId})}'|">삭제</button>
+        <button class="btn btn-outline-success"
+                th:if="${eventPost.company.getName()}==${myCompany}"
+                th:onclick="|location.href='@{/events/eventPost/update/{eventPostId}(eventPostId = ${eventPost.eventPostId})}'|">수정</button>
+    </div>
+    <div class="eventPostTitle">
+        <span th:text="${eventPost.eventPostTitle}">이벤트 제목</span><br/>
+    </div>
+    <div class="companyName">
+        <span class="badge badge-success" th:text="${eventPost.company.getName()}">업체명</span><br/>
+    </div>
+    <div class="eventPostWriteDate" >
+        <span th:text="${eventPost.eventPostWriteDate}">2020-12-01</span><br/>
+    </div>
+    <div class="eventPostContent">
+        <div th:each="imgs : ${imgs}">
+            <img th:src="|/events/image/${imgs}|" width="100%" height="100%" onerror="this.style.display='none'" alt='' />
+        </div>
+        <span th:text="${eventPost.eventPostContent}">이벤트 내용</span><br/>
+    </div>
+    <div class="eventPostImgs">
+    </div>
 </div>
+<div th:replace="fragments/bodyfooter :: bodyfooter"/>
+
 </body>
 </html>

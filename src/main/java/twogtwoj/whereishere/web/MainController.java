@@ -35,6 +35,15 @@ public class MainController {
 
     private final CommentService commentService;
 
+
+
+    @GetMapping("/main")
+    public String enterMain(Model model) {
+        List<Company> companyList = companyServiceImpl.findAll();
+        model.addAttribute("companyList",companyList);
+        return "/main";
+    }
+
     @GetMapping("/home")
     public String enterHome(Model model) {
         List<Company> companyList = new ArrayList<>();

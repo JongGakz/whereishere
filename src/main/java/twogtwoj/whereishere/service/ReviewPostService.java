@@ -1,23 +1,15 @@
 package twogtwoj.whereishere.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import twogtwoj.whereishere.domain.Member;
-import twogtwoj.whereishere.domain.ReviewLike;
-import twogtwoj.whereishere.domain.ReviewPost;
-import twogtwoj.whereishere.dto.ReviewPostDto;
-import twogtwoj.whereishere.file.FileStore;
-import twogtwoj.whereishere.file.UploadFile;
-import twogtwoj.whereishere.repository.MemberRepository;
-import twogtwoj.whereishere.repository.ReviewLikeRepository;
-import twogtwoj.whereishere.repository.ReviewPostRepository;
-
+import twogtwoj.whereishere.domain.*;
+import twogtwoj.whereishere.dto.*;
+import twogtwoj.whereishere.file.*;
+import twogtwoj.whereishere.repository.*;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -34,10 +26,12 @@ public class ReviewPostService {
 
 
     //글 작성 처리
-    public void post(ReviewPostDto reviewPostDto) throws Exception {
+    public void post(ReviewPostDto reviewPostDto,Member member) throws Exception {
 
         ReviewPost reviewPost = new ReviewPost();
 
+        reviewPost.setMember(member);
+        reviewPost.setWriter(member.getName());
         reviewPost.setReviewPostDate(LocalDate.now());
         reviewPost.setName(reviewPostDto.getName());
         reviewPost.setReviewPostContent(reviewPostDto.getReviewPostContent());
@@ -105,25 +99,46 @@ public class ReviewPostService {
         reviewPostRepository.deleteById(reviewPostId);
     }
 
+    public int findLike(Long reviewPostId, Long memberId) {
+        Optional<ReviewPost> reviewPost = reviewPostRepository.findById(reviewPostId);
+        Optional<Member> member = memberRepository.findMemberByMemberId(memberId);
+
+        if (reviewPost.isPresent() && member.isPresent()) {
+            ReviewPost foundReviewPost = reviewPost.get();
+            Member foundMember = member.get();
+
+            Optional<ReviewLike> findLike = reviewLikeRepository.findByReviewPostAndMember(foundReviewPost, foundMember);
+
+            if (findLike.isEmpty()) {
+                return 0; // 좋아요 안 함
+            } else {
+                return 1; // 좋아요 함
+            }
+        }
+        return -1; // 처리할 수 없는 경우
+    }
+
     @Transactional
-    public int saveReviewLike(ReviewPost reviewPostId, Member memberId) {
-        ReviewLike findReviewLike = reviewLikeRepository.findByReviewPostAndMember(reviewPostId, memberId);
+    public int saveLike(Long reviewPostId, Long memberId) {
+        ReviewPost foundReviewPost = reviewPostRepository.findById(reviewPostId).get();
+        Member foundMember = memberRepository.findMemberByMemberId(memberId).get();
 
-        if (findReviewLike == null) {
-            Member member = memberRepository.findMemberByMemberId(memberId.getId()).get();
-            ReviewPost reviewPost = reviewPostRepository.findById(reviewPostId.getReviewPostId()).get();
+        Optional<ReviewLike> findLike = reviewLikeRepository.findByReviewPostAndMember(foundReviewPost, foundMember);
 
+        Member member = memberRepository.findMemberByMemberId(memberId).get();
+        ReviewPost reviewPost = reviewPostRepository.findById(reviewPostId).get();
+
+        if (findLike.isEmpty()) {
             ReviewLike reviewLike = ReviewLike.toReviewLike(member, reviewPost);
             reviewLikeRepository.save(reviewLike);
-            reviewPostRepository.plusReviewLike(reviewPostId.getReviewPostId());
+            reviewPostRepository.plusReviewLike(reviewPostId);
             //저장 : 1
             return 1;
         } else {
-            reviewLikeRepository.deleteByReviewPostAndMember(reviewPostId, memberId);
-            reviewPostRepository.minusReviewLike(reviewPostId.getReviewPostId());
+            reviewLikeRepository.deleteByReviewPostAndMember(reviewPost, member);
+            reviewPostRepository.minusReviewLike(reviewPostId);
             //삭제 : 0
             return 0;
-
         }
     }
 }

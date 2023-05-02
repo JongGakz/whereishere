@@ -1,24 +1,57 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/header :: header"/>
-    <meta charset="UTF-8">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"
-          th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css}"
-          rel="stylesheet">
-    <title>후기 게시판 - 게시글 작성</title>
+<meta charset="UTF-8">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"
+      th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css}"
+      rel="stylesheet">
+<link href="/css/createEventPost.css" rel="stylesheet">
+<title>Title</title>
 
 <body>
 <div th:replace="fragments/bodyheader :: bodyheader"/>
-
-<form th:action method="post" enctype="multipart/form-data" class="col">
-    <ul>
-        <li>리뷰 제목<input type="text" name="eventPostTitle"></li>
-        <li>리뷰 내용 <input type="text" name="eventPostContent"></li>
-        <li>이미지 1<input type="file" name="eventPostImg1"></li>
-        <li>이미지 2<input type="file" name="eventPostImg2"></li>
-    </ul>
-    <input type="submit" id="submit">
+<form th:action method="post" enctype="multipart/form-data" class="grid-form">
+    <div class="modify">
+        <button class="btn btn-outline-success" type="submit">업로드</button>
+    </div>
+    <div class="eventTitle">
+        <label for="eventPostTitle" class="title">제목</label>
+        <input name="eventPostTitle" type="text" id="eventPostTitle">
+    </div>
+    <div class="eventPostContent" id="previewImg">
+        <img id="eventPostContent">
+    </div>
+    <textarea name="eventPostContent" class="eventPostContent"></textarea>
+    <div class="eventPostImgs">
+        <label for="eventPostImgs" class="imgs">이미지 첨부</label>
+        <input type="file" name="eventPostImgs" id="eventPostImgs">
+        <details>
+            <summary>파일명</summary>
+            <li id="preview"></li>
+        </details>
+    </div>
 </form>
+<div th:replace="fragments/bodyfooter :: bodyfooter"/>
+
 </body>
 </html>
+<script>
+    const handler = {
+        init() {
+            const fileInput = document.querySelector('#eventPostImgs');
+            const preview = document.querySelector('#preview');
+            fileInput.addEventListener('change', () => {
+                console.dir(fileInput)
+                const files = Array.from(fileInput.files)
+                files.forEach(file => {
+                    preview.innerHTML += `
+                        <p id="${file.lastModified}">
+                            ${file.name}
+                        </p>`;
+                });
+            });
+        }
+    }
+    handler.init()
+</script>

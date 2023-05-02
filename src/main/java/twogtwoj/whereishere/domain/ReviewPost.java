@@ -1,10 +1,6 @@
 package twogtwoj.whereishere.domain;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -38,7 +34,7 @@ public class ReviewPost {//후기 게시판
 
     private String reviewPostImg2;
 
-    private int liked;//좋아요
+    private int likeCount;//좋아요
 
     private LocalDate reviewPostDate;
 

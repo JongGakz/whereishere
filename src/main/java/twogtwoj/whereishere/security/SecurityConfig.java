@@ -32,6 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable();
         http.
 
                 authorizeRequests()
@@ -49,7 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("loginId")
                 .passwordParameter("loginPw")
                 .failureUrl("/login?error=false") // 로그인이 실패하면 error의 파라미터가 false라는 값을 가지고, 로그인창으로 다시 보내줍니다.
-                .defaultSuccessUrl("/home", true).permitAll() // 권한 승인
+                .defaultSuccessUrl("/main", true).permitAll() // 권한 승인
                 .and()
 
 

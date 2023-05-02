@@ -2,21 +2,35 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <header th:fragment="bodyheader" class="body_header">
-    <a href="/home"><img src="/image/LOGO.png" class="body_logo"></a>
-
-    <div class="login_info">
-
-<!--        로그인한 객체의 정보 어떻게 가져오지 -->
-        <div sec:authorize="isAuthenticated()" th:text="${#authentication.principal.username}" style="font-size:35px;"></div>
-        <button class="button"  th:onclick="|location.href='@{/logout}'|" style="margin-left:10px;">로그아웃</button>
-    </div>
+    <a href="/main" class="body_href_logo"><img src="/image/LOGO.png" class="body_logo"></a>
 
     <div class="topmenu">
-
-        <a href="/home" class="topmenusource">메인 메뉴</a>
+        <a href="/home" class="topmenusource">지도 찾기</a>
         <span class="contour">|</span>
-        <a href="/review/list" class="topmenusource">리뷰 게시판</a>
+        <a href="/home" class="topmenusource">업체 정보</a>
         <span class="contour">|</span>
         <a href="/events/eventPost" class="topmenusource">이벤트 게시판</a>
+        <span class="contour">|</span>
+        <a href="/review/list" class="topmenusource">리뷰 게시판</a>
     </div>
+
+    <div class="body_header_dropdown">
+        <button class="body_header_dropbtn">Menu ▼</button>
+        <div class="body_header_dropdown-content">
+            <a href="/home">첫 화면</a>
+            <a href="/home">업체 정보</a>
+            <a href="/events/eventPost">이벤트 게시판</a>
+            <a href="/review/list">리뷰 게시판</a>
+        </div>
+    </div>
+
+
+
+    <div class="login_info">
+        <div sec:authorize="isAuthenticated()" th:text="${#authentication.principal.username} + '님'"
+             style="font-size:15px;"></div>
+        <button class="button" th:onclick="|location.href='@{/logout}'|" style="margin-left:10px;">로그아웃</button>
+    </div>
+
+
 </header>

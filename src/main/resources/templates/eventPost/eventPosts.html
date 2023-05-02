@@ -10,7 +10,7 @@
 <link href="/css/eventPosts.css" rel="stylesheet">
 <body>
 <div th:replace="fragments/bodyheader :: bodyheader"/>
-<div class="container" style="max-width: 800px">
+<div class="container">
     <div class="eventPost">
         <h1>이벤트포스트 게시판</h1>
     </div>
@@ -34,7 +34,7 @@
     </div>
     <hr class="my-4">
     <div class="eventPostList">
-        <table class="table">
+        <table class="table" style="width: 800px">
             <thead>
             <tr>
                 <th>작성자</th>
@@ -45,20 +45,22 @@
             </thead>
             <tbody>
             <tr class="eventPostContent" th:each="eventPost : ${events}" th:onclick="|location.href='@{|/events/eventPost/${eventPost.eventPostId}|}'|">
-                <td th:text="${eventPost.company.getName()}">작성자</td>
-                <td th:text="${eventPost.eventPostTitle}">제목</td>
-                <td th:text="${eventPost.eventPostContent}">이벤트 내용</td>
-                <td style="width: 124px;" th:text="${eventPost.eventPostWriteDate}">등록날짜</td>
+                <td style="padding: 10px; width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" th:text="${eventPost.company.getName()}">작성자</td>
+                <td style="padding: 10px; width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" th:text="${eventPost.eventPostTitle}">제목</td>
+                <td style="padding: 10px; width: 400px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" th:text="${eventPost.eventPostContent}">이벤트 내용</td>
+                <td style="padding: 10px; width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" th:text="${eventPost.eventPostWriteDate}">등록날짜</td>
             </tr>
             </tbody>
         </table>
-        <div class="page">
+    </div>
+    <div class="page">
         <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
             <a th:if="${page != nowPage}" th:href="@{/events/eventPost(page = ${page - 1})}" th:text="${page}"></a>
-            <strong th:if="${page == nowPage}" th:text="${page}" style="color: black"></strong>
+            <strong th:if="${page == nowPage}" th:text="${page}" style="color: black" ></strong>
         </th:block>
-        </div>
     </div>
 </div> <!-- /container -->
+<div th:replace="fragments/bodyfooter :: bodyfooter"/>
+
 </body>
 </html>

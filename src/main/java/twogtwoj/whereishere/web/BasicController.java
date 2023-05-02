@@ -58,15 +58,15 @@ public class BasicController {
 
 
         companyServiceImpl.save(new Company("kitri", "123123", 1838100871L,
-                "키트리주식회사", "이미지1.png", "세상에서 제일 맛있는 김치찌개병원", Category.HOSPITAL.getDescription()
+                "키트리병원", "이미지1.png", "시설 최대 병원", Category.HOSPITAL.getDescription()
                 , "경기도 부천시 소삼로 47"));
 
         companyServiceImpl.save(new Company("kisri", "1818182", 1523849210L,
-                "한국시설안전연구원", "이미지2.png", "둘이먹다 하나죽어도 모르는 아메리카노 카페", Category.CAFFE.getDescription()
+                "스타벅스 소사점", "이미지2.png", "둘이먹다 하나죽어도 모르는 아메리카노 카페", Category.CAFFE.getDescription()
                 , "울산광역시 동구 전하로 64"));
 
         Company company = companyServiceImpl.save(new Company("starbucks", "starbucks112", 6627019215L,
-                "별다방", "이미지3.png", "스타벅스를 혐오하는 자만 먹을 수 있는 김치찌개 까페", Category.CAFFE.getDescription()
+                "별다방", "이미지3.png", "스타벅스를 혐오하는 자만 먹을 수 있는 까페", Category.CAFFE.getDescription()
                 , "전라남도 무안군 해제면 만송로 480"));
 
         companyServiceImpl.save(new Company("JeJu", "202012", 876451231L,
@@ -233,15 +233,15 @@ public class BasicController {
         commentService.save(new Comment(member4, company, "허허벌판", LocalDateTime.now()));
 
 
-        eventPostService.save(new EventPost(companyServiceImpl.findCompanyByCompanyName("하얀나라피부과의원"), "할인중", "할인중입니다.", null, null, LocalDate.of(2022,02, 13)));
-        eventPostService.save(new EventPost(companyServiceImpl.findCompanyByCompanyName("핏앤피트니스"), "새해 이벤트", "1월 중에 등록하신분들은 회원권 40%할인 해드립니다.", "fitness1", "fitness2", LocalDate.of(2022,01, 10)));
-        eventPostService.save(new EventPost(companyServiceImpl.findCompanyByCompanyName("강냉이소쿠리"), "아메리카노 반값 이벤트", "한달 동안 아메리카노에 한해서 반값 이벤트 합니다.", "gang1.png", "gang2.png", LocalDate.of(2022,02, 13)));
-        eventPostService.save(new EventPost(companyServiceImpl.findCompanyByCompanyName("만동제과"), "빵 6개 이벤트", "빵 6개를 한번에 사시면 서비스로 2개를 드려요", "bread1", "bread2", LocalDate.of(2021,05, 13)));
-        eventPostService.save(new EventPost(companyServiceImpl.findCompanyByCompanyName("테라로사 커피공장 강릉본점"), "아침이벤트", "아침에는 아메리카노가 이천원 입니다.", "coffee1", "coffee2", LocalDate.of(2021,12, 27)));
-        eventPostService.save(new EventPost(companyServiceImpl.findCompanyByCompanyName("강릉자동차극장"), "팝콘 세트 이벤트", "팝콘 세트 20%할인합니다.", "movie1.png", "movie2.png", LocalDate.of(2020,07, 24)));
-        eventPostService.save(new EventPost(companyServiceImpl.findCompanyByCompanyName("롯데시네마 동해"), "조조영화 특별 할인", "조조영화는 10%할인 합니다.", "cinema1.png", "cinema2.png", LocalDate.of(2022,01, 05)));
-        eventPostService.save(new EventPost(companyServiceImpl.findCompanyByCompanyName("그린횟집"), "제철생선 주문시 추가이벤트", "제철생선을 시킬시 광어와 우럭회를 추가로 드려요", "green1.png", "green2.png", LocalDate.of(2022,04, 15)));
-        eventPostService.save(new EventPost(companyServiceImpl.findCompanyByCompanyName("강릉한정식 하서주미역"), "10인이상 단체손님은 음료수 무료", "10인 이상 단체손님 방문시 음료수를 무료로 제공해 드립니다.", "han1.png", "han2.png", LocalDate.of(2019,11, 11)));
+        eventPostService.save(new EventPost(companyServiceImpl.findCompanyByCompanyName("하얀나라피부과의원"), "할인중", "할인중입니다.", null, LocalDate.of(2022,02, 13)));
+        eventPostService.save(new EventPost(companyServiceImpl.findCompanyByCompanyName("핏앤피트니스"), "새해 이벤트", "1월 중에 등록하신분들은 회원권 40%할인 해드립니다.", "이미지2.png", LocalDate.of(2022,01, 10)));
+        eventPostService.save(new EventPost(companyServiceImpl.findCompanyByCompanyName("강냉이소쿠리"), "아메리카노 반값 이벤트", "한달 동안 아메리카노에 한해서 반값 이벤트 합니다.", "이미지2.png", LocalDate.of(2022,02, 13)));
+        eventPostService.save(new EventPost(companyServiceImpl.findCompanyByCompanyName("만동제과"), "빵 6개 이벤트", "빵 6개를 한번에 사시면 서비스로 2개를 드려요", "이미지2.png", LocalDate.of(2021,05, 13)));
+        eventPostService.save(new EventPost(companyServiceImpl.findCompanyByCompanyName("테라로사 커피공장 강릉본점"), "아침이벤트", "아침에는 아메리카노가 이천원 입니다.", "이미지2.png", LocalDate.of(2021,12, 27)));
+        eventPostService.save(new EventPost(companyServiceImpl.findCompanyByCompanyName("강릉자동차극장"), "팝콘 세트 이벤트", "팝콘 세트 20%할인합니다.", "이미지2.png", LocalDate.of(2020,07, 24)));
+        eventPostService.save(new EventPost(companyServiceImpl.findCompanyByCompanyName("롯데시네마 동해"), "조조영화 특별 할인", "조조영화는 10%할인 합니다.", "이미지2.png", LocalDate.of(2022,01, 05)));
+        eventPostService.save(new EventPost(companyServiceImpl.findCompanyByCompanyName("그린횟집"), "제철생선 주문시 추가이벤트", "제철생선을 시킬시 광어와 우럭회를 추가로 드려요", "이미지2.png", LocalDate.of(2022,04, 15)));
+        eventPostService.save(new EventPost(companyServiceImpl.findCompanyByCompanyName("강릉한정식 하서주미역"), "10인이상 단체손님은 음료수 무료", "10인 이상 단체손님 방문시 음료수를 무료로 제공해 드립니다.", "이미지2.png", LocalDate.of(2019,11, 11)));
 
     }
 }

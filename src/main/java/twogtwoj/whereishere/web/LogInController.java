@@ -3,6 +3,7 @@ package twogtwoj.whereishere.web;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import twogtwoj.whereishere.service.MemberService;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -40,7 +42,9 @@ public class LogInController {
     }
 
     @GetMapping("/login/signup/member")
-    public String viewSingUpMemberPage() {
+    public String viewSingUpMemberPage(Model model) {
+        List<Member> memberList = memberService.findAll();
+        model.addAttribute("memberList",memberList);
         return "/login/signup/member";
     }
 
@@ -52,12 +56,14 @@ public class LogInController {
         // 아이디 중복확인 버튼 만들기 ()
         memberService.save(new Member(memberLoginId, memberLoginPw, memberName, LocalDate.of(year, month, day)));
 
-        redirectAttributes.addAttribute("status",true);
+        redirectAttributes.addAttribute("status", true);
         return "redirect:/login";
     }
 
     @GetMapping("/login/signup/company")
-    public String viewSingUpCompanyPage() {
+    public String viewSingUpCompanyPage(Model model) {
+        List<Company> companyList = companyServiceImpl.findAll();
+        model.addAttribute("companyList",companyList);
         return "/login/signup/company";
     }
 
@@ -69,9 +75,9 @@ public class LogInController {
 
         String companyImgName = UUID.randomUUID() + ".png";
         companyImg.transferTo(new File(fileStore.getFullPath(companyImgName)));
-        companyServiceImpl.save(new Company(companyLoginId,companyLoginPw,companyBusinessId,companyName,companyImgName,companyIntroduction,companyCategory,companyAddress));
+        companyServiceImpl.save(new Company(companyLoginId, companyLoginPw, companyBusinessId, companyName, companyImgName, companyIntroduction, companyCategory, companyAddress));
 
-        redirectAttributes.addAttribute("status",true);
+        redirectAttributes.addAttribute("status", true);
         return "redirect:/login";
     }
 }

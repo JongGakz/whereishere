@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"/>
+<!--  메인 페이지 검색창의 css 입니다. -->
+<link href="/css/mainstyle.css" rel="stylesheet">
+
+
+<body>
+<div th:replace="fragments/bodyheader :: bodyheader"/>
+
+
+<div class="main_sub">
+    
+    <h1> Hello '여긴 어디'! </h1>
+    <div>국내 최대 리뷰 사이트!</div>
+    <br>
+    <div>당신을 위한 길잡이, 매장 정보안내 및 리뷰 게시판을 통해 다양한 정보 찾아가세요!</div>
+<!-- 슬라이드쇼를 표시할 div -->
+<div class="slideshow-container">
+    <div class="section" th:each="company : ${companyList}" onmouseover="stopTimer()" onmouseout="startTimer()">
+        <div class="slide-ment">* 이미지를 클릭하시면 해당 업체 상세정보로 이동합니다.</div>
+        <a class="slide-href" href="/companies/1">
+            <img class="slide-image" th:src="|/image/${company.companyImg}|"/>
+        </a>
+        <div class="slide-name">
+            <div th:text="${company.getName()}"></div>
+        </div>
+    </div>
+</div>
+</div>
+<div th:replace="fragments/bodyfooter :: bodyfooter"/>
+
+
+<!-- JavaScript 코드 -->
+<script>
+    var slideIndex = 0;
+    var timer;
+    let slideHref = document.querySelectorAll(".slide-href")[document.querySelectorAll(".slide-href").length - 1];
+
+
+    showSlides();
+
+    // 자동으로 슬라이드 이미지를 변경하는 함수
+    function showSlides() {
+        var i;
+        var slides = document.getElementsByClassName("section");
+        for (i = 0; i < slides.length; i++) {
+            slides[i].classList.remove("active"); // active 클래스 제거
+        }
+        slideIndex++;
+        if (slideIndex > slides.length) {
+            slideIndex = 1
+        }
+        slides[slideIndex - 1].classList.add("active"); // active 클래스 추가
+        timer = setTimeout(showSlides, 5000);
+        setTimeout(setImageHref, 5000);
+    }
+
+    // 마우스를 올렸을 때 호출될 함수
+    function stopTimer() {
+        clearTimeout(timer);
+    }
+
+    // 마우스를 내렸을 때 호출될 함수
+    function startTimer() {
+        timer = setTimeout(showSlides, 5000);
+    }
+
+    // 링크도 시간에 맞추어 올리는 함수
+    function setImageHref() {
+        slideHref.setAttribute("href", `/companies/${slideIndex}`);
+    }
+
+</script>
+</body>
+</html>

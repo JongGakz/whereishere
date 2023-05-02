@@ -3,13 +3,9 @@ package twogtwoj.whereishere.domain;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.multipart.MultipartFile;
-import twogtwoj.whereishere.repository.CommentRepository;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -27,18 +23,15 @@ public class EventPost { // 이벤트 게시판
 
     private String eventPostContent;
 
-    private String eventPostImg1;
-
-    private String eventPostImg2;
+    private String eventPostImgs;
 
     private LocalDate eventPostWriteDate;
 
-    public EventPost(Company company, String eventPostTitle, String eventPostContent, String eventPostImg1, String eventPostImg2, LocalDate eventPostWriteDate) {
+    public EventPost(Company company, String eventPostTitle, String eventPostContent, String eventPostImgs, LocalDate eventPostWriteDate) {
         this.company = company;
         this.eventPostTitle = eventPostTitle;
         this.eventPostContent = eventPostContent;
-        this.eventPostImg1 = eventPostImg1;
-        this.eventPostImg2 = eventPostImg2;
+        this.eventPostImgs = eventPostImgs;
         this.eventPostWriteDate = eventPostWriteDate;
     }
     public EventPost(){}

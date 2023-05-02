@@ -8,18 +8,25 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import twogtwoj.whereishere.domain.Member;
 import twogtwoj.whereishere.domain.ReviewPost;
 import twogtwoj.whereishere.dto.ReviewPostDto;
 import twogtwoj.whereishere.file.FileStore;
 import twogtwoj.whereishere.repository.ReviewPostRepository;
+import twogtwoj.whereishere.service.MemberService;
 import twogtwoj.whereishere.service.ReviewPostService;
 
 import java.net.MalformedURLException;
+import java.security.Principal;
+import java.util.stream.Collectors;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -31,7 +38,7 @@ public class ReviewPostController {
 
     private final ReviewPostService reviewPostService;
 
-    private final ReviewPostRepository reviewPostRepository;
+    private final MemberService memberService;
 
     private final FileStore fileStore;
 
@@ -54,11 +61,10 @@ public class ReviewPostController {
     public Resource downloadImage(@PathVariable String filename) throws MalformedURLException {
         return new UrlResource("file:" + fileStore.getFullPath(filename));
     }
-    //@PostMapping("/postPro")//안쓰는 경우가 많지만 개발에서 필요한 경우도 있음 알아두는 것이 좋음
-
     @RequestMapping(path = "/postPro", method = POST, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-    public String reviewPostPro(@ModelAttribute ReviewPostDto reviewPostDto, Model model) throws Exception{
-        reviewPostService.post(reviewPostDto);
+    public String reviewPostPro(@ModelAttribute ReviewPostDto reviewPostDto, Model model, @AuthenticationPrincipal User user) throws Exception{
+        Member member = memberService.findMemberByLoginId(user.getUsername());
+        reviewPostService.post(reviewPostDto,member);
 
         model.addAttribute("message", "작성이 완료되었습니다.");
         model.addAttribute("searchUrl", "/review/list");
@@ -108,13 +114,47 @@ public class ReviewPostController {
 
 
     @GetMapping("/view")//localhost:8080/review/view?id=1
-    public String review(@RequestParam Long reviewPostId, Model model) throws Exception{
+    public String review(@RequestParam Long reviewPostId, Model model, Principal principal) throws Exception{
 
         ReviewPost reviewPost = reviewPostService.reviewPostView(reviewPostId);
 
         model.addAttribute("review", reviewPost);
+        // 글쓴이 아이디
+        model.addAttribute("memberId", reviewPost.getMember().getId());
+
+        Member member = memberService.findMemberByLoginId(principal.getName());
+        int like = reviewPostService.findLike(reviewPostId, member.getId());
+
+        model.addAttribute("like", like);
+        model.addAttribute("memberId", member.getId());
 
         return "/review/view";
+    }
+
+    @GetMapping("/myList")
+    public String reviewMyList(Model model, Pageable pageable, @AuthenticationPrincipal User user) {
+        Member member = memberService.findMemberByLoginId(user.getUsername());
+        Page<ReviewPost> reviewPost = reviewPostService.reviewPostList(pageable);
+
+        Page<ReviewPost> resultPage = PageableExecutionUtils.getPage(
+                reviewPost.filter(n -> n.getMember().equals(member))
+                        .stream().collect(Collectors.toList()), pageable,
+                () -> reviewPost.filter(n -> n.getMember().equals(member)).stream().count());
+
+        int nowPage = resultPage.getPageable().getPageNumber() + 1;
+        int startPage = Math.max(nowPage - 4, 1);
+        int endPage = Math.min(nowPage + 5, resultPage.getTotalPages());
+        model.addAttribute("reviewPost", resultPage);
+        model.addAttribute("nowPage", nowPage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        return "review/reviewMyList";
+    }
+
+    @ResponseBody
+    @PostMapping("like")
+    public int like(Long reviewPostId, Long memberId) {
+        return reviewPostService.saveLike(reviewPostId, memberId);
     }
 
     @GetMapping("/modify/{reviewPostId}")
@@ -125,8 +165,7 @@ public class ReviewPostController {
 
     @RequestMapping(path = "/update/{reviewPostId}", method = POST, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public String update(@PathVariable("reviewPostId") Long reviewPostId,
-                         @ModelAttribute ReviewPostDto reviewPostDto,
-                         Model model) throws Exception {
+                         @ModelAttribute ReviewPostDto reviewPostDto) throws Exception {
 
         reviewPostService.update(reviewPostId, reviewPostDto);
 

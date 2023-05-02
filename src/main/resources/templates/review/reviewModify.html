@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"
-          th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css}"
-          rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <title>후기 수정하기</title>
+<head th:replace="fragments/header :: header"/>
+<meta charset="UTF-8">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"
+      th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css}"
+      rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<title>후기 게시판 - 후기 수정 페이지</title>
 </head>
 
 <style>
@@ -41,27 +41,26 @@
 </style>
 
 <body>
+<div th:replace="fragments/bodyheader :: bodyheader"/>
 <div class="container">
-       <form th:action="@{/review/update/{reviewPostId}(reviewPostId = ${review.reviewPostId})}" method="post" enctype="multipart/form-data">
+    <form th:action="@{/review/update/{reviewPostId}(reviewPostId = ${review.reviewPostId})}" method="post" enctype="multipart/form-data">
 
         <div class="py-5 text-center">
             <h2>후기 수정 게시판</h2>
         </div>
         <div>
-            <label for="companyName">업체명</label>
+            <label>업체명</label>
             <input type="text" id="autocompleteCompany" name="name" class="form-control"
                    th:value="${review.name}" value="삼성성모안과">
             <div>
-                <select id="companyName">
-                    <!--                        <option th:value="${review.companyName}"></option>-->
-                </select>
+                <select id="companyName"></select>
             </div>
         </div>
 
         <div>
             <label for="memberName">작성자</label>
             <input type="text" id="memberName" name="memberName" class="form-control"
-                   th:value="${review.writer}" value="박가경" readonly>
+                   th:value="${review.member}" value="박가경" readonly>
         </div>
         <div>
             <label for="reviewPostTitle">제목</label>
@@ -83,12 +82,12 @@
         </div>
 
         <hr class="my-4">
-        <button class="btn btn-warning float-end" type="submit"> 수정 </button>
+        <button class="btn btn-outline-success" type="submit"> 수정 </button>
     </form>
 
     </br>
 
-    <button class="btn btn-warning float-end" th:onclick="|location.href='@{/review/list}'|"> 목록으로 </button>
+    <button class="btn btn-outline-success" th:onclick="|location.href='@{/review/list}'|"> 목록으로 </button>
 
 </div>
 </body>
@@ -99,7 +98,7 @@
     let response;
     const SEARCH_API = "http://localhost:8080/api/search/companies?query=";
     let search = document.querySelector("#autocompleteCompany");
-    let matchCompanyList = document.querySelector("#companyName");
+    let matchCompanyList = document.querySelector("#name");
 
     search.addEventListener('keypress', ()=> {
         if(search.value.trim() !== "") {
@@ -113,49 +112,73 @@
         }
     });
 
+    search.addEventListener("click", ()=>{
+        if(search.value.trim() !== "") {
+            getCompanies(SEARCH_API + search.value);
+        }
+    });
+
     async function getCompanies(url){
         response = await fetch(url);
         data = await response.json();
         matchCompanyList.innerHTML="";
+        for(let i = 0; i < data.companyList.length; i++) {
+            console.log(data.companyList[i].name);
+            matchCompanyList.innerHTML +=`<option> ${data.companyList[i].name} [${data.companyList[i].companyAddress}]</option>`
+        }
+
         let selectCompany = document.querySelector("select");
+
+        selectCompany.addEventListener("change",function() {
+            document.querySelector("#autocompleteCompany").value = selectCompany.value;
+        })
+
+        selectCompany.addEventListener("keypress",function() {
+            document.querySelector("#autocompleteCompany").value = selectCompany.value;
+        })
 
         selectCompany.addEventListener("click",function() {
             document.querySelector("#autocompleteCompany").value = selectCompany.value;
-        });
-
-        for(let i = 0; i < data.companyList.length; i++) {
-            console.log(data.companyList[i].name);
-            matchCompanyList.innerHTML +=`<option> ${data.companyList[i].name} [${data.companyList[i].companyAddress}]</option>`;
-        }
+        })
     }
+
+    $(function () {
+        $("#file1").change(function () {
+            readURL1(this);
+        });
+    });
 
     function readURL1(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById('img1').src = e.target.result;
-            };
+
+            reader.onload = function (e) {
+                //alert(e.target.result);
+                $('#img1').attr('src', e.target.result);
+            }
+
             reader.readAsDataURL(input.files[0]);
-        } else {
-            document.getElementById('img1').src = "";
         }
     }
+
+    $(function () {
+        $("#file2").change(function () {
+            readURL2(this);
+        });
+    });
 
     function readURL2(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById('img2').src = e.target.result;
-            };
+
+            reader.onload = function (e) {
+                //alert(e.target.result);
+                $('#img2').attr('src', e.target.result);
+            }
+
             reader.readAsDataURL(input.files[0]);
-        } else {
-            document.getElementById('img2').src = "";
         }
     }
-
-
-
-
 </script>
 
 </html>

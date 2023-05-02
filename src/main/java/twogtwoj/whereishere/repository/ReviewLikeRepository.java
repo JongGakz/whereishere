@@ -6,11 +6,13 @@ import twogtwoj.whereishere.domain.Member;
 import twogtwoj.whereishere.domain.ReviewLike;
 import twogtwoj.whereishere.domain.ReviewPost;
 
+import java.util.Optional;
+
 @Repository
 public interface ReviewLikeRepository extends JpaRepository<ReviewLike, Long> {
 
-    ReviewLike findByReviewPostAndMember(ReviewPost reviewPost, Member member);
-    void  deleteByReviewPostAndMember(ReviewPost reviewPost, Member memberId);
+    Optional<ReviewLike> findByReviewPostAndMember(ReviewPost reviewPost, Member member);
+    void deleteByReviewPostAndMember(ReviewPost reviewPost, Member member);
    // ReviewLike findByReviewPostAndMember(ReviewPost reviewPost, Member member); //ReviewPost 정보와 Member 의 정보를 바탕으로 ReviewLike 의 객체를 불러옴
 
 }

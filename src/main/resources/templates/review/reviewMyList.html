@@ -19,7 +19,7 @@
         <h2>후기 게시판</h2>
     </div>
     <div class="row">
-        <div class="col" th:each="reviewPost : ${reviewPost}">
+        <div class="col"  th:action="@{/review/myList}" method="get">
             <button class="btn btn-outline-success"
                     onclick="location.href='reviewPost.html'"
                     th:onclick="|location.href='@{/review/post}'|"
@@ -36,25 +36,6 @@
                 <div class="input-group-append">
                     <button class="btn btn-outline-success" type="submit">검색</button>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="col" th:each="reviewPost : ${list}">
-        <button class="btn btn-outline-success"
-                onclick="location.href='reviewPost.html'"
-                th:onclick="|location.href='@{/review/post}'|"
-                type="button" sec:authorize="hasRole('MEMBER')">글쓰기</button>
-        <button class="btn btn-outline-success"
-                onclick="location.href='reviewMyList.html'"
-                th:onclick="|location.href='@{/review/list}'|"
-                type="button" sec:authorize="hasRole('MEMBER')">전체 목록 보기</button>
-        <div class="input-group input-group-dynamic mb-4">
-
-            <input class="form-control" name="searchKeyword" th:value="${searchKeyword}" placeholder="검색어를 입력해주세요" type="text">
-            <input class="form-control" name="name" th:value="${name}" placeholder="회사명 또는 지역을 입력해주세요" type="text">
-
-            <div class="input-group-append">
-                <button class="btn btn-outline-success" type="submit">검색</button>
             </div>
         </div>
     </div>

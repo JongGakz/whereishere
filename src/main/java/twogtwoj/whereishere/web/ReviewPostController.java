@@ -109,10 +109,7 @@ public class ReviewPostController {
     }
 
     @GetMapping("/myList")
-    public String reviewMyList(@PageableDefault(size = 5, sort = "reviewPostDate", direction = Sort.Direction.DESC) Pageable pageable,
-                               @RequestParam(name = "searchKeyword", required = false) String searchKeyword,
-                               @RequestParam(name = "name", required = false) String name,
-                               Model model, @AuthenticationPrincipal User user) {
+    public String reviewMyList(Pageable pageable, Model model, @AuthenticationPrincipal User user) {
         Member member = memberService.findMemberByLoginId(user.getUsername());
         Page<ReviewPost> reviewPost = reviewPostService.reviewPostList(pageable);
 
@@ -125,7 +122,6 @@ public class ReviewPostController {
         int startPage = Math.max(nowPage - 4, 1);
         int endPage = Math.min(nowPage + 5, resultPage.getTotalPages());
 
-        model.addAttribute("list", reviewList(pageable, searchKeyword, name, model));
         model.addAttribute("reviewPost", resultPage);
         model.addAttribute("nowPage", nowPage);
         model.addAttribute("startPage", startPage);

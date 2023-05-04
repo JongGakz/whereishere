@@ -74,7 +74,7 @@ public class ReviewPostController {
 
     @SneakyThrows
     @GetMapping("/list")
-    public String reviewList(@PageableDefault(size = 10, sort = "reviewPostId", direction = Sort.Direction.DESC) Pageable pageable,
+    public String reviewList(@PageableDefault(size = 7, sort = "reviewPostId", direction = Sort.Direction.DESC) Pageable pageable,
                              @RequestParam(name = "searchKeyword", required = false) String searchKeyword,
                              @RequestParam(name = "name", required = false) String name,
                              Model model) {

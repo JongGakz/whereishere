@@ -177,3 +177,10 @@ li {
     z-index: 0;
     padding: 0;
 }
+
+.star-warning {
+    display :inline-block;
+    color : red;
+    font-size: 12px;
+    margin-left:10px;
+}

@@ -74,7 +74,7 @@ public class MainController {
 
     // 검색한 업체 정보 바로가기
     @GetMapping("/companies/{companyId}")
-    public String informationCompany(@PathVariable Long companyId, Model model) {
+    public String informationCompany(@PathVariable Long companyId, Model model, @AuthenticationPrincipal User user) {
 
         Company company = companyServiceImpl.findCompanyByCompanyId(companyId);
 
@@ -88,6 +88,11 @@ public class MainController {
         // 업체에 등록된 코멘트 리스트 찾기
         List<Comment> commentList = commentService.findCommentListByCompany(company);
 
+        List<Star> allStars = starService.findAll();
+        Member member = memberService.findMemberByLoginId(user.getUsername());
+
+        model.addAttribute("member",member);
+        model.addAttribute("allStars",allStars);
         model.addAttribute("company", company);
         model.addAttribute("starsPoint", starsPointToString);
         model.addAttribute("commentList", commentList);

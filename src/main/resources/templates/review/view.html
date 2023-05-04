@@ -60,6 +60,7 @@
     let reviewLikeList = [[${reviewLikeList}]];
     let memberId = document.querySelector("#memberId").value;
     let reviewPostId = document.querySelector("#reviewPostId").value;
+    let reviewPost = [[${review}]];
     let likeCount = document.querySelector("#like-count");
 
     let likeBtn = document.querySelector('.heart');
@@ -81,10 +82,12 @@
     like.forEach(function (event) {
         event.addEventListener('click',
             function () {
-                if (memberId != 0) {
+            if(memberId == reviewPost.member.id){
+                alert("본인 게시물에는 좋아요를 누를 수 없습니다.");
+            } else if (memberId !== 0) {
                     processLike();
                 }
-            })
+            });
 
         async function processLike() {
 

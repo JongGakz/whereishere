@@ -44,26 +44,33 @@
             <form sec:authorize="hasRole('MEMBER')" th:action="|/companies/${companyId}/star|" method="post">
                 <input type="number" name="starPoint" max="5" min="1" step="1" value="3" placeholder="별점">
                 <span>/ 5 </span>
-                <input type="submit" class="button" value="점수 등록">
+                <input type="submit" class="button" id="starButton" value="점수 등록">
+                <div class="star-warning">* 별점은 한번만 입력 가능합니다.</div>
             </form>
         </div>
     </div>
     <div class="companyintroduction">
         <span class="list">업체 소개 </span><br><br>
         <div class="companyintroductiontext">
-        <span th:text="${company.companyIntroduction}"></span>
+            <span th:text="${company.companyIntroduction}"></span>
         </div>
     </div>
     <div class="gocompanyreview">
-        <button class="button"  th:onclick="|location.href='@{|/review/list?searchKeyword=&name=${company.getName()}|}'|">업체 리뷰 보러가기</button>
+        <button class="button"
+                th:onclick="|location.href='@{|/review/list?searchKeyword=&name=${company.getName()}|}'|">업체 리뷰 보러가기
+        </button>
     </div>
     <div class="gocompanyeventpost">
-        <button class="button"  th:onclick="|location.href='@{|/events/eventPost/search?searchKeyword=${company.getName()}|}'|">업체 이벤트 보러가기</button>
+        <button class="button"
+                th:onclick="|location.href='@{|/events/eventPost/search?searchKeyword=${company.getName()}|}'|">업체 이벤트
+            보러가기
+        </button>
     </div>
     <div class="companycomment">
         <form sec:authorize="hasRole('MEMBER')" th:action="|/companies/${companyId}/comment|" method="post">
-            <input type="text" name="commentContent" id="commentContent" placeholder="한줄 평을 남겨주세요!" style="width:90%; height:60px">
-            <input type="submit" class="button" value="등록">
+            <input type="text" name="commentContent" id="commentContent" placeholder="한줄 평을 남겨주세요!"
+                   style="width:90%; height:60px">
+            <input type="submit" class="button" id="commentButton" value="등록">
         </form>
     </div>
 
@@ -83,7 +90,9 @@
             <li class="companycommentwriter" th:text="${comment.getMember().getName()}">작성자</li>
             <li class="companycommentcontent" th:text="${comment.getCommentContent()}">작성 내용</li>
             <li class="companycommenttime" th:text="${comment.getCommentWriteDate().getYear()} +  '년 '  + ${comment.getCommentWriteDate().getMonthValue()} +  '월 '
-    + ${comment.getCommentWriteDate().getDayOfMonth()} +  '일 '  + ${comment.getCommentWriteDate().getHour()} +  '시 '  + ${comment.getCommentWriteDate().getMinute()} +  '분'" >날짜</li>
+    + ${comment.getCommentWriteDate().getDayOfMonth()} +  '일 '  + ${comment.getCommentWriteDate().getHour()} +  '시 '  + ${comment.getCommentWriteDate().getMinute()} +  '분'">
+                날짜
+            </li>
         </ul>
     </div>
 </div>
@@ -93,12 +102,37 @@
 <script th:inline="javascript">
 
     let paramStatus = [[${param.status}]];
+    let company = [[${company}]];
+    let member = [[${member}]];
+    let allStars = [[${allStars}]];
 
-    if(paramStatus[0] === 'true'){
-        alert("저장을 성공했습니다.");
-    } else if(paramStatus[0] === 'false') {
-        alert("저장에 실패했습니다.");
-    }
+    let starButton = document.querySelector("#starButton");
+
+    let checkStarPoint = allStars.filter(n => n.company.loginId === company.loginId).filter(n => n.member.loginId === member.loginId);
+
+    starButton.addEventListener("click", function () {
+        if (checkStarPoint.length >= 1) {
+            alert("별점은 한번만 줄 수 있습니다.")
+            event.preventDefault();
+        } else {
+            alert("별점이 입력되었습니다.")
+        }
+    });
+
+
+    // 코멘트에 빈칸만 입력시 입력이 되지 않는 메서드
+
+    let commentButton = document.querySelector("#commentButton");
+    let commentContent = document.querySelector("#commentContent");
+    commentButton.addEventListener("click", function () {
+        if (commentContent.value.trim() === '') {
+            alert("한줄 평은 빈칸만 입력할 수 없습니다.");
+            event.preventDefault();
+        } else {
+            alert("한줄 평이 정상적으로 입력 되었습니다.");
+        }
+    });
+
 
 </script>
 </html>

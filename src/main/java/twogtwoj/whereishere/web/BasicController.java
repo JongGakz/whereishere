@@ -70,7 +70,7 @@ public class BasicController {
                 "스타벅스 소사점", "이미지2.png", "둘이먹다 하나죽어도 모르는 아메리카노 카페", Category.CAFFE.getDescription()
                 , "울산광역시 동구 전하로 64"));
 
-        Company company = companyServiceImpl.save(new Company("starbucks", "starbucks112", 6627019215L,
+        companyServiceImpl.save(new Company("starbucks", "starbucks112", 6627019215L,
                 "별다방", "이미지3.png", "스타벅스를 혐오하는 자만 먹을 수 있는 까페", Category.CAFFE.getDescription()
                 , "전라남도 무안군 해제면 만송로 480"));
 
@@ -125,7 +125,7 @@ public class BasicController {
                 "롯데시네마 영주", "이미지16.png", "롯데시네마 영주점은 고객에게 행복한 기억을 선사합니다.", Category.THEATER.getDescription()
                 , "경북 영주시 구성로 417"));
 
-        companyServiceImpl.save(new Company("jjimdark", "ssg5478", 8951234567L,
+        Company company = companyServiceImpl.save(new Company("jjimdark", "ssg5478", 8951234567L,
                 "안동신세계찜닭", "이미지17.png", "안동찜닭거리의 최고의 맛집. 양도 맛도 최고", Category.RESTAURANT.getDescription()
                 , "경북 안동시 번영길 10"));
 
@@ -221,18 +221,18 @@ public class BasicController {
                 , "강원 강릉시 난설헌로 73"));
 
 
-        starservice.save(new Star(member, company, 4.0));
+        starservice.save(new Star(member3, company, 4.0));
         starservice.save(new Star(member2, company, 3.0));
 
-        commentService.save(new Comment(member, company, "와 존맛", LocalDateTime.now()));
-        commentService.save(new Comment(member2, company, "아 글쎼 난 별루", LocalDateTime.now()));
-        commentService.save(new Comment(member3, company, "엥 난 좋은데", LocalDateTime.now()));
-        commentService.save(new Comment(member4, company, "어쩔티비 ", LocalDateTime.now()));
+        commentService.save(new Comment(member2, company, "와 존맛", LocalDateTime.of(2023,5,1,12,30,52)));
+        commentService.save(new Comment(member2, company, "정말 친절하세요", LocalDateTime.of(2023,6,2,7,40,52)));
+        commentService.save(new Comment(member3, company, "접근성이 떨어져요", LocalDateTime.of(2023,7,3,6,50,52)));
+        commentService.save(new Comment(member4, company, "가성비가 좋아요", LocalDateTime.of(2023,6,1,5,20,52)));
 
-        commentService.save(new Comment(member, company, "아 내가 마싱다는데", LocalDateTime.now()));
-        commentService.save(new Comment(member2, company, "그려 니 맘대로하렴", LocalDateTime.now()));
-        commentService.save(new Comment(member3, company, "엥 여기 근데 음식집아아닌걸", LocalDateTime.now()));
-        commentService.save(new Comment(member4, company, "허허벌판", LocalDateTime.now()));
+        commentService.save(new Comment(member2, company, "사장님이 재밌어요", LocalDateTime.of(2023,8,16,5,10,52)));
+        commentService.save(new Comment(member2, company, "가본적은 없지만 가보고 싶어요", LocalDateTime.of(2023,9,16,1,20,52)));
+        commentService.save(new Comment(member3, company, "카페라뗴가 맛있어요", LocalDateTime.of(2023,10,1,12,5,52)));
+        commentService.save(new Comment(member4, company, "너무 좋아요", LocalDateTime.of(2023,11,15,3,5,52)));
 
 
         eventPostService.save(new EventPost(companyServiceImpl.findCompanyByCompanyName("핏앤피트니스"), "새해 이벤트", "1월 중에 등록하신분들은 회원권 40%할인 해드립니다.", "이미지2.png", LocalDate.of(2022, 01, 10)));

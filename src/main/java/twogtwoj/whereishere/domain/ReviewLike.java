@@ -24,8 +24,6 @@ public class ReviewLike {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    private boolean status;
-
     public static ReviewLike toReviewLike(Member member, ReviewPost reviewPost){
         ReviewLike reviewLike = new ReviewLike();
         reviewLike.setMember(member);

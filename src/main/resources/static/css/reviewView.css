@@ -1,0 +1,80 @@
+.container {
+    display: grid;
+    grid-template-columns: 1fr 400px 400px 1fr;
+    grid-template-rows: 50px 50px 70px 40px 50px 400px 50px;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+    ". . . ."
+    ". button button ."
+    ". reviewPostTitle reviewPostTitle ."
+    ". memberName memberName ."
+    ". companyName companyName ."
+    ". reviewPostContent reviewPostContent ."
+    ". . . .";
+    justify-items: stretch;
+    align-items: stretch;
+}
+
+.button {
+    grid-area: button;
+    align-self: center;
+    margin-left: 30px;
+    justify-self: flex-start;
+}
+
+.button:hover {
+    background-color:white;
+}
+
+.reviewPostTitle {
+    grid-area: reviewPostTitle;
+    font-size: 30px;
+    font-weight: bolder;
+    align-self: center;
+    justify-self: center;
+}
+
+.companyName {
+    grid-area: companyName;
+    font-size: 17px;
+    align-self: center;
+    justify-self: normal;
+}
+
+.memberName {
+    grid-area: memberName;
+    font-size: 20px;
+    align-self: center;
+    margin-left: 10px;
+    justify-self: right;
+    display: inline-block;
+}
+
+.reviewPostContent {
+    grid-area: reviewPostContent;
+    border-top: solid 1px lightslategrey;
+    border-bottom: solid 1px lightslategrey;
+    width: 800px;
+    height: 400px;
+    padding-top: 10px;
+    overflow: auto;
+    align-self: flex-start;
+    justify-self: flex-start;
+
+}
+
+.reviewImg1 {
+    align-self: center;
+    justify-self: normal;
+}
+
+.reviewImg2 {
+    align-self: center;
+    justify-self: normal;
+}
+
+.form-control[readonly] {
+    background-color: white;
+    opacity: 1;
+}

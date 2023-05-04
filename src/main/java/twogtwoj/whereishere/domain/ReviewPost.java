@@ -28,6 +28,8 @@ public class ReviewPost {//후기 게시판
 
     private String reviewPostTitle;
 
+
+    @Column(columnDefinition = "varchar(1000)")
     private String reviewPostContent;
 
     private String reviewPostImg1;
@@ -46,5 +48,16 @@ public class ReviewPost {//후기 게시판
     public ReviewPost() {
 
     }
-
+    public ReviewPost(Member member, Company company, String name, String writer, String reviewPostTitle, String reviewPostContent, String reviewPostImg1, String reviewPostImg2, int likeCount, LocalDate reviewPostDate) {
+        this.member = member;
+        this.company = company;
+        this.name = name;
+        this.writer = writer;
+        this.reviewPostTitle = reviewPostTitle;
+        this.reviewPostContent = reviewPostContent;
+        this.reviewPostImg1 = reviewPostImg1;
+        this.reviewPostImg2 = reviewPostImg2;
+        this.likeCount = likeCount;
+        this.reviewPostDate = reviewPostDate;
+    }
 }

@@ -37,19 +37,31 @@
 </body>
 </html>
 <script>
+
+
+    let fileInput
+    let preview
     const handler = {
         init() {
-            const fileInput = document.querySelector('#eventPostImgs');
-            const preview = document.querySelector('#preview');
+            fileInput = document.querySelector('#eventPostImgs');
+            preview = document.querySelector('#preview');
             fileInput.addEventListener('change', () => {
-                console.dir(fileInput)
-                const files = Array.from(fileInput.files)
-                files.forEach(file => {
-                    preview.innerHTML += `
+                if (fileInput.value.slice(-3) !== "jpg" && fileInput.value.slice(-3) !== "png" && fileInput.value.slice(-3) !== "jpeg") {
+                    alert("이미지는 'jpg, 'jpeg' ,'png' 형식만 지원합니다.")
+                    fileInput.value = '';
+                } else if (fileInput.files[0].size >= 5000000) {
+                    alert("이미지는 5MB를 넘을 수 없습니다.")
+                    fileInput.value = '';
+                } else {
+                    console.dir(fileInput)
+                    const files = Array.from(fileInput.files)
+                    files.forEach(file => {
+                        preview.innerHTML += `
                         <p id="${file.lastModified}">
                             ${file.name}
                         </p>`;
-                });
+                    });
+                }
             });
         }
     }

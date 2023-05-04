@@ -114,6 +114,7 @@ body {
     .body_header_dropdown-content {
         display: flex;
         background-color: #f9f9f9;
+        justify-content: center;
         min-width: 160px;
         box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
         z-index: 1;
@@ -125,6 +126,7 @@ body {
     }
 
     .body_header_dropdown-content a {
+        font-size:13px;
         color: black;
         padding: 12px 16px;
         text-decoration: none;
@@ -132,6 +134,7 @@ body {
     }
 
     .body_header_dropdown-content a:hover {
+        text-decoration: none;
         background-color: #f1f1f1
     }
 
@@ -150,7 +153,7 @@ body {
 .body_logo {
     vertical-align: middle;
     border-style: none;
-    width: 150px;
+    width: 250px;
     height: fit-content;
 }
 .body_href_logo {

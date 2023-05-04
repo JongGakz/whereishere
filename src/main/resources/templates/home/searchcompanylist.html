@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/header :: header"/>
+
+<link href="/css/searchcompanylist.css" rel="stylesheet">
+
+<body>
+<div th:replace="fragments/bodyheader :: bodyheader"/>
+
+<div class="subject">
+    <h1> 업체 상세 정보</h1>
+    <div class="searchbox">
+        <br>
+        <div class="searchbox_text">&nbsp;&nbsp;검색 조건</div>
+        <br><br>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;업종 :</div>
+        <select class="searchbox_companyCategory" name="companyCategory" id="companyCategory">
+            <option value="">All</option>
+            <option value="헬스장">헬스장</option>
+            <option value="음식점">음식점</option>
+            <option value="병원">병원</option>
+            <option value="영화관">영화관</option>
+            <option value="백화점">백화점</option>
+            <option value="카페">카페</option>
+        </select>
+        <div> &nbsp;&nbsp;&nbsp;&nbsp; 업체명 :</div>
+        <input type="text" id="searchCompanyName" placeholder="업체명을 입력하세요">
+    </div>
+<br><br><br>
+    <div class="main" id="main">
+        <div class="company" th:each="company : ${companyList}">
+            <div class="company_ment">* 이미지를 클릭하시면 해당 업체 상세정보로 이동합니다.</div>
+            <a class="company_image" th:href="|/companies/${company.getId()}|">
+                <img th:src="|/image/${company.companyImg}|">
+            </a>
+            <div class="company_name" th:text="${company.getName()}"></div>
+            <div class="company_address" th:text="'(' + ${company.getCompanyAddress()} + ')'"></div>
+        </div>
+    </div>
+
+</div>
+
+
+<div th:replace="fragments/bodyfooter :: bodyfooter"/>
+
+</body>
+
+<script th:inline="javascript">
+    let companyList = [[${companyList}]];
+    let category = document.querySelector("#companyCategory");
+    let main = document.querySelector("#main");
+    let searchCompanyName = document.querySelector("#searchCompanyName");
+
+    let filterCompanyList;
+
+    category.addEventListener("change",function() {
+      changeList();
+    });
+
+    searchCompanyName.addEventListener("keyup",function(){
+        changeList();
+    });
+
+    function changeList() {
+        main.innerHTML = "";
+
+        filterCompanyList = companyList.filter(n => n.companyCategory.includes(category.value)).filter(n => n.name.includes(searchCompanyName.value));
+
+        for (let i = 0; i < filterCompanyList.length; i++) {
+            main.innerHTML += ` <div class="company">
+            <div class="company_ment">* 이미지를 클릭하시면 해당 업체 상세정보로 이동합니다.</div>
+            <a class="company_image" href="/companies/${filterCompanyList[i].id}">
+                <img src="/image/${filterCompanyList[i].companyImg}">
+            </a>
+            <div class="company_name">${filterCompanyList[i].name}</div>
+            <div class="company_address">(${filterCompanyList[i].companyAddress})</div>
+        </div>`;
+        }
+    }
+</script>
+</html>

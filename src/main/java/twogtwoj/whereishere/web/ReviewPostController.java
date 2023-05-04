@@ -134,7 +134,7 @@ public class ReviewPostController {
     }
 
     @GetMapping("/view")//localhost:8080/review/view?id=1
-    public String review(@RequestParam Long reviewPostId, Model model, Principal principal) throws Exception {
+    public String review(@RequestParam Long reviewPostId, Model model, Principal principal,@AuthenticationPrincipal User user) throws Exception {
 
         ReviewPost reviewPost = reviewPostService.reviewPostView(reviewPostId);
         model.addAttribute("review", reviewPost);
@@ -142,6 +142,13 @@ public class ReviewPostController {
         List<ReviewLike> reviewLikeList = reviewLikeService.findAll();
 
         model.addAttribute("reviewLikeList",reviewLikeList);
+
+        if(user.getAuthorities().stream().filter(n -> n.getAuthority().equals("ROLE_MEMBER")).toArray().length == 1){
+            Member findMember = memberService.findMemberByLoginId(user.getUsername());
+            model.addAttribute("member", findMember.getName());
+        } else {
+            model.addAttribute("member","");
+        }
 
         try {
             Member member = memberService.findMemberByLoginId(principal.getName());

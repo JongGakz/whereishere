@@ -1,0 +1,108 @@
+.container {
+    display: grid;
+    grid-template-columns: 1fr 800px 1fr;
+    grid-template-rows: 50px 50px 100px 400px 30px;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+    ". . ."
+    ". reviewPost ."
+    ". reviewPostCategory ."
+    ". reviewPostList ."
+    ". page .";
+    justify-items: stretch;
+    align-items: stretch;
+}
+
+.reviewPost {
+    grid-area: reviewPost;
+    font-size: 50px;
+    justify-self: center;
+}
+
+.reviewPostCategory {
+    grid-area: reviewPostCategory;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    justify-self: center;
+    align-self: center;
+}
+
+.reviewPostList {
+    grid-template-columns: 100%;
+    grid-template-rows: 130px 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    margin-bottom: 0;
+    grid-area: reviewPostList;
+    row-gap: 10px;
+    word-wrap: break-word;
+    justify-self: center;
+}
+
+.reviewPostList tr:last-child td {
+    border-bottom: 1px solid #dee2e6;
+}
+
+.reviewPostContent {
+    cursor: pointer;
+}
+
+.reviewPostContent:hover {
+    background-color: green;
+    color: white;
+}
+
+.container input {
+    width: 280px;
+    height: 38px;
+}
+
+th {
+    text-align: center;
+}
+
+td{
+    text-align: center;
+}
+
+.page {
+    text-align: center;
+}
+
+button {
+    margin-bottom: 5px;
+}
+
+.table{
+    margin-bottom: 0;
+    table-layout: fixed;
+}
+
+.active {
+    display: inline-block;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #ccc;
+    color: white;
+}
+
+strong {
+    display: inline-block;
+    width: 2rem; /* 너비와 높이를 같게 설정 */
+    height: 2rem;
+    padding: 0.5rem;
+    border: 2px solid green;
+    border-radius: 5px;
+    text-align: center;
+    height: 30px;
+    line-height: 10px;
+}
+
+a {
+    color: black;
+}

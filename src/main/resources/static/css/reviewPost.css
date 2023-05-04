@@ -1,0 +1,114 @@
+.grid-form {
+    display: grid;
+    grid-template-columns: 1fr 400px 400px 1fr;
+    grid-template-rows: 50px 50px 50px 40px 50px 300px 300px;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+    ". . . ."
+    ". button button ."
+    ". reviewPost reviewPost ."
+    ". companyName companyName ."
+    ". reviewPostTitle reviewPostTitle ."
+    ". reviewPostContent reviewPostContent ."
+    ". reviewImg1 reviewImg2 .";
+    justify-items: stretch;
+    align-items: stretch;
+}
+
+.button {
+    grid-area: button;
+    align-self: center;
+    margin-left: 30px;
+    justify-self: flex-start;
+}
+.button:hover {
+    background-color:white;
+}
+
+.reviewPost {
+    grid-area: reviewPost;
+    align-self: center;
+    justify-self: center;
+}
+
+.companyName {
+    grid-area: companyName;
+    align-self: center;
+    justify-self: normal;
+}
+
+input#autocompleteCompany {
+    border: none;
+    width: 650px;
+    border-bottom: 1px solid black;
+    padding: 0;
+    outline: none;
+}
+
+.reviewPostTitle {
+    grid-area: reviewPostTitle;
+    align-self: center;
+    justify-self: normal;
+}
+
+input#reviewPostTitle{
+    width: 700px;
+    border: none;
+    border-bottom: 1px solid black;
+    padding: 0;
+    outline: none;
+}
+
+input#reviewPostTitle:focus,
+input#reviewPostTitle:hover,
+input#autocompleteCompany:focus,
+input#autocompleteCompany:hover{
+    border-bottom: 2px solid black;
+}
+
+.reviewPostContent {
+    grid-area: reviewPostContent;
+    width: 800px;
+    justify-self: center;
+}
+
+.reviewImg1 {
+    grid-area: reviewImg1;
+    align-self: center;
+    justify-self: center;
+}
+
+.reviewImg2 {
+    grid-area: reviewImg2;
+    align-self: center;
+    justify-self: center;
+}
+
+textarea {
+    width : 100%;
+    margin-top : 10px;
+    min-height : 300px;
+    resize: none;
+}
+
+label {
+    width: 10%;
+    font-weight: bold;
+    font-size: 15px;
+    margin-bottom: 0px;
+    padding-right: 10px;
+}
+
+#reviewPostContent {
+    width : 100%;
+    margin-top : 10px;
+    min-height : 300px;
+    resize: none;
+}
+
+img {
+    width: 200px;
+    height: 200px;
+}
+

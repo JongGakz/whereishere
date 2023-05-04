@@ -44,6 +44,8 @@ public class MainController {
         return "/main";
     }
 
+
+
     @GetMapping("/home")
     public String enterHome(Model model) {
         List<Company> companyList = new ArrayList<>();
@@ -62,7 +64,7 @@ public class MainController {
 
             List<Company> companies = companyServiceImpl.findAll();
 
-            List<Company> companyList = companies.stream().filter(n -> n.getCompanyIntroduction().contains(search)).collect(Collectors.toUnmodifiableList());
+            List<Company> companyList = companies.stream().filter(n -> n.getCompanyIntroduction().contains(search) || n.getName().contains(search)).collect(Collectors.toUnmodifiableList());
 
             model.addAttribute("companyList", companyList);
 
@@ -145,6 +147,17 @@ public class MainController {
             redirectAttributes.addAttribute("status", false);
             return "redirect:/companies/{companyId}";
         }
+    }
+
+
+    // 업체 정보 페이지로 바로가기
+
+    @GetMapping("/serachcompanylist")
+    public String enterSearchCompanyList(Model model) {
+        List<Company> companyList = companyServiceImpl.findAll();
+        model.addAttribute("companyList", companyList);
+
+        return "/home/searchcompanylist";
     }
 }
 

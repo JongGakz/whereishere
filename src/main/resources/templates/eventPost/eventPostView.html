@@ -19,6 +19,7 @@
         <button class="btn btn-outline-success"
                 th:if="${eventPost.company.getName()}==${myCompany}"
                 th:onclick="|location.href='@{/events/eventPost/update/{eventPostId}(eventPostId = ${eventPost.eventPostId})}'|">수정</button>
+        <button class="btn btn-outline-success" th:onclick="|location.href='@{/events/eventPost}'|">목록으로</button>
     </div>
     <div class="eventPostTitle">
         <span th:text="${eventPost.eventPostTitle}">이벤트 제목</span><br/>

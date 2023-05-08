@@ -35,7 +35,6 @@
 <script>
     var slideIndex = 1;
     var timer;
-    var timer2;
     let slideHref = document.querySelectorAll(".slide-href")[document.querySelectorAll(".slide-href").length - 1];
 
 
@@ -54,20 +53,18 @@
         }
         slides[slideIndex - 1].classList.add("active"); // active 클래스 추가
         setImageHref();
-        timer = setTimeout(showSlides, 1000);
-        timer2 = setTimeout(setImageHref, 1000);
+        timer = setTimeout(showSlides, 1500);
+        // timer2 = setTimeout(setImageHref, 1000);
     }
 
     // 마우스를 올렸을 때 호출될 함수
     function stopTimer() {
         clearTimeout(timer);
-        clearTimeout(timer2);
     }
 
     // 마우스를 내렸을 때 호출될 함수
     function startTimer() {
-        timer = setTimeout(showSlides, 1000);
-        timer2 = setTimeout(setImageHref, 1000);
+        timer = setTimeout(showSlides, 1500);
     }
 
     // 링크도 시간에 맞추어 올리는 함수

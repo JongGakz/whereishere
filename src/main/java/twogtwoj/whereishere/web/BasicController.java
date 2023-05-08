@@ -245,6 +245,7 @@ public class BasicController {
         eventPostService.save(new EventPost(companyServiceImpl.findCompanyByCompanyName("강릉한정식 하서주미역"), "10인이상 단체손님은 음료수 무료", "10인 이상 단체손님 방문시 음료수를 무료로 제공해 드립니다.", "이미지2.png", LocalDate.of(2019, 11, 11)));
 
         eventPostService.save(new EventPost(companyServiceImpl.findCompanyByCompanyName("별다방"), "아침이벤트", "아침에는 아메리카노가 이천원 입니다.", "이미지3.png", LocalDate.of(2023, 5, 1)));
+        eventPostService.save(new EventPost(company, "안동신세계찜닭 할인 행사", "맛있는 고기를 판매합니다", "이미지17.png", LocalDate.of(2023, 5, 1)));
 
         reviewPostRepository.save(new ReviewPost(member2, company, "돈삼이네", member2.getName(), "암사동 삼겹살 생고기 맛집 돈삼이네 암사역과 굽은다리역 중간쯤에 위치한 돈삼이네.", "돌판에 고기, 김치 부추를 깔아 줘서 같이 구워먹으면 진짜 꿀맛! 기본반찬도 맛있고 가격도 착해서 맛있어요 마지막은 볶음밥 국룰이죠! 근데 여기에 치즈 볶음밥까지 먹는다면? 더이상 말이 필요없죠!! 위에 김가루까지 덮어준다? 말해뭐해... 암사동에서 생고기 삼겹살을 먹고 싶다면 돈삼이네로!", "이미지3.png", "이미지2.png", 3, LocalDate.now().minusWeeks(2)));
         reviewPostRepository.save(new ReviewPost(member, company, "별다방", member.getName(), "둘이먹다 하나죽어도 모르는 별다방 까페", "사장님이 친절해요", "이미지3.png", "이미지2.png", 3, LocalDate.now().minusWeeks(2)));

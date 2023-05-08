@@ -74,7 +74,7 @@ public class ReviewPostController {
 
     @SneakyThrows
     @GetMapping("/list")
-    public String reviewList(@PageableDefault(size = 7, sort = "reviewPostId", direction = Sort.Direction.DESC) Pageable pageable,
+    public String reviewList(@PageableDefault(size = 7, sort = "reviewPostDate", direction = Sort.Direction.DESC) Pageable pageable,
                              @RequestParam(name = "searchKeyword", required = false) String searchKeyword,
                              @RequestParam(name = "name", required = false) String name,
                              Model model) {
@@ -99,6 +99,9 @@ public class ReviewPostController {
         int startPage = Math.max(nowPage - 4, 1); // nowPage - 4 의 값이 1보다 작을 경우 1이 출력. 즉 두가지 중에 작은 값으로 출력하게 됨
         //마지막 페이지
         int endPage = Math.min(nowPage + 5, list.getTotalPages()); //nowPage + 5 이 값이 총 페이지 수 보다 클 경우 총 페이지 수가 출력됨
+
+        if(endPage < startPage)
+            endPage = nowPage;
 
         model.addAttribute("list", list);
         model.addAttribute("nowPage", nowPage);

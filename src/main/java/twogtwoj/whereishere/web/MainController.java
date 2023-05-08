@@ -89,8 +89,10 @@ public class MainController {
         List<Comment> commentList = commentService.findCommentListByCompany(company);
 
         List<Star> allStars = starService.findAll();
-        Member member = memberService.findMemberByLoginId(user.getUsername());
-
+        Member member = new Member();
+        if(user.getAuthorities().stream().filter(n -> n.getAuthority().equals("ROLE_MEMBER")).toArray().length == 1) {
+            member = memberService.findMemberByLoginId(user.getUsername());
+        }
         model.addAttribute("member",member);
         model.addAttribute("allStars",allStars);
         model.addAttribute("company", company);

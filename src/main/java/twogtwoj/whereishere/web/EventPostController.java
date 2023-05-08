@@ -53,6 +53,9 @@ public class EventPostController {
         int nowPage = events.getPageable().getPageNumber() + 1;
         int startPage = Math.max(nowPage - 4, 1);
         int endPage = Math.min(nowPage + 5, events.getTotalPages());
+        if(endPage < startPage) {
+            startPage = nowPage;
+        }
         model.addAttribute("events", events);
         model.addAttribute("nowPage", nowPage);
         model.addAttribute("startPage", startPage);
